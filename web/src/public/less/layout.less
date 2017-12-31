@@ -1,0 +1,120 @@
+.day{
+    li{
+        .mu-checkbox-icon-uncheck{
+            color: #999;
+        }
+    }
+}
+.day-form{
+    .mu-appbar-title{
+        text-align: center;
+    }
+    .mu-date-picker{
+        width: 100%;
+        .mu-text-field{
+            margin-bottom: 0;
+        }
+        .mu-text-field-content{
+            padding: 0;
+            padding-left: 15px;
+        }
+        .mu-text-field-hint{
+            height: 48px;
+            line-height: 48px;
+            color: #bdc4cf;
+        }
+        input{
+            height: 48px;
+            padding-left: 15px;
+        }
+    }
+}
+
+.day-date{
+    width: auto;
+    .mu-text-field{
+        margin-bottom: 0;
+        width: auto;
+    }
+    .mu-text-field-content{
+        padding: 0;
+        height: 56px;
+    }
+    .mu-text-field-hint{
+        line-height: 56px;
+    }
+    .mu-text-field-input{
+        width: 90px;
+        height: 56px;
+        color: #fff;
+    }
+}
+
+.search-box{
+    width: 90%;
+    height: 100%;
+    background-color: #fff;
+    dl{
+        padding: 10px;
+        height: calc(~"100% - 50px");
+        overflow-y: auto;
+        dt{
+            padding-bottom: 5px;
+            font-size: 18px;
+            flex: 0 0 100%;
+            margin-bottom: 10px;
+        }
+        dd{
+            span{
+                padding: 8px 0;
+                display: block;
+                text-align: center;
+                border: 1px solid #eee;
+                border-radius: 3px;
+                margin-bottom: 10px;
+                &.active{
+                    background-color: #e0f2f1;
+                    color: #009688;
+                    border-color: #e0f2f1;
+                }
+            }
+        }
+    }
+    .search-form{
+        margin-top: 20px;
+    }
+    .search-form-item{
+        margin-bottom: 10px;
+        input,select{
+            width: 100%;
+            padding: 0 10px;
+            height: 45px;
+            border-radius: 5px;
+            border: 1px solid #eee;
+            background-color: #fff;
+        }
+    }
+    .date{
+        overflow: hidden;
+        input{
+            width: 48%;
+        }
+    }
+    .search-btn{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        button{
+           flex: 1;
+           height: 50px;
+           line-height: 50px;
+           border: none;
+           box-shadow: none;
+           &.default{
+               border-top: 1px solid #eee;
+           }
+        }
+    }
+}
