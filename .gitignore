@@ -1,2 +1,3 @@
-/admin/node_module/*
-/web/node_module/*
+admin/node_modules/
+web/node_module/
+.vscode/
