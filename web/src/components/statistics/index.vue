@@ -1,4 +1,5 @@
 <template>
+    <!-- 统计分析 -->
     <div class="inner statistics">
         <mu-appbar title="统计分析">
             <div slot="right" class="statistics-head">
