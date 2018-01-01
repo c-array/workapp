@@ -131,7 +131,7 @@
                 ],
                 formModel:{
                     businessType:'', //业务类型
-                    username:'', //用户名
+                    userId:sessionStorage.userId ? JSON.parse(sessionStorage.userId) : '', //用户名
                     startDate:'', //开始时间
                     endDate:'', //结束时间
                     departmentId:'', //部门id
@@ -144,6 +144,7 @@
         created () {
           this.vm.searchVisible = this.searchList[0].id; 
           this.searchList[0].checked = true;
+          this.queryData();
         },
         methods: {
             open() {
@@ -178,12 +179,13 @@
                 });
             },
             queryData(){
+                this.formModel.businessType = this.vm.searchVisible;
                 this.$http.post({
-                    url:'',
-                    data:this,formModel,
+                    url:'/statistics',
+                    data:this.formModel,
                     type:'json',
                     success: data => {
-
+                        console.log(data);
                     },
                     error:msg => {
                         

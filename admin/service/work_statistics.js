@@ -17,8 +17,99 @@ function fillIn(value){
     }
 }
 
+
+
+
+router.post('/work/statistics',function(req,res,next){
+    var param = req.body;
+    if(param.businessType == 1){ //我和同事
+        async.series([
+            function (callback) {
+                workDaily.all({ //每天投入时间
+                    where:{
+                        userId:param.userId,
+                        createDate:{
+                            $gte:param.startDate,
+                            $lt:param.endDate
+                        }
+                    },
+                    attributes: ['usedTime', 'createDate']
+                }).then(function (data) {
+                    callback(null,data);
+                }).catch(function (err) {
+                    callback(err,'每天');
+                })
+            },
+            function (callback) {
+                workDaily.all({ //产品投入时间
+                    where:{
+                        userId:param.userId,
+                        type:1,
+                        createDate:{
+                            $gte:param.startDate,
+                            $lt:param.endDate
+                        }
+                    },
+                    //attributes: ['sum',[sequelize.fn('SUM',sequelize.col('usedTime')),'sum']],
+                    include:[{
+                        model:workProductProject,
+                        attributes: ['prName']
+                    }]
+                }).then(function (data) {
+                    callback(null,data);
+                }).catch(function (err) {
+                    callback(err,'产品');
+                })
+            },
+            function (callback) {
+                workDaily.all({ //产品投入时间
+                    where:{
+                        userId:param.userId,
+                        type:2,
+                        createDate:{
+                            $gte:param.startDate,
+                            $lt:param.endDate
+                        }
+                    },
+                    attributes: ['usedTime'],
+                    include:[{
+                        model:workProductProject,
+                        attributes: ['prName']
+                    }]
+                }).then(function (data) {
+                    callback(null,data);
+                }).catch(function (err) {
+                    callback(err,'项目');
+                })
+            }
+        ],function (err, results) {
+            console.log(results[1]);
+            if (!err){
+                res.send({
+                    status:0,
+                    message:'成功',
+                    result:results
+                });
+            }else{
+                console.log(err);
+                res.send({
+                    status:1,
+                    message:'失败！',
+                    result:''
+                });
+            }
+        })
+    }else if(param.businessType == 2){ //部门
+        
+    }else if(param.businessType == 3){ //项目和产品
+        
+    }else if(param.businessType == 4){ //项目人月
+        
+    }
+})
+
 //查询任务列表
-router.post('/work/statistics',function (req,res,next) {
+/* router.post('/work/statistics',function (req,res,next) {
     var param = req.body;
     var d = new Date(param.createDate);
     var startDate = param.createDate;
@@ -89,13 +180,7 @@ router.post('/work/statistics',function (req,res,next) {
                 res.send({
                     status:0,
                     message:'成功',
-                    result:results/*{
-                        startDate:startDate,
-                        endDate:endDate,
-                        day:getValue(results[0],'createDate','usedTime',1),
-                        product:getValue(results[1],'prName','usedTime',2),
-                        project:getValue(results[2],'prName','usedTime',2)
-                    }*/
+                    result:results
                 });
             }else{
                 console.log(err);
@@ -111,7 +196,7 @@ router.post('/work/statistics',function (req,res,next) {
     }else if(param.type == 3){ //统计产品或项目
 
     }
-});
+});  */
 
 
 function getValue(arr,key1,key2,type) {

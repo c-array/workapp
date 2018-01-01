@@ -37,7 +37,7 @@
                     type:'json',
                     data:this.formModel,
                     success:data => {
-                        console.log(data);
+                        localStorage.userInfo = JSON.stringify(data);
                         sessionStorage.userId = data.id;
                         this.$router.push({ path: '/main' }); //登录成功，跳转到主页
                     },
