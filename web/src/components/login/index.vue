@@ -43,7 +43,6 @@
                     },
                     error:msg => {
                         this.$Toast(msg);
-                        
                     }
                 })
             }

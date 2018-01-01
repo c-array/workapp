@@ -1,6 +1,32 @@
 .statistics{
-    .v-modal{
-        top: 56px;
+    .statistics-box{
+        overflow-x: auto;
+        height: calc(~"100% - 56px");
+        .statistics-chart{
+            margin-bottom: 2px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            &:last-child{
+                margin-bottom: 0;
+            }
+        }
+        .stats-empty{
+            h3{
+                font-weight: normal;
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+            i{
+                text-align: center;
+                display: block;
+                font-size: 80px;
+                color: #ff9800;
+            }
+            p{
+                padding: 15px 0;
+                text-align: center;
+            }
+        }
     }
 }
 .statistics-head{

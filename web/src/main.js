@@ -24,6 +24,15 @@ import AlloyFingerPlugin from 'alloyfinger/vue/alloy_finger.vue'
 Vue.use(AlloyFingerPlugin,{
     AlloyFinger
 })
+
+//图表
+import VeHistogram from 'v-charts/lib/histogram';
+import VePie from 'v-charts/lib/pie';
+import 'echarts/lib/component/dataZoom';
+import 'echarts/lib/component/title';
+Vue.component(VeHistogram.name, VeHistogram);
+Vue.component(VePie.name, VePie);
+
 //htpp请求
 import {formatDate} from './public/js/common';
 import http from './public/js/http';
