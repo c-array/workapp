@@ -35,7 +35,7 @@ router.post('/work/login',function(req,res,next){
 });
 
 //查询用户列表
-router.post('/work/users',function(req,res,next){
+router.get('/work/users',function(req,res,next){
     workAdmin.all({
         where:{
             $not:[
@@ -43,7 +43,7 @@ router.post('/work/users',function(req,res,next){
                 {username:['admin']}
             ]
         },
-        attributes: ['id','realname']
+        attributes: [['id', 'value'],['realname','name']]
     }).then(function(data){
         if(data){
             res.send({

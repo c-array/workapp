@@ -30,3 +30,8 @@ export const formatDate = (params => {
     }
     return time;
 });
+
+//深度copy对象
+export const copyObj = (obj => {
+    return JSON.parse(JSON.stringify(obj));
+});

@@ -27,17 +27,20 @@ Vue.use(AlloyFingerPlugin,{
 
 //图表
 import VeHistogram from 'v-charts/lib/histogram';
+import VeLine from 'v-charts/lib/line';
 import VePie from 'v-charts/lib/pie';
 import 'echarts/lib/component/dataZoom';
 import 'echarts/lib/component/title';
 Vue.component(VeHistogram.name, VeHistogram);
 Vue.component(VePie.name, VePie);
+Vue.component(VeLine.name, VeLine);
 
 //htpp请求
-import {formatDate} from './public/js/common';
+import {formatDate,copyObj} from './public/js/common';
 import http from './public/js/http';
 Vue.prototype.$http = http;
 Vue.prototype.$formatDate = formatDate;
+Vue.prototype.$copyObj = copyObj;
 
 router.beforeEach((to, from, next) => {
   // 判断该路由是否需要登录权限

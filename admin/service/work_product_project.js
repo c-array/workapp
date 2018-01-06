@@ -12,7 +12,11 @@ router.post('/work/getPrItem',function (req,res,next) {
         where:{
             type:type,
             status:1
-        }
+        },
+        attributes:[
+            ['id','value'],
+            ['prName','name']
+        ]
     }).then(function (data) {
         if(data){
             res.send({
