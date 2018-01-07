@@ -6,6 +6,7 @@ var async = require('async');
 var sequelize = require('sequelize');
 var router = express.Router();
 var db = require('../config/config');
+var formatDate = require('../config/formatDate');
 var workAdmin = db.workAdmin;
 var workDaily = db.workDaily;
 var workSubtask = db.workSubtask;
@@ -26,14 +27,18 @@ router.post('/work/statsMyColleague',function(req,res,next){
     var where = {
         userId:param.userId,
     }
-    if(param.startDate || param.endDate){
-        where.createDate = {};
-        if(param.startDate){
-            where.createDate.$gte = param.startDate;
-        }
-        if(param.endDate){
-            where.createDate.$lte = param.endDate;
-        }
+    if(param.createDate){
+        var arr = formatDate({
+            type:'yyyy-mm-dd',
+            date:param.createDate
+        }).split('-'); 
+        where.createDate = {
+            $gte: formatDate({
+                type:'yyyy-mm-dd',
+                date:param.createDate
+            }),
+            $lte:arr[0] + '-' + (arr[1] + 1) + '-' + arr[2]
+        };
     }
     async.series([
         function (callback) {
@@ -56,7 +61,6 @@ router.post('/work/statsMyColleague',function(req,res,next){
             })
         },
         function (callback) {
-            where.type = 1;
             workDaily.all({ //产品投入时间
                 where:where,
                 attributes: [
@@ -66,40 +70,22 @@ router.post('/work/statsMyColleague',function(req,res,next){
                 ],
                 group:'prName',
                 order:[
-                    ['usedTime','ASC']
+                    ['createDate','ASC']
                 ],
                 include:[{
                     model:workProductProject,
-                    attributes: ['prName']
+                    where:{
+                        $or: [
+                            { type: [1,2] }
+                        ]
+                    },
+                    attributes: ['prName','type']
                 }]
             }).then(function (data) {
                 callback(null,data);
             }).catch(function (err) {
                 console.log(err);
                 callback(err,'产品');
-            })
-        },
-        function (callback) {
-            where.type = 2;
-            workDaily.all({ //项目投入时间
-                where:where,
-                attributes: [
-                    'usedTime',
-                    [sequelize.fn('SUM', sequelize.col('usedTime')),'usedTime'],
-                    'createDate'
-                ],
-                group:'prName',
-                order:[
-                    ['usedTime','ASC']
-                ],
-                include:[{
-                    model:workProductProject,
-                    attributes: ['prName']
-                }]
-            }).then(function (data) {
-                callback(null,data);
-            }).catch(function (err) {
-                callback(err,'项目');
             })
         },
         function (callback) {

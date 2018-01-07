@@ -23,6 +23,10 @@ export const formatDate = (params => {
     var second = d.getSeconds();
     if(params.type == 'yyyy-mm-dd'){
         time = year + '-' + fillIn(month) + '-' + fillIn(ndate);
+    }else if(params.type == 'yyyy-mm'){
+        time = year + '-' + fillIn(month);
+    }else if(params.type == 'mm-dd'){
+        time = fillIn(month) + '-' + fillIn(ndate);
     }else if(params.type == 'hh:mm:ss'){
         time = fillIn(hour) + ':' + fillIn(minute) + ':' + fillIn(second);
     }else{
