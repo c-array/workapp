@@ -2,17 +2,18 @@
     position: relative;
     .day-date-picker{
         position: relative;
-        width: 120px;
-        .mu-icon{
+        .vux-calendar{
+            padding-right: 14px;
+            &::before{
+                border: none;
+            }
+        }
+        i{
             position: absolute;
             right: 0;
             top: 50%;
-            transform: translateY(-60%);
-        }
-        input{
-            width: 100%;
-            background: none;
-            color: #fff;
+            transform: translateY(-50%);
+            font-size: 16px;
         }
     }
     .day-head{
@@ -57,12 +58,28 @@
         i{
             color: #999;
             margin-left: 5px;
+            &.icon-edit{
+                color: #795548;
+            }
+            &.icon-delete{
+                color: #607d8b;
+            }
         }
     }
     .day-add{
         position: absolute;
         right: 10%;
         bottom: 10%;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        border-radius: 50%;
+        text-align: center;
+        background-color: #009688;
+        i{
+            font-size: 25px;
+            color: #fff;
+        }
     }
 }
 .day-form{

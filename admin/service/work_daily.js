@@ -74,6 +74,9 @@ router.post('/work/daily',function (req,res,next) {
 //添加主任务
 router.post('/work/addTask',function (req,res,next) {
    var params = req.body;
+   if(!params.itemId){
+        params.itemId = null;
+   }
    workDaily.create(params).then(function (data) {
        if (data){
            res.send({
@@ -101,6 +104,9 @@ router.post('/work/addTask',function (req,res,next) {
 //修改主任务
 router.post('/work/updateTask',function (req,res,next) {
     var param = req.body;
+    if(!param.itemId){
+        param.itemId = null;
+   }
     workDaily.update(param,{
         where:{
             id:param.id

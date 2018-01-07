@@ -3,62 +3,68 @@
         <div class="main-body">
             <router-view></router-view>
         </div>
-        <mu-tabs :value="activeTab" @change="handleTabChange">
-            <mu-tab v-for="item in menuList" :value="item.id" :key="item.id" :icon="item.icon" :title="item.name" />
-        </mu-tabs>
+        <tabbar v-model="activeTab">
+            <tabbar-item @on-item-click="handleTabChange(item.id)" :key="item.id" v-for="(item,index) in menuList">
+                <i slot="icon" :class="item.icon"></i>
+                <div slot="label">
+                    {{item.name}}
+                </div>
+            </tabbar-item>
+        </tabbar>
     </div>
 </template>
 <style lang="less">
     @import '../../public/less/main.less';
 </style>
 <script>
+    import {Tabbar,TabbarItem,Icon} from 'vux';
     export default {
         name: 'home',
         data() {
             return {
-                activeTab: 1,
+                activeTab: this.$route.query.tabId ? parseInt(this.$route.query.tabId) : 0,
                 menuList:[
                     {
                         id:1,
                         name:'今天',
-                        icon:'date_range',
+                        icon:'icon-date',
                         url:'/main/day'
                     },
                     {
                         id:2,
                         name:'统计分析',
-                        icon:'show_chart',
+                        icon:'icon-stats',
                         url:'/main/statistics'
                     },
                     {
                         id:3,
                         name:'系统管理',
-                        icon:'settings',
+                        icon:'icon-guanli',
                         url:'/main/day'
                     },
                     {
                         id:4,
                         name:'我的',
-                        icon:'perm_identity',
+                        icon:'icon-my',
                         url:'/main/day'
                     }
                 ]
             }
         },
-        mounted () {
-            if(this.$route.query.tabId){
-                this.activeTab = parseInt(this.$route.query.tabId);
-            }
+        components:{
+            Icon,
+            Tabbar,
+            TabbarItem
         },
         methods: {
             handleTabChange(val) {
-                this.activeTab = val;
+                this.activeTab = val - 1;
                 for (const item of this.menuList) {
                     if(item.id == val){
                         this.$router.push({
                             path:item.url,
                             query:{
-                                tabId:val
+                                tabId:val - 1
                             }
                         })
                         break;

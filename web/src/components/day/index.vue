@@ -1,32 +1,23 @@
 <template>
     <div class="inner day">
-        <mu-appbar title="今天">
-            <div @click="openPicker" slot="right" class="day-date-picker">
-                <input v-model="vm.currentDate" disabled type="text">
-                <mu-icon value="date_range" />
+        <x-header title="今天">
+            <div slot="right" class="day-date-picker">
+                <calendar @on-change="handleQuery" title="" v-model="vm.currentDate"></calendar>
+                <i class="icon-date"></i>
             </div>
-        </mu-appbar>
+        </x-header>
         <ul class="day-list">
             <li v-for="(item,index) in list">
                 <p>{{item.taskName}}</p>
                 <div class="day-action">
-                    <mu-icon @click="handleGoTo(item)" color="brown500" value="mode_edit" />
-                    <mu-icon @click="handleDelete(item.id)" color="blueGrey500" value="delete_forever" />
+                    <i @click="handleGoTo(item)" class="icon-edit"></i>
+                    <i @click="handleDelete(item.id)" class="icon-delete"></i>
                 </div>
             </li>
         </ul>
-        <mu-float-button @click="handleGoTo()" icon="add" class="day-add" />
-        <mt-datetime-picker
-            ref="picker"
-            v-model="vm.queryPicker"
-            type="date"
-            :startDate="vm.startDate"
-            :endDate="vm.endDate"
-            year-format="{value} 年"
-            month-format="{value} 月"
-            date-format="{value} 日"
-            @confirm="handleConfirmDate">
-        </mt-datetime-picker>
+        <div @click="handleGoTo()" class="day-add">
+            <i class="icon-add"></i>
+        </div>
     </div>
 </template>
 <style scoped lang="less">
@@ -37,6 +28,7 @@
     import { DatetimePicker } from 'mint-ui';
     Vue.component(DatetimePicker.name, DatetimePicker);
     import { mapState, mapMutations } from 'vuex';
+    import { Calendar,XHeader } from 'vux';
     export default {
         name: 'day',
         data() {
@@ -49,6 +41,10 @@
                 list: state => state.common.day.list,
                 vm: state => state.common.day.vm
             })
+        },
+        components: {
+            Calendar,
+            XHeader 
         },
         created() {
             this.handleQuery();
@@ -74,16 +70,6 @@
                     })
                 }).catch(() => {
 
-                })
-            },
-            openPicker() {
-                this.$refs.picker.open();
-            },
-            handleConfirmDate(val){
-                this.$store.commit({
-                    type: 'common/day/confirmDate',
-                    date: val,
-                    status:1
                 })
             }
         }

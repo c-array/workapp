@@ -4,11 +4,11 @@
             <img src="../../public/images/logo.png" alt="">
         </div>
         <div class="login-item">
-            <i class="material-icons">perm_identity</i>
+            <i class="icon-my"></i>
             <input v-model="formModel.username" type="text">
         </div>
         <div class="login-item">
-            <i class="material-icons">lock_outline</i>
+            <i class="icon-password"></i>
             <input v-model="formModel.password" type="password">
         </div>
         <div class="login-btn">

@@ -1,14 +1,12 @@
 <template>
     <div class="inner day-form">
-        <mu-appbar :title="taskId ? '修改任务信息' : '添加任务信息'">
-            <mu-icon-button @click="handleBack" icon="chevron_left" slot="left" />
-        </mu-appbar>
+        <x-header :title="taskId ? '修改任务信息' : '添加任务信息'"></x-header>
         <div class="day-form-body">
             <ul>
                 <li>
                     <label>任务时间</label>
-                    <div @click="openPicker" class="day-form-item">
-                        <input v-model="formModel.createDate" placeholder="请选择任务时间" disabled type="text">
+                    <div class="day-form-item">
+                        <calendar placeholder="请选择任务时间" title="" v-model="formModel.createDate"></calendar>
                     </div>
                 </li>
                 <li>
@@ -37,7 +35,7 @@
                     <div class="day-form-item">
                         <select v-model="formModel.itemId">
                             <option value="">请选择</option>
-                            <option v-for="item in prList" :value="item.id">{{item.prName}}</option>
+                            <option v-for="item in prList" :value="item.value">{{item.name}}</option>
                         </select>
                     </div>
                 </li>
@@ -46,17 +44,6 @@
                 <mu-raised-button @click="handleSave" label="保 存" class="demo-raised-button" primary/>
             </div>
         </div>
-        <mt-datetime-picker
-            ref="picker"
-            v-model="vm.formPicker"
-            type="date"
-            :startDate="vm.startDate"
-            :endDate="vm.endDate"
-            year-format="{value} 年"
-            month-format="{value} 月"
-            date-format="{value} 日"
-            @confirm="handleConfirmDate">
-        </mt-datetime-picker>
     </div>
 </template>
 <style scoped lang="less">
@@ -65,6 +52,7 @@
 <script>
     import Vue from 'vue';
     import { mapState, mapMutations } from 'vuex';
+    import { XHeader,Calendar } from 'vux';
     import { Field, Picker, Popup } from 'mint-ui';
     Vue.component(Field.name, Field);
     Vue.component(Picker.name, Picker);
@@ -84,6 +72,10 @@
                 vm: state => state.common.day.vm
             })
         },
+        components: {
+            XHeader,
+            Calendar  
+        },
         created(){
             if(this.taskId){
                 this.$http.post({
@@ -94,7 +86,7 @@
                     },
                     success:data => {
                         this.$store.state.common.day.formModel = data;
-                        this.handleChangeType();
+                        this.getPrItem();
                     },
                     error: msg => {
                         this.$Toast(msg);
@@ -103,6 +95,9 @@
             }
         },
         methods: {
+            ...mapMutations({
+                getPrItem:'common/day/getPrItem'
+            }),
             handleSave(){
                 if(this.taskId){
                     this.$store.commit({
@@ -120,16 +115,6 @@
             handleChangeType() {
                 this.$store.commit({
                     type: 'common/day/changeType'
-                })
-            },
-            openPicker() {
-                this.$refs.picker.open();
-            },
-            handleConfirmDate(val){
-                this.$store.commit({
-                    type: 'common/day/confirmDate',
-                    date: val,
-                    status:2
                 })
             }
         }

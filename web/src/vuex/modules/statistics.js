@@ -58,6 +58,7 @@ export default {
             prName: '', //产品或项目名称
             itemId:''
         },
+        peopleList:[],
         chartsData:{
             dayData:{ //每天投入时间
                 columns: ['createDate', 'usedTime'],
@@ -252,6 +253,11 @@ export default {
                 }
             })
         },
+        handleClear(state,arr){
+            arr.forEach(function(key,index){
+                state.formModel[key] = '';
+            })
+        },
         confirm(state,params){ //确定
             let url = "";
             if(state.formModel.businessType == 1){ //我和同事
@@ -347,8 +353,25 @@ export default {
                         Toast(msg);
                     }
                 })
-            }else if(state.formModel.businessType == 4){
-
+            }else if(state.formModel.businessType == 4){ //项目人月
+                http.post({
+                    url:'/statsPeople',
+                    data:state.formModel,
+                    type:'json',
+                    success: data => {
+                        data.forEach(function(item,key){
+                            item.count = 0;
+                            item.work_dailies.forEach(function(obj,index){
+                                item.count = item.count + obj.usedTime;
+                            })
+                        })
+                        state.peopleList = data;
+                        state.vm.popupVisible = false;
+                    },
+                    error: msg => {
+                        Toast(msg);
+                    }
+                })
             }
         }
     }

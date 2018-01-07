@@ -6,12 +6,10 @@ export default {
     state: {
         vm:{
             currentDate:formatDate({
-                type:'yyyy-mm-dd'
+                type:'yyyy-mm-dd',
+                date:'2016-08-11'
             }),
-            queryPicker:'',
             formPicker:'',
-            startDate:new Date('2010-01-01'),
-            endDate:new Date()
         },
         list:[],
         formModel:{
@@ -54,7 +52,7 @@ export default {
                 }
             })
         },
-        changeType(state,params){
+        getPrItem(state,params){
             http.post({
                 url:'/getPrItem',
                 type:'json',
@@ -69,21 +67,13 @@ export default {
                 }
             })
         },
+        changeType(state,params){
+            this.commit('common/day/getPrItem');
+            state.formModel.itemId = "";
+        },
         clear(state,params){
             for (const key in state.formModel) {
                 state.formModel[key] = "";
-            }
-        },
-        confirmDate(state,params){
-            var date = formatDate({
-                type:'yyyy-mm-dd',
-                date:params.date
-            });
-            if(params.status == 1) {
-                state.vm.currentDate = date;
-                this.commit('common/day/getList');
-            }else if(params.status == 2){
-                state.formModel.createDate = date;
             }
         },
         add(state,params){

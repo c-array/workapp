@@ -407,6 +407,64 @@ router.post('/work/statsItem',function (req,res,next) {
     })
 });
 
+//项目人月
+router.post('/work/statsPeople',function (req,res,next) {
+    var param = req.body;
+    var where = {}
+    if(param.itemType){
+        where.type = param.itemType;
+    }
+    if(param.itemId){
+        where.id = param.itemId
+    }
+    if(param.startDate || param.endDate){
+        where.createTime = {};
+        if(param.startDate){
+            where.createTime.$gte = param.startDate;
+        }
+        if(param.endDate){
+            where.createTime.$lte = param.endDate;
+        }
+    }
+    workProductProject.all({
+        where:where,
+        attributes: ['prName','type'],
+        group:'realname',
+        include:{
+            model:workDaily,
+            attributes: [
+                'usedTime',
+                [sequelize.fn('SUM', sequelize.col('usedTime')),'usedTime']
+            ],
+            include:{
+                model:workAdmin,
+                attributes: ['realname']
+            },
+        }
+    }).then(function (data) {
+        if(data){
+            res.send({
+                status:0,
+                message:'成功',
+                result:data
+            });
+        }else{
+            res.send({
+                status:1,
+                message:'失败',
+                result:''
+            });
+        }
+    }).catch(function (err) {
+        console.log(err);
+        res.send({
+            status:1,
+            message:'失败',
+            result:''
+        });
+    })
+});
+
 
 function getValue(arr,key1,key2,type) {
     var tempArr = {

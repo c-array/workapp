@@ -5,6 +5,7 @@ import main from '@/components/main/index';
 import day from '@/components/day/index';
 import dayForm from '@/components/day/form';
 import statistics from '@/components/statistics/index';
+import colleague from '@/components/statistics/colleague';
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -34,6 +35,14 @@ export default new Router({
           path: 'statistics',
           name: 'statistics',
           component: statistics,
+          meta: { // 添加该字段，表示进入这个路由是需要登录的
+            requireAuth: true,
+          }
+        },
+        {
+          path: 'colleague',
+          name: 'colleague',
+          component: colleague,
           meta: { // 添加该字段，表示进入这个路由是需要登录的
             requireAuth: true,
           }

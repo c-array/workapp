@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import day from './modules/day';
-import stats from './modules/statistics';
+import colleague from './modules/colleague';
 Vue.use(Vuex);
 export default new Vuex.Store({
     modules: {
@@ -9,7 +9,7 @@ export default new Vuex.Store({
             namespaced: true,
             modules:{
                 day:day,
-                stats:stats,
+                colleague:colleague,
             }
         }
     }

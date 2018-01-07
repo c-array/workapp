@@ -4,6 +4,19 @@
             color: #999;
         }
     }
+    .day-date-picker{
+        .weui-cell__ft{
+            color: #fff;
+        }
+        .vux-tap-active:active{
+            background:none;
+        }
+    }
+    .vux-header{
+        .vux-header-right{
+            top: 3px;
+        }
+    }
 }
 .day-form{
     .mu-appbar-title{
@@ -84,6 +97,7 @@
         margin-top: 20px;
     }
     .search-form-item{
+        position: relative;
         margin-bottom: 10px;
         input,select{
             width: 100%;
@@ -93,11 +107,31 @@
             border: 1px solid #eee;
             background-color: #fff;
         }
+        .clear-icon{
+            width: 25px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            position: absolute;
+            background-color: #fff;
+            top: 50%;
+            right: 6px;
+            transform: translateY(-50%);
+        }
     }
     .date{
-        overflow: hidden;
-        input{
-            width: 48%;
+        display: flex;
+        .date-item{
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            padding-right: 5px;
+            &:last-child{
+                padding-left: 5px;
+            }
+            input{
+                width: 100%;
+            }
         }
     }
     .search-btn{
@@ -116,5 +150,43 @@
                border-top: 1px solid #eee;
            }
         }
+    }
+}
+
+.vux-header{
+    background-color: #009688 !important;
+    .vux-header-left{
+        a{
+            color: #fff !important;
+        }
+    }
+    .vux-header-title{
+        font-size: 16px !important;
+    }
+}
+
+.day-form-item{
+    .vux-calendar{
+        height: 48px;
+        .weui-cell{
+            height: 48px;
+        }
+        .weui-cell__ft{
+            text-align: left;
+            color: #000;
+        }
+    }
+}
+
+.vux-calendar{
+    &::before{
+        border: none !important;
+    }
+    .weui-cell{
+        padding: 0;
+    }
+    .weui-cell__ft{
+        text-align: center;
+        color: #fff;
     }
 }
