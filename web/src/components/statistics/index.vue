@@ -12,11 +12,11 @@
                 <i class="icon-colleague"></i>
                 <p>同事统计</p>
             </grid-item>
-            <grid-item>
+            <grid-item link="/main/department">
                 <i class="icon-department"></i>
                 <p>部门统计</p>
             </grid-item>
-            <grid-item>
+            <grid-item link="/main/item">
                 <i class="icon-product"></i>
                 <p>产品/项目统计</p>
             </grid-item>

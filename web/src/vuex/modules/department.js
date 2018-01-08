@@ -1,15 +1,14 @@
 import http from '../../public/js/http';
 import {formatDate} from '../../public/js/common';
 import {Toast} from 'mint-ui'
+
 export default {
     namespaced: true,
     state: {
         vm:{
             visible:false,
             dateVisible:false,
-            username:'',
-            nameModel:[''], //选择用户的model
-            userList:[],
+            itemList:[], //部门数据集合
             dateKey:'',
             date:formatDate({ //开始时间
                 type: 'yyyy-mm-dd',
@@ -17,34 +16,37 @@ export default {
             })
         },
         formModel:{
-            username:'',
+            departmentId:'', //部门id
             startDate: formatDate({ //开始时间
                 type: 'yyyy-mm-dd',
                 date:new Date('2016-08-01') 
-            }), 
-            endDate: formatDate({ //开始时间
+            }),
+            endDate:formatDate({ //开始时间
                 type: 'yyyy-mm-dd',
                 date:new Date('2016-08-31') 
-            }), 
-            userId:sessionStorage.userId
+            })
         },
         chartsData:{
-            dayData:{ //每天投入时间
+            personData:{ //人员总体投入时间
                 columns: ['createDate', 'usedTime'],
                 rows: []
             },
-            pmData:{ //产品投入时间
+            itemPersonData:{ //每人投入时间
+                columns: ['realname', 'usedTime'],
+                rows: []
+            },
+            depPmData:{ //产品投入时间
                 columns: ['prName', 'usedTime'],
                 rows: []
             },
-            pjData:{ //项目投入时间
+            depPjData:{ //项目投入时间
                 columns: ['prName', 'usedTime'],
                 rows: []
             },
-            otherData:{ //其他投入时间
+            depOtherData:{ //项目/产品/其他投入时间
                 columns: ['name', 'usedTime'],
                 rows: []
-            }
+            },
         },
         histogramConfig: {
             callback(options) {
@@ -131,75 +133,66 @@ export default {
                 return false;
             }
             http.post({
-                url:'/statsMyColleague',
+                url:'/statsDepartment',
                 data:state.formModel,
                 type:'json',
                 success: data => {
-                    data[0].forEach(function(item,key){
-                        var arr = item.createDate.split('-');
-                        item.createDate = arr[1] + '-' + arr[2];
-                    })
+                    state.chartsData.personData.rows = data[0];
+                        var itemPersonData = [];
+                        data[1].forEach(function(item,key){
+                            itemPersonData.push({
+                                realname:item.work_admin.realname,
+                                usedTime:item.usedTime
+                            })
+                        })
+                        state.chartsData.itemPersonData.rows = itemPersonData;
 
-                    var itemPmData = [];
-                    var itemPjData = [];
-                    data[1].forEach(function(item,key){
-                        if(item.work_product_project.type == 1){
-                            itemPmData.push({
-                                prName:item.work_product_project.prName,
-                                usedTime:item.usedTime
-                            })
-                        }
-                        if(item.work_product_project.type == 2){
-                            itemPjData.push({
-                                prName:item.work_product_project.prName,
-                                usedTime:item.usedTime
-                            })
-                        }
-                    })
-                    state.chartsData.pmData.rows = itemPmData;
-                    state.chartsData.pjData.rows = itemPjData;
-                    console.log(itemPmData);
-                    state.chartsData.dayData.rows = data[0];
-                    state.chartsData.otherData.rows = data[2];
+                        var depPmData = [];
+                        var depPjData = [];
+                        data[2].forEach(function(item,key){
+                            if(item.work_product_project.type == 1){
+                                depPmData.push({
+                                    prName:item.work_product_project.prName,
+                                    usedTime:item.usedTime
+                                })
+                            }
+                            if(item.work_product_project.type == 2){
+                                depPjData.push({
+                                    prName:item.work_product_project.prName,
+                                    usedTime:item.usedTime
+                                })
+                            }
+                        })
+                        state.chartsData.depPmData.rows = depPmData;
+                        state.chartsData.depPjData.rows = depPjData;
+                        state.chartsData.depOtherData.rows = data[3];
                 },
                 error: msg => {
                     Toast(msg);
                 }
             })
         },
-        getUserList(state,params){
+        getDepartmentList(state,params){
             http.get({
-                url:'/users',
+                url:'/departments',
                 success: data => {
-                    state.vm.userList = [data];
-                    state.vm.visible = true;
+                    state.vm.itemList = data;
                 },
                 error: msg => {
                     Toast(msg);
                 }
             })
-        },
-        getUserName(state,params){ //获取选择的用户名
-            state.formModel.userId = state.vm.nameModel[0];
-            for (const item of state.vm.userList[0]) {
-                if(item.value == state.formModel.userId){
-                    state.formModel.username = item.name;
-                    break;
-                }
-            }
-            this.commit('common/colleague/getList');
-            state.vm.visible = false; //隐藏选择用户控件
         },
         getDate(state,params){
             state.formModel[state.vm.dateKey] = state.vm.date;
             state.vm.dateVisible = false;
-            this.commit('common/colleague/getList');
+            this.commit('common/department/getList');
         },
         clear(state,array){
             array.forEach(key => {
                 state.formModel[key] = "";
             });
-            this.commit('common/colleague/getList');
+            this.commit('common/department/getList');
         },
         showDate(state,key){
             state.vm.dateKey = key;

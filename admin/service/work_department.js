@@ -7,7 +7,7 @@ var db = require('../config/config');
 var workDepartment = db.workDepartment;
 
 //查询部门列表
-router.post('/work/departments',function(req,res,next){
+router.get('/work/departments',function(req,res,next){
     workDepartment.all().then(function(data){
         if(data){
             res.send({

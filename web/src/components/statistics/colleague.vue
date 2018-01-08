@@ -13,8 +13,12 @@
                 <i v-if="formModel.username" @click="handleClear(['username','userId'])" class="icon-clear"></i>
             </li>
             <li>
-                <span @click="vm.dateVisible = true">{{formModel.createDate}}</span>
-                <i v-if="formModel.createDate" @click="handleClear(['createDate'])" class="icon-clear"></i>
+                <span @click="handleShowDate('startDate')">{{formModel.startDate ? formModel.startDate :'开始时间'}}</span>
+                <i v-if="formModel.startDate" @click="handleClear(['startDate'])" class="icon-clear"></i>
+            </li>
+            <li>
+                <span @click="handleShowDate('endDate')">{{formModel.endDate ? formModel.endDate :'结束时间'}}</span>
+                <i v-if="formModel.endDate" @click="handleClear(['endDate'])" class="icon-clear"></i>
             </li>
         </ul>
         <div class="stats-chart">
@@ -78,7 +82,7 @@
             @on-click-left="vm.dateVisible = false"
             @on-click-right="getDate">
         </popup-header>
-        <datetime-view format="YYYY-MM" v-model="vm.date"></datetime-view>
+        <datetime-view format="YYYY-MM-DD" v-model="vm.date"></datetime-view>
     </popup>
 </div>
 </template>
@@ -131,7 +135,8 @@
                 getUserList:'common/colleague/getUserList',
                 handleClear:'common/colleague/clear',
                 getList:'common/colleague/getList',
-                getDate:'common/colleague/getDate'
+                getDate:'common/colleague/getDate',
+                handleShowDate:'common/colleague/showDate'
             }),
             handleFormat(value){
                 console.log(value);

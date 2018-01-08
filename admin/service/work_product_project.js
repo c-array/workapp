@@ -7,16 +7,16 @@ var db = require('../config/config');
 var workProductProject = db.workProductProject;
 //获取产品或项目列表
 router.post('/work/getPrItem',function (req,res,next) {
-    var type = req.body.type;
+    var param = req.body;
+    var where = {
+        status:1
+    };
+    if(param.type){
+        where.type = param.type;
+    }
     workProductProject.all({
-        where:{
-            type:type,
-            status:1
-        },
-        attributes:[
-            ['id','value'],
-            ['prName','name']
-        ]
+        where:where,
+        attributes:['id','prName']
     }).then(function (data) {
         if(data){
             res.send({

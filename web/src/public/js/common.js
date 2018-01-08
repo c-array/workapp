@@ -29,6 +29,8 @@ export const formatDate = (params => {
         time = fillIn(month) + '-' + fillIn(ndate);
     }else if(params.type == 'hh:mm:ss'){
         time = fillIn(hour) + ':' + fillIn(minute) + ':' + fillIn(second);
+    }else if(params.type == 'time'){
+        time = d.getTime();
     }else{
         time = year + '-' + fillIn(month) + '-' + fillIn(ndate) + ' ' + fillIn(hour) + ':' + fillIn(minute) + ':' + fillIn(second);
     }

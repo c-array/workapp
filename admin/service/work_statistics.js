@@ -27,18 +27,44 @@ router.post('/work/statsMyColleague',function(req,res,next){
     var where = {
         userId:param.userId,
     }
-    if(param.createDate){
-        var arr = formatDate({
-            type:'yyyy-mm-dd',
-            date:param.createDate
-        }).split('-'); 
-        where.createDate = {
-            $gte: formatDate({
-                type:'yyyy-mm-dd',
-                date:param.createDate
-            }),
-            $lte:arr[0] + '-' + (arr[1] + 1) + '-' + arr[2]
+    if(param.startDate && param.endDate){ //开始时间和结束时间都存在
+        var startTime = formatDate({
+            type:'time',
+            date:param.startDate
+        })
+        var endTime = formatDate({
+            type:'time',
+            date:param.endDate
+        })
+
+        if(startTime < endTime){ //开始时间小于结束时间
+            where.createDate = { 
+                $gte: param.startDate,
+                $lte:param.endDate
+            };
+        }else{
+            res.send({
+                status:1,
+                message:'开始时间不能大于结束时间',
+                result:''
+            });
+            return false;
+        }
+    }else if(param.startDate && !param.endDate){ //开始时间有，结束时间没有
+        where.createDate = { 
+            $gte: param.startDate
         };
+    }else if(param.endDate && !param.startDate){ //开始时间没有，结束时间有
+        where.createDate = { 
+            $lte:param.endDate
+        };
+    }else{
+        res.send({
+            status:1,
+            message:'时间不能为空',
+            result:''
+        });
+        return false;
     }
     async.series([
         function (callback) {
@@ -149,15 +175,46 @@ router.post('/work/statsDepartment',function(req,res,next){
     var where = {
         id:param.departmentId
     }
-    if(param.startDate || param.endDate){
-        where.createDate = {};
-        if(param.startDate){
-            where.createDate.$gte = param.startDate;
+    if(param.startDate && param.endDate){ //开始时间和结束时间都存在
+        var startTime = formatDate({
+            type:'time',
+            date:param.startDate
+        })
+        var endTime = formatDate({
+            type:'time',
+            date:param.endDate
+        })
+
+        if(startTime < endTime){ //开始时间小于结束时间
+            where.createDate = { 
+                $gte: param.startDate,
+                $lte:param.endDate
+            };
+        }else{
+            res.send({
+                status:1,
+                message:'开始时间不能大于结束时间',
+                result:''
+            });
+            return false;
         }
-        if(param.endDate){
-            where.createDate.$lte = param.endDate;
-        }
+    }else if(param.startDate && !param.endDate){ //开始时间有，结束时间没有
+        where.createDate = { 
+            $gte: param.startDate
+        };
+    }else if(param.endDate && !param.startDate){ //开始时间没有，结束时间有
+        where.createDate = { 
+            $lte:param.endDate
+        };
+    }else{
+        res.send({
+            status:1,
+            message:'时间不能为空',
+            result:''
+        });
+        return false;
     }
+
     async.series([
         function (callback) {
             workDaily.all({
@@ -242,10 +299,12 @@ router.post('/work/statsDepartment',function(req,res,next){
                 include:[
                     {
                         model:workProductProject,
-                        attributes:[
-                            'prName',
-                            'type'
-                        ], 
+                        where:{
+                            $or: [
+                                { type: [1,2] }
+                            ]
+                        },
+                        attributes: ['prName','type']
                     },
                     {
                         model:workAdmin,
@@ -340,18 +399,16 @@ router.post('/work/statsDepartment',function(req,res,next){
 //项目和产品
 router.post('/work/statsItem',function (req,res,next) {
     var param = req.body;
-    var where = {}
-    if(param.startDate || param.endDate){
-        where.createDate = {};
-        if(param.startDate){
-            where.createDate.$gte = param.startDate;
-        }
-        if(param.endDate){
-            where.createDate.$lte = param.endDate;
-        }
+    var dailyWhere = {};
+    var itemWhere = {};
+    if(param.itemId){ //有
+        dailyWhere.itemId = param.itemId;
+    }
+    if(param.type){
+        itemWhere.type = param.type;
     }
     workDaily.all({
-        where:where,
+        where:dailyWhere,
         attributes: [
             'usedTime',
             [sequelize.fn('SUM', sequelize.col('usedTime')),'usedTime']
@@ -362,11 +419,7 @@ router.post('/work/statsItem',function (req,res,next) {
         ],
         include:{
             model:workProductProject,
-            where:{
-                $or: [
-                    { type: [1,2] }
-                ]
-            },
+            where:itemWhere,
             attributes: ['prName','type']
         }
     }).then(function (data) {
