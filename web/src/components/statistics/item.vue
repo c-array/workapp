@@ -23,37 +23,29 @@
                 </ul>
             <div v-if="formModel.type == 1 || formModel.type == ''" class="stats-chart">
                 <ve-histogram 
-                    v-if="chartsData.itemPmData.rows.length > 0" 
                     height="250px" 
                     :title="{text: '产品投入时间'}" 
                     :legend-visible="false"
                     :data-zoom="histogramConfig.dataZoom" 
                     :after-config="histogramConfig.callback" 
                     :data="chartsData.itemPmData"
+                    :data-empty="chartsData.itemPmData.rows.length <= 0"
+                    :loading="vm.loading"
                     :settings="histogramConfig.chartSettings">
                 </ve-histogram>
-                <div class="stats-empty" v-else>
-                    <h3>产品投入时间</h3>
-                    <i class="icon-warning"></i>
-                    <p>暂无数据</p>
-                </div>
             </div>
             <div v-if="formModel.type == 2 || formModel.type == ''" class="stats-chart">
                 <ve-histogram 
-                    v-if="chartsData.itemPjData.rows.length > 0" 
                     height="250px" 
                     :title="{text: '项目投入时间'}" 
                     :legend-visible="false"
                     :data-zoom="histogramConfig.dataZoom" 
                     :after-config="histogramConfig.callback" 
                     :data="chartsData.itemPjData"
+                    :data-empty="chartsData.itemPjData.rows.length <= 0"
+                    :loading="vm.loading"
                     :settings="histogramConfig.chartSettings">
                 </ve-histogram>
-                <div class="stats-empty" v-else>
-                    <h3>项目投入时间</h3>
-                    <i class="icon-warning"></i>
-                    <p>暂无数据</p>
-                </div>
             </div>
         </div>
     </div>

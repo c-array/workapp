@@ -26,6 +26,7 @@ Vue.use(AlloyFingerPlugin,{
 })
 
 //图表
+import 'v-charts/lib/style.css';
 import VeHistogram from 'v-charts/lib/histogram';
 import VeLine from 'v-charts/lib/line';
 import VePie from 'v-charts/lib/pie';

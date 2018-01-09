@@ -6,7 +6,8 @@ export default {
     namespaced: true,
     state: {
         vm:{
-            itemList:''
+            itemList:'',
+            loading:true
         },
         formModel:{
             type:'', //类型：1产品，2：项目
@@ -89,6 +90,7 @@ export default {
     },
     mutations:{
         getList(state,params){
+            state.vm.loading = true;
             http.post({
                 url:'/statsItem',
                 data:state.formModel,
@@ -112,6 +114,7 @@ export default {
                         })
                         state.chartsData.itemPmData.rows = itemPmData;
                         state.chartsData.itemPjData.rows = itemPjData;
+                        state.vm.loading = false;
                 },
                 error: msg => {
                     Toast(msg);
