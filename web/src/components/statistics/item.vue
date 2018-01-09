@@ -29,7 +29,7 @@
                     :data-zoom="histogramConfig.dataZoom" 
                     :after-config="histogramConfig.callback" 
                     :data="chartsData.itemPmData"
-                    :data-empty="chartsData.itemPmData.rows.length <= 0"
+                    :data-empty="vm.empty"
                     :loading="vm.loading"
                     :settings="histogramConfig.chartSettings">
                 </ve-histogram>
@@ -42,7 +42,7 @@
                     :data-zoom="histogramConfig.dataZoom" 
                     :after-config="histogramConfig.callback" 
                     :data="chartsData.itemPjData"
-                    :data-empty="chartsData.itemPjData.rows.length <= 0"
+                    :data-empty="vm.empty"
                     :loading="vm.loading"
                     :settings="histogramConfig.chartSettings">
                 </ve-histogram>

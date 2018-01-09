@@ -1,24 +1,25 @@
 import http from '../../public/js/http';
-import {formatDate} from '../../public/js/common';
-import {Toast} from 'mint-ui'
+import { formatDate } from '../../public/js/common';
+import { Toast } from 'mint-ui'
 
 export default {
     namespaced: true,
     state: {
-        vm:{
-            itemList:'',
-            loading:true
+        vm: {
+            itemList: '',
+            loading: true,
+            empty: false
         },
-        formModel:{
-            type:'', //类型：1产品，2：项目
-            itemId:'' //产品或项目id
+        formModel: {
+            type: '', //类型：1产品，2：项目
+            itemId: '' //产品或项目id
         },
-        chartsData:{
-            itemPmData:{
+        chartsData: {
+            itemPmData: {
                 columns: ['prName', 'usedTime'],
                 rows: []
             },
-            itemPjData:{
+            itemPjData: {
                 columns: ['prName', 'usedTime'],
                 rows: []
             }
@@ -69,7 +70,7 @@ export default {
             }
         },
         pieConfig: {
-            callback(options){
+            callback(options) {
                 options.legend.top = "20%";
                 options.title.textStyle = {
                     color: "#666",
@@ -88,45 +89,47 @@ export default {
             }
         }
     },
-    mutations:{
-        getList(state,params){
+    mutations: {
+        getList(state, params) {
             state.vm.loading = true;
             http.post({
-                url:'/statsItem',
-                data:state.formModel,
-                type:'json',
+                url: '/statsItem',
+                data: state.formModel,
+                type: 'json',
                 success: data => {
+                    state.vm.loading = false;
+                    state.vm.empty = false;
                     var itemPmData = [];
-                        var itemPjData = [];
-                        data.forEach(function(item,key){
-                            if(item.work_product_project.type == 1){
-                                itemPmData.push({
-                                    prName:item.work_product_project.prName,
-                                    usedTime:item.usedTime
-                                })
-                            }
-                            if(item.work_product_project.type == 2){
-                                itemPjData.push({
-                                    prName:item.work_product_project.prName,
-                                    usedTime:item.usedTime
-                                })
-                            }
-                        })
-                        state.chartsData.itemPmData.rows = itemPmData;
-                        state.chartsData.itemPjData.rows = itemPjData;
-                        state.vm.loading = false;
+                    var itemPjData = [];
+                    data.forEach(function (item, key) {
+                        if (item.work_product_project.type == 1) {
+                            itemPmData.push({
+                                prName: item.work_product_project.prName,
+                                usedTime: item.usedTime
+                            })
+                        }
+                        if (item.work_product_project.type == 2) {
+                            itemPjData.push({
+                                prName: item.work_product_project.prName,
+                                usedTime: item.usedTime
+                            })
+                        }
+                    })
+                    state.chartsData.itemPmData.rows = itemPmData;
+                    state.chartsData.itemPjData.rows = itemPjData;
                 },
                 error: msg => {
                     Toast(msg);
+                    state.vm.empty = true;
                 }
             })
         },
-        getItemList(state,params){
-            if(state.formModel.type){
+        getItemList(state, params) {
+            if (state.formModel.type) {
                 http.post({
-                    url:'/getPrItem',
-                    data:state.formModel,
-                    type:'json',
+                    url: '/getPrItem',
+                    data: state.formModel,
+                    type: 'json',
                     success: data => {
                         state.formModel.itemId = '';
                         state.vm.itemList = data;
@@ -136,7 +139,7 @@ export default {
                         Toast(msg);
                     }
                 })
-            }else{
+            } else {
                 state.formModel.itemId = '';
                 state.vm.itemList = [];
                 this.commit('common/item/getList');

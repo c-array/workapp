@@ -14,7 +14,9 @@ export default {
             date:formatDate({ //开始时间
                 type: 'yyyy-mm-dd',
                 date:new Date('2016-08-01') 
-            })
+            }),
+            loading:true,
+            empty:false
         },
         formModel:{
             username:'',
@@ -93,7 +95,9 @@ export default {
         },
         pieConfig: {
             callback(options){
-                options.legend.top = "20%";
+                if(options.legend){
+                    options.legend.top = "20%";
+                }
                 options.title.textStyle = {
                     color: "#666",
                     fontWeight: 'normal'
@@ -113,6 +117,7 @@ export default {
     },
     mutations:{
         getList(state,params){
+            state.vm.loading = true;
             if(state.formModel.startDate && state.formModel.endDate){
                 var startTime = formatDate({
                     type:'time',
@@ -135,11 +140,12 @@ export default {
                 data:state.formModel,
                 type:'json',
                 success: data => {
+                    state.vm.loading = false;
+                    state.vm.empty = false;
                     data[0].forEach(function(item,key){
                         var arr = item.createDate.split('-');
                         item.createDate = arr[1] + '-' + arr[2];
                     })
-
                     var itemPmData = [];
                     var itemPjData = [];
                     data[1].forEach(function(item,key){
@@ -163,6 +169,7 @@ export default {
                     state.chartsData.otherData.rows = data[2];
                 },
                 error: msg => {
+                    state.vm.empty = true;
                     Toast(msg);
                 }
             })

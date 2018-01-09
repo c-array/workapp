@@ -22,46 +22,55 @@
             </li>
         </ul>
         <div class="stats-chart">
-            <ve-histogram v-if="chartsData.dayData.rows.length > 0" height="250px" :title="{text:'我和伙伴'}" :legend-visible="false" :data-zoom="histogramConfig.dataZoom"
-                :after-config="histogramConfig.callback" :data="chartsData.dayData" :settings="histogramConfig.chartSettings"></ve-histogram>
-            <div class="stats-empty" v-else>
-                <h3>每天投入时间</h3>
-                <i class="icon-warning"></i>
-                <p>暂无数据</p>
-            </div>
+            <ve-histogram 
+                height="250px" 
+                :title="{text:'我和伙伴'}" 
+                :legend-visible="false" 
+                :data-zoom="histogramConfig.dataZoom"
+                :after-config="histogramConfig.callback" 
+                :data="chartsData.dayData"
+                :data-empty="vm.empty"
+                :loading="vm.loading" 
+                :settings="histogramConfig.chartSettings">
+            </ve-histogram>
         </div>
         <div class="stats-chart">
-            <ve-histogram v-if="chartsData.pmData.rows.length > 0" height="250px" :title="{text:'产品投入时间'}" :legend-visible="false" :data-zoom="histogramConfig.dataZoom"
-                :after-config="histogramConfig.callback" :data="chartsData.pmData" :settings="histogramConfig.chartSettings"></ve-histogram>
-            <div class="stats-empty" v-else>
-                <h3>产品投入时间</h3>
-                <i class="icon-warning"></i>
-                <p>暂无数据</p>
-            </div>
+            <ve-histogram 
+                height="250px" 
+                :title="{text:'产品投入时间'}" 
+                :legend-visible="false"
+                :data-zoom="histogramConfig.dataZoom"
+                :after-config="histogramConfig.callback" 
+                :data="chartsData.pmData"
+                :data-empty="vm.empty"
+                :loading="vm.loading" 
+                :settings="histogramConfig.chartSettings">
+            </ve-histogram>
         </div>
         <div class="stats-chart">
-            <ve-histogram v-if="chartsData.pjData.rows.length > 0" height="250px" :title="{text:'项目投入时间'}" :legend-visible="false" :data-zoom="histogramConfig.dataZoom"
-                :after-config="histogramConfig.callback" :data="chartsData.pjData" :settings="histogramConfig.chartSettings"></ve-histogram>
-            <div class="stats-empty" v-else>
-                <h3>项目投入时间</h3>
-                <i class="icon-warning"></i>
-                <p>暂无数据</p>
-            </div>
+            <ve-histogram 
+                height="250px" 
+                :title="{text:'项目投入时间'}" 
+                :legend-visible="false" 
+                :data-zoom="histogramConfig.dataZoom"
+                :after-config="histogramConfig.callback" 
+                :data="chartsData.pjData"
+                :data-empty="vm.empty"
+                :loading="vm.loading" 
+                :settings="histogramConfig.chartSettings">
+            </ve-histogram>
         </div>
         <div class="stats-chart">
             <ve-pie 
-                v-if="chartsData.otherData.rows.length > 0" 
                 height="250px" 
                 :data="chartsData.otherData"
                 :after-config="pieConfig.callback"
-                :title="{text: '项目投入时间'}"
+                :title="{text: '项目/产品/其他投入时间'}"
+                :legend-visible="true"
+                :data-empty="vm.empty"
+                :loading="vm.loading"
                 :settings="pieConfig.chartSettings">
             </ve-pie>
-            <div class="stats-empty" v-else>
-                <h3>项目/产品/其他投入时间</h3>
-                <i class="icon-warning"></i>
-                <p>暂无数据</p>
-            </div>
         </div>
     </div>
     <popup v-model="vm.visible" width="100%">
