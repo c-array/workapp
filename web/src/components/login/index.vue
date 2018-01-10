@@ -12,7 +12,7 @@
             <input v-model="formModel.password" type="password">
         </div>
         <div class="login-btn">
-            <mu-raised-button @click="handleLogin" label="登 录" class="demo-raised-button" primary/>
+            <x-button @click.native="handleLogin" type="primary">登 录</x-button>
         </div>
     </div>
 </template>
@@ -20,6 +20,7 @@
     @import '../../public/less/login.less';
 </style>
 <script>
+    import {XButton} from 'vux';
     export default {
         name:'login',
         data () {
@@ -30,8 +31,18 @@
                 }
             }
         },
+        components: {
+            XButton  
+        },
         methods: {
             handleLogin(){
+                if(!this.formModel.username){
+                    this.$vux.toast.text('用户名不能为空！', 'top');
+                    return false;
+                }else if(!this.formModel.password){
+                    this.$vux.toast.text('密码不能为空！', 'top');
+                    return false;
+                }
                 this.$http.post({
                     url:'/login',
                     type:'json',
@@ -42,7 +53,7 @@
                         this.$router.push({ path: '/main' }); //登录成功，跳转到主页
                     },
                     error:msg => {
-                        this.$Toast(msg);
+                        this.$vux.toast.text(msg, 'top');
                     }
                 })
             }

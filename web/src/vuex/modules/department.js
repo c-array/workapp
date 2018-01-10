@@ -1,7 +1,6 @@
+import Vue from 'vue';
 import http from '../../public/js/http';
 import {formatDate} from '../../public/js/common';
-import {Toast} from 'mint-ui'
-
 export default {
     namespaced: true,
     state: {
@@ -13,7 +12,9 @@ export default {
             date:formatDate({ //开始时间
                 type: 'yyyy-mm-dd',
                 date:new Date('2016-08-01') 
-            })
+            }),
+            loading:true,
+            empty:false
         },
         formModel:{
             departmentId:'', //部门id
@@ -47,70 +48,6 @@ export default {
                 columns: ['name', 'usedTime'],
                 rows: []
             },
-        },
-        histogramConfig: {
-            callback(options) {
-                options.title.textStyle = {
-                    color: "#666",
-                    fontWeight: 'normal'
-                }
-                return options;
-            },
-            dataZoom: [
-                {
-                    show: true,
-                    start: 0,
-                    end: 50,
-                    handleIcon: 'M512 512m-494.933333 0a494.933333 494.933333 0 1 0 989.866666 0 494.933333 494.933333 0 1 0-989.866666 0Z',
-                    handleSize: '200%',
-                    backgroundColor: '#e4e7ed',
-                    borderColor: '#e4e7ed',
-                    fillerColor: "#409eff",
-                    height: 6,//组件高度
-                    dataBackground: {
-                        lineStyle: {
-                            opacity: 0
-                        },
-                        areaStyle: {
-                            opacity: 0
-                        }
-                    },
-                    handleStyle: {
-                        color: "#fff",
-                        borderWidth: 2,
-                        borderColor: "#409eff"
-                    }
-                },
-                {
-                    type: 'inside',
-                    start: 94,
-                    end: 100
-                }
-            ],
-            chartSettings: {
-                labelMap: {
-                    usedTime: '用时'
-                }
-            }
-        },
-        pieConfig: {
-            callback(options){
-                options.legend.top = "20%";
-                options.title.textStyle = {
-                    color: "#666",
-                    fontWeight: 'normal'
-                }
-                return options;
-            },
-            chartSettings: {
-                dimension: 'name',
-                metrics: 'usedTime',
-                dataType: 'KMB',
-                selectedMode: 'single',
-                hoverAnimation: false,
-                radius: 50,
-                offsetY: 170
-            }
         }
     },
     mutations:{
@@ -125,19 +62,23 @@ export default {
                     date:state.formModel.endDate
                 })
                 if(startTime >= endTime){ //开始时间小于结束时间
-                    Toast('开始时间不能大于结束时间');
+                    Vue.$vux.toast.text('开始时间不能大于结束时间', 'top');
                     return false;
                 }
             }else if(!state.formModel.startDate && !state.formModel.endDate){
-                Toast('时间不能为空');
+                Vue.$vux.toast.text('时间不能为空', 'top');
                 return false;
             }
+            state.vm.loading = true;
             http.post({
                 url:'/statsDepartment',
                 data:state.formModel,
                 type:'json',
                 success: data => {
-                    state.chartsData.personData.rows = data[0];
+                    setTimeout(_ => {
+                        state.vm.loading = false;
+                        state.vm.empty = false;
+                        state.chartsData.personData.rows = data[0];
                         var itemPersonData = [];
                         data[1].forEach(function(item,key){
                             itemPersonData.push({
@@ -166,9 +107,11 @@ export default {
                         state.chartsData.depPmData.rows = depPmData;
                         state.chartsData.depPjData.rows = depPjData;
                         state.chartsData.depOtherData.rows = data[3];
+                    },300)
                 },
                 error: msg => {
-                    Toast(msg);
+                    state.vm.empty = true;
+                    Vue.$vux.toast.text(msg, 'top');
                 }
             })
         },
@@ -179,7 +122,7 @@ export default {
                     state.vm.itemList = data;
                 },
                 error: msg => {
-                    Toast(msg);
+                    Vue.$vux.toast.text(msg, 'top');
                 }
             })
         },

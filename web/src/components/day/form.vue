@@ -35,13 +35,13 @@
                     <div class="day-form-item">
                         <select v-model="formModel.itemId">
                             <option value="">请选择</option>
-                            <option v-for="item in prList" :value="item.value">{{item.name}}</option>
+                            <option v-for="item in prList" :value="item.id">{{item.prName}}</option>
                         </select>
                     </div>
                 </li>
             </ul>
             <div class="day-form-btn">
-                <mu-raised-button @click="handleSave" label="保 存" class="demo-raised-button" primary/>
+                <x-button @click.native="handleSave" type="primary">保 存</x-button>
             </div>
         </div>
     </div>
@@ -52,7 +52,7 @@
 <script>
     import Vue from 'vue';
     import { mapState, mapMutations } from 'vuex';
-    import { XHeader,Calendar } from 'vux';
+    import { XHeader,Calendar,XButton } from 'vux';
     import { Field, Picker, Popup } from 'mint-ui';
     Vue.component(Field.name, Field);
     Vue.component(Picker.name, Picker);
@@ -74,7 +74,8 @@
         },
         components: {
             XHeader,
-            Calendar  
+            Calendar,
+            XButton  
         },
         created(){
             if(this.taskId){

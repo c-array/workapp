@@ -1,6 +1,6 @@
+import Vue from 'vue';
 import http from '../../public/js/http';
 import {formatDate} from '../../public/js/common';
-import {Toast} from 'mint-ui'
 export default {
     namespaced: true,
     state: {
@@ -48,7 +48,7 @@ export default {
                     state.list = data;
                 },
                 error:msg => {
-                    Toast(msg);
+                    Vue.$vux.toast.text(msg, 'top');
                 }
             })
         },
@@ -63,7 +63,7 @@ export default {
                     state.prList = data;
                 },
                 error:msg => {
-                    Toast(msg);
+                    Vue.$vux.toast.text(msg, 'top');
                 }
             })
         },
@@ -83,14 +83,14 @@ export default {
                 type:'json',
                 data:state.formModel,
                 success:data => {
-                    Toast('添加成功');
+                    Vue.$vux.toast.text('添加成功', 'top');
                     this.commit('common/day/clear');
                     this.commit({
                         type:'common/day/getList'
                     });
                 },
                 error: msg => {
-                    Toast(msg);
+                    Vue.$vux.toast.text(msg, 'top');;
                 }
             })
         },
@@ -100,13 +100,13 @@ export default {
                 type:'json',
                 data:state.formModel,
                 success:data => {
-                    Toast('修改成功');
+                    Vue.$vux.toast.text('修改成功', 'top');
                     this.commit({
                         type:'common/day/getList'
                     });
                 },
                 error: msg => {
-                    Toast(msg);
+                    Vue.$vux.toast.text(msg, 'top');
                 }
             })
         },
@@ -118,13 +118,13 @@ export default {
                     id:params.id
                 },
                 success:data => {
-                    Toast('删除成功');
+                    Vue.$vux.toast.text('删除成功', 'top');
                     this.commit({
                         type:'common/day/getList'
                     });
                 },
                 error: msg => {
-                    Toast(msg);
+                    Vue.$vux.toast.text(msg, 'top');
                 }
             })
         }

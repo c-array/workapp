@@ -63,13 +63,19 @@
                 });
             },
             handleDelete(taskId) {
-                this.$MessageBox.confirm('确定要删除该条记录?').then(action => {
-                    this.$store.commit({
-                        type: 'common/day/delete',
-                        id: taskId
-                    })
-                }).catch(() => {
-
+                const _this = this;
+                this.$vux.confirm.show({
+                    title:"删除提示",
+                    content:"确定要删除该条记录?",
+                    onCancel () {
+                        _this.$vux.toast.text('已取消删除', 'top');
+                    },
+                    onConfirm () {
+                        _this.$store.commit({
+                            type: 'common/day/delete',
+                            id: taskId
+                        })
+                    }
                 })
             }
         }

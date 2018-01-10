@@ -21,56 +21,58 @@
                 <i v-if="formModel.endDate" @click="handleClear(['endDate'])" class="icon-clear"></i>
             </li>
         </ul>
-        <div class="stats-chart">
-            <ve-histogram 
-                height="250px" 
-                :title="{text:'我和伙伴'}" 
-                :legend-visible="false" 
-                :data-zoom="histogramConfig.dataZoom"
-                :after-config="histogramConfig.callback" 
-                :data="chartsData.dayData"
-                :data-empty="vm.empty"
-                :loading="vm.loading" 
-                :settings="histogramConfig.chartSettings">
-            </ve-histogram>
-        </div>
-        <div class="stats-chart">
-            <ve-histogram 
-                height="250px" 
-                :title="{text:'产品投入时间'}" 
-                :legend-visible="false"
-                :data-zoom="histogramConfig.dataZoom"
-                :after-config="histogramConfig.callback" 
-                :data="chartsData.pmData"
-                :data-empty="vm.empty"
-                :loading="vm.loading" 
-                :settings="histogramConfig.chartSettings">
-            </ve-histogram>
-        </div>
-        <div class="stats-chart">
-            <ve-histogram 
-                height="250px" 
-                :title="{text:'项目投入时间'}" 
-                :legend-visible="false" 
-                :data-zoom="histogramConfig.dataZoom"
-                :after-config="histogramConfig.callback" 
-                :data="chartsData.pjData"
-                :data-empty="vm.empty"
-                :loading="vm.loading" 
-                :settings="histogramConfig.chartSettings">
-            </ve-histogram>
-        </div>
-        <div class="stats-chart">
-            <ve-pie 
-                height="250px" 
-                :data="chartsData.otherData"
-                :after-config="pieConfig.callback"
-                :title="{text: '项目/产品/其他投入时间'}"
-                :legend-visible="true"
-                :data-empty="vm.empty"
-                :loading="vm.loading"
-                :settings="pieConfig.chartSettings">
-            </ve-pie>
+        <div class="stats-warp">
+            <div class="stats-chart">
+                <ve-histogram 
+                    height="250px" 
+                    :title="{text:'我和伙伴'}" 
+                    :legend-visible="false" 
+                    :data-zoom="histogramConfig.dataZoom"
+                    :after-config="histogramConfig.callback" 
+                    :data="chartsData.dayData"
+                    :data-empty="vm.empty"
+                    :loading="vm.loading" 
+                    :settings="histogramConfig.chartSettings">
+                </ve-histogram>
+            </div>
+            <div class="stats-chart">
+                <ve-histogram 
+                    height="250px" 
+                    :title="{text:'产品投入时间'}" 
+                    :legend-visible="false"
+                    :data-zoom="histogramConfig.dataZoom"
+                    :after-config="histogramConfig.callback" 
+                    :data="chartsData.pmData"
+                    :data-empty="vm.empty"
+                    :loading="vm.loading" 
+                    :settings="histogramConfig.chartSettings">
+                </ve-histogram>
+            </div>
+            <div class="stats-chart">
+                <ve-histogram 
+                    height="250px" 
+                    :title="{text:'项目投入时间'}" 
+                    :legend-visible="false" 
+                    :data-zoom="histogramConfig.dataZoom"
+                    :after-config="histogramConfig.callback" 
+                    :data="chartsData.pjData"
+                    :data-empty="vm.empty"
+                    :loading="vm.loading" 
+                    :settings="histogramConfig.chartSettings">
+                </ve-histogram>
+            </div>
+            <div class="stats-chart">
+                <ve-pie 
+                    height="250px" 
+                    :data="chartsData.otherData"
+                    :after-config="pieConfig.callback"
+                    :title="{text: '项目/产品/其他投入时间'}"
+                    :legend-visible="true"
+                    :data-empty="vm.empty"
+                    :loading="vm.loading"
+                    :settings="pieConfig.chartSettings">
+                </ve-pie>
+            </div>
         </div>
     </div>
     <popup v-model="vm.visible" width="100%">
@@ -105,8 +107,8 @@
         name:'day',
         computed: {
             ...mapState({
-                histogramConfig: state => state.common.colleague.histogramConfig,
-                pieConfig: state => state.common.colleague.pieConfig,
+                histogramConfig: state => state.common.histogramConfig,
+                pieConfig: state => state.common.pieConfig,
                 chartsData: state => state.common.colleague.chartsData,
                 formModel: state => state.common.colleague.formModel,
                 vm: state => state.common.colleague.vm
@@ -148,7 +150,6 @@
                 handleShowDate:'common/colleague/showDate'
             }),
             handleFormat(value){
-                console.log(value);
                 return value[0] + ' 至 ' + value[1];
             }
         }

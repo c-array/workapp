@@ -1,6 +1,6 @@
+import Vue from 'vue';
 import http from '../../public/js/http';
 import {formatDate} from '../../public/js/common';
-import {Toast} from 'mint-ui'
 export default {
     namespaced: true,
     state: {
@@ -48,76 +48,9 @@ export default {
                 rows: []
             }
         },
-        histogramConfig: {
-            callback(options) {
-                options.title.textStyle = {
-                    color: "#666",
-                    fontWeight: 'normal'
-                }
-                return options;
-            },
-            dataZoom: [
-                {
-                    show: true,
-                    start: 0,
-                    end: 50,
-                    handleIcon: 'M512 512m-494.933333 0a494.933333 494.933333 0 1 0 989.866666 0 494.933333 494.933333 0 1 0-989.866666 0Z',
-                    handleSize: '200%',
-                    backgroundColor: '#e4e7ed',
-                    borderColor: '#e4e7ed',
-                    fillerColor: "#409eff",
-                    height: 6,//组件高度
-                    dataBackground: {
-                        lineStyle: {
-                            opacity: 0
-                        },
-                        areaStyle: {
-                            opacity: 0
-                        }
-                    },
-                    handleStyle: {
-                        color: "#fff",
-                        borderWidth: 2,
-                        borderColor: "#409eff"
-                    }
-                },
-                {
-                    type: 'inside',
-                    start: 94,
-                    end: 100
-                }
-            ],
-            chartSettings: {
-                labelMap: {
-                    usedTime: '用时'
-                }
-            }
-        },
-        pieConfig: {
-            callback(options){
-                if(options.legend){
-                    options.legend.top = "20%";
-                }
-                options.title.textStyle = {
-                    color: "#666",
-                    fontWeight: 'normal'
-                }
-                return options;
-            },
-            chartSettings: {
-                dimension: 'name',
-                metrics: 'usedTime',
-                dataType: 'KMB',
-                selectedMode: 'single',
-                hoverAnimation: false,
-                radius: 50,
-                offsetY: 170
-            }
-        }
     },
     mutations:{
         getList(state,params){
-            state.vm.loading = true;
             if(state.formModel.startDate && state.formModel.endDate){
                 var startTime = formatDate({
                     type:'time',
@@ -128,49 +61,51 @@ export default {
                     date:state.formModel.endDate
                 })
                 if(startTime >= endTime){ //开始时间小于结束时间
-                    Toast('开始时间不能大于结束时间');
+                    Vue.$vux.toast.text('开始时间不能大于结束时间', 'top');
                     return false;
                 }
             }else if(!state.formModel.startDate && !state.formModel.endDate){
-                Toast('时间不能为空');
+                Vue.$vux.toast.text('时间不能为空', 'top');
                 return false;
             }
+            state.vm.loading = true;
             http.post({
                 url:'/statsMyColleague',
                 data:state.formModel,
                 type:'json',
                 success: data => {
-                    state.vm.loading = false;
-                    state.vm.empty = false;
-                    data[0].forEach(function(item,key){
-                        var arr = item.createDate.split('-');
-                        item.createDate = arr[1] + '-' + arr[2];
-                    })
-                    var itemPmData = [];
-                    var itemPjData = [];
-                    data[1].forEach(function(item,key){
-                        if(item.work_product_project.type == 1){
-                            itemPmData.push({
-                                prName:item.work_product_project.prName,
-                                usedTime:item.usedTime
-                            })
-                        }
-                        if(item.work_product_project.type == 2){
-                            itemPjData.push({
-                                prName:item.work_product_project.prName,
-                                usedTime:item.usedTime
-                            })
-                        }
-                    })
-                    state.chartsData.pmData.rows = itemPmData;
-                    state.chartsData.pjData.rows = itemPjData;
-                    console.log(itemPmData);
-                    state.chartsData.dayData.rows = data[0];
-                    state.chartsData.otherData.rows = data[2];
+                    setTimeout(_ => {
+                        state.vm.loading = false;
+                        state.vm.empty = false;
+                        data[0].forEach(function(item,key){
+                            var arr = item.createDate.split('-');
+                            item.createDate = arr[1] + '-' + arr[2];
+                        })
+                        var itemPmData = [];
+                        var itemPjData = [];
+                        data[1].forEach(function(item,key){
+                            if(item.work_product_project.type == 1){
+                                itemPmData.push({
+                                    prName:item.work_product_project.prName,
+                                    usedTime:item.usedTime
+                                })
+                            }
+                            if(item.work_product_project.type == 2){
+                                itemPjData.push({
+                                    prName:item.work_product_project.prName,
+                                    usedTime:item.usedTime
+                                })
+                            }
+                        })
+                        state.chartsData.pmData.rows = itemPmData;
+                        state.chartsData.pjData.rows = itemPjData;
+                        state.chartsData.dayData.rows = data[0];
+                        state.chartsData.otherData.rows = data[2];
+                    },300);
                 },
                 error: msg => {
                     state.vm.empty = true;
-                    Toast(msg);
+                    Vue.$vux.toast.text(msg, 'top');
                 }
             })
         },
@@ -182,7 +117,7 @@ export default {
                     state.vm.visible = true;
                 },
                 error: msg => {
-                    Toast(msg);
+                    Vue.$vux.toast.text(msg, 'top');
                 }
             })
         },

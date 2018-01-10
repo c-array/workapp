@@ -8,22 +8,9 @@ import store from './vuex/store';
 Vue.config.productionTip = false;
 
 //ui框架
-import MuseUI from 'muse-ui';
-import 'muse-ui/dist/muse-ui.css';
-import 'muse-ui/dist/theme-teal.css' // 使用 teal 主题
-
-import {Toast,MessageBox} from 'mint-ui';
-import 'mint-ui/lib/style.css';
-Vue.prototype.$Toast = Toast;
-Vue.prototype.$MessageBox = MessageBox;
-Vue.use(MuseUI);
-
-//手势库
-import AlloyFinger from 'alloyfinger';
-import AlloyFingerPlugin from 'alloyfinger/vue/alloy_finger.vue'
-Vue.use(AlloyFingerPlugin,{
-    AlloyFinger
-})
+import  { ToastPlugin,ConfirmPlugin } from 'vux'
+Vue.use(ToastPlugin);
+Vue.use(ConfirmPlugin);
 
 //图表
 import 'v-charts/lib/style.css';

@@ -23,54 +23,68 @@
                     <i v-if="formModel.endDate" @click="handleClear(['endDate'])" class="icon-clear"></i>
                 </li>
             </ul>
-            <div class="stats-chart">
-                <ve-histogram v-if="chartsData.personData.rows.length > 0" height="250px" :title="{text: '人员总体投入时间'}" :legend-visible="false"
-                    :data-zoom="histogramConfig.dataZoom" :after-config="histogramConfig.callback" :data="chartsData.personData"
-                    :settings="histogramConfig.chartSettings"></ve-histogram>
-                <div class="stats-empty" v-else>
-                    <h3>人员总体投入时间</h3>
-                    <i class="icon-warning"></i>
-                    <p>暂无数据</p>
+            <div class="stats-warp">
+                <div class="stats-chart">
+                    <ve-histogram 
+                        height="250px" 
+                        :title="{text: '人员总体投入时间'}" 
+                        :legend-visible="false"
+                        :data-zoom="histogramConfig.dataZoom" 
+                        :after-config="histogramConfig.callback" 
+                        :data="chartsData.personData"
+                        :data-empty="vm.empty"
+                        :loading="vm.loading"
+                        :settings="histogramConfig.chartSettings">
+                    </ve-histogram>
                 </div>
-            </div>
-            <div class="stats-chart">
-                <ve-histogram v-if="chartsData.itemPersonData.rows.length > 0" height="250px" :title="{text: '每人投入时间'}" :legend-visible="false"
-                    :data-zoom="histogramConfig.dataZoom" :after-config="histogramConfig.callback" :data="chartsData.itemPersonData"
-                    :settings="histogramConfig.chartSettings"></ve-histogram>
-                <div class="stats-empty" v-else>
-                    <h3>每人投入时间</h3>
-                    <i class="icon-warning"></i>
-                    <p>暂无数据</p>
+                <div class="stats-chart">
+                    <ve-histogram 
+                        height="250px" 
+                        :title="{text: '每人投入时间'}" 
+                        :legend-visible="false"
+                        :data-zoom="histogramConfig.dataZoom" 
+                        :after-config="histogramConfig.callback" 
+                        :data="chartsData.itemPersonData"
+                        :data-empty="vm.empty"
+                        :loading="vm.loading"
+                        :settings="histogramConfig.chartSettings">
+                    </ve-histogram>
                 </div>
-            </div>
-            <div class="stats-chart">
-                <ve-histogram v-if="chartsData.depPmData.rows.length > 0" height="250px" :title="{text: '产品投入时间'}" :legend-visible="false"
-                    :data-zoom="histogramConfig.dataZoom" :after-config="histogramConfig.callback" :data="chartsData.depPmData"
-                    :settings="histogramConfig.chartSettings"></ve-histogram>
-                <div class="stats-empty" v-else>
-                    <h3>产品投入时间</h3>
-                    <i class="icon-warning"></i>
-                    <p>暂无数据</p>
+                <div class="stats-chart">
+                    <ve-histogram 
+                        height="250px" 
+                        :title="{text: '产品投入时间'}" 
+                        :legend-visible="false"
+                        :data-zoom="histogramConfig.dataZoom" 
+                        :after-config="histogramConfig.callback" 
+                        :data="chartsData.depPmData"
+                        :data-empty="vm.empty"
+                        :loading="vm.loading"
+                        :settings="histogramConfig.chartSettings">
+                    </ve-histogram>
                 </div>
-            </div>
-            <div class="stats-chart">
-                <ve-histogram v-if="chartsData.depPjData.rows.length > 0" height="250px" :title="{text: '项目投入时间'}" :legend-visible="false"
-                    :data-zoom="histogramConfig.dataZoom" :after-config="histogramConfig.callback" :data="chartsData.depPjData"
-                    :settings="histogramConfig.chartSettings"></ve-histogram>
-                <div class="stats-empty" v-else>
-                    <h3>项目投入时间</h3>
-                    <i class="icon-warning"></i>
-                    <p>暂无数据</p>
+                <div class="stats-chart">
+                    <ve-histogram 
+                        height="250px" :title="{text: '项目投入时间'}" 
+                        :legend-visible="false"
+                        :data-zoom="histogramConfig.dataZoom" 
+                        :after-config="histogramConfig.callback" 
+                        :data="chartsData.depPjData"
+                        :data-empty="vm.empty"
+                        :loading="vm.loading"
+                        :settings="histogramConfig.chartSettings">
+                    </ve-histogram>
                 </div>
-            </div>
-            <div class="stats-chart">
-                <ve-pie v-if="chartsData.depOtherData.rows.length > 0" height="250px" :data="chartsData.depOtherData" :after-config="pieConfig.callback"
-                    :title="{text: '项目/产品/其他'}" :settings="pieConfig.chartSettings">
-                </ve-pie>
-                <div class="stats-empty" v-else>
-                    <h3>项目/产品/其他</h3>
-                    <i class="icon-warning"></i>
-                    <p>暂无数据</p>
+                <div class="stats-chart">
+                    <ve-pie 
+                        height="250px" 
+                        :data="chartsData.depOtherData" 
+                        :after-config="pieConfig.callback"
+                        :title="{text: '项目/产品/其他'}" 
+                        :data-empty="vm.empty"
+                        :loading="vm.loading"
+                        :settings="pieConfig.chartSettings">
+                    </ve-pie>
                 </div>
             </div>
         </div>
@@ -97,8 +111,8 @@
         name: 'department',
         computed: {
             ...mapState({
-                histogramConfig: state => state.common.department.histogramConfig,
-                pieConfig: state => state.common.department.pieConfig,
+                histogramConfig: state => state.common.histogramConfig,
+                pieConfig: state => state.common.pieConfig,
                 chartsData: state => state.common.department.chartsData,
                 formModel: state => {
                     let formModel = state.common.department.formModel;
