@@ -4,6 +4,7 @@ import day from './modules/day';
 import colleague from './modules/colleague';
 import department from './modules/department';
 import item from './modules/item';
+import people from './modules/people';
 Vue.use(Vuex);
 export default new Vuex.Store({
     modules: {
@@ -82,7 +83,8 @@ export default new Vuex.Store({
                 day:day,
                 colleague:colleague,
                 department:department,
-                item:item
+                item:item,
+                people:people
             }
         }
     }

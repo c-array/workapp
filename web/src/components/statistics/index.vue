@@ -20,7 +20,7 @@
                 <i class="icon-product"></i>
                 <p>产品/项目统计</p>
             </grid-item>
-            <grid-item>
+            <grid-item link="/main/people">
                 <i class="icon-partner"></i>
                 <p>人月统计</p>
             </grid-item>
