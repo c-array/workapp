@@ -4,10 +4,28 @@ import { formatDate } from '../../public/js/common';
 export default {
     namespaced: true,
     state: {
-        peopleList:[]
+        vm:{
+            itemList:'',
+            charts:1,
+            empty:false,
+            loading:true
+        },
+        formModel:{
+            type:'',
+            itemId:''
+        },
+        peopleList:[],
+        chartData:{
+            name:"",
+            peopleData:{
+                columns:['realname', '用时'],
+                rows:[]
+            }
+        }
     },
     mutations: {
-        getList(){
+        getList(state,params){
+            state.vm.loading = true;
             http.post({
                 url:'/statsPeople',
                 data:state.formModel,
@@ -20,10 +38,59 @@ export default {
                         })
                     })
                     state.peopleList = data;
-                    state.vm.popupVisible = false;
                 },
                 error: msg => {
                     Toast(msg);
+                }
+            })
+        },
+        getItemList(state, params) {
+            if (state.formModel.type) {
+                http.post({
+                    url: '/getPrItem',
+                    data: state.formModel,
+                    type: 'json',
+                    success: data => {
+                        state.formModel.itemId = '';
+                        state.vm.itemList = data;
+                        this.commit('common/people/getList');
+                    },
+                    error: msg => {
+                        Vue.$vux.toast.text(msg, 'top');
+                    }
+                })
+            } else {
+                state.formModel.itemId = '';
+                state.vm.itemList = [];
+                this.commit('common/people/getList');
+            }
+        },
+        getPeopleItem(state, itemId){
+            state.vm.loading = true;
+            http.post({
+                url: '/statsPeople',
+                data: {
+                    itemId:itemId
+                },
+                type: 'json',
+                success: data => {
+                    setTimeout(_ => {
+                        state.vm.loading = false;
+                        state.vm.empty = false;
+                        let arr = [];
+                        data[0].work_dailies.forEach((item,key) => {
+                            arr.push({
+                                realname:item.work_admin.realname,
+                                用时:item.usedTime.toFixed(2)
+                            })
+                        })
+                        state.chartData.peopleData.rows = arr;
+                        state.chartData.name = data[0].prName;
+                    },300)
+                },
+                error: msg => {
+                    state.vm.empty = true;
+                    Vue.$vux.toast.text(msg, 'top');
                 }
             })
         }

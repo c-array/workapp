@@ -1,9 +1,8 @@
 <template>
     <div class="inner stats">
-        <x-header title="统计分析-项目人月">
+        <x-header title="统计分析-人月统计">
             <div slot="right" class="stats-head-right">
                 <i class="icon-list"></i>
-                <i class="icon-curve"></i>
             </div>
         </x-header>
         <div class="stats-box">
@@ -20,23 +19,17 @@
                         <option v-for="item in vm.itemList" :value="item.id">{{item.prName}}</option>
                     </select>
                 </li>
-                <li>
-                    <span @click="handleShowDate('startDate')">{{formModel.startDate ? formModel.startDate :'开始时间'}}</span>
-                    <i v-if="formModel.startDate" @click="handleClear(['startDate'])" class="icon-clear"></i>
-                </li>
-                <li>
-                    <span @click="handleShowDate('endDate')">{{formModel.endDate ? formModel.endDate :'结束时间'}}</span>
-                    <i v-if="formModel.endDate" @click="handleClear(['endDate'])" class="icon-clear"></i>
-                </li>
             </ul>
+            <div class="stats-warp">
+                <dl class="people" v-for="item in peopleList">
+                    <dt>{{item.prName}}</dt>
+                    <dd v-for="obj in item.work_dailies">
+                        {{obj.work_admin.realname}}：<span class="usedTime">{{obj.usedTime.toFixed(1)}}</span>小时
+                    </dd>
+                    <dd class="people-count">总投入时间：<span class="usedTime">{{item.count.toFixed(1)}}</span> 小时 <i @click="handleCharts(item)" class="icon-curve"></i></dd>
+                </dl>
+            </div>
         </div>
-        <!-- <dl class="people" v-for="item in peopleList">
-            <dt>{{item.prName}}</dt>
-            <dd v-for="obj in item.work_dailies">
-                {{obj.work_admin.realname}}：<span class="usedTime">{{obj.usedTime.toFixed(2)}}</span> 小时
-            </dd>
-            <dd class="people-count">总投入时间：<span class="usedTime">{{item.count.toFixed(2)}}</span> 小时</dd>
-        </dl> -->
     </div>
 </template>
 <style scoped lang="less">
@@ -44,14 +37,32 @@
 </style>
 <script>
     import { mapState, mapMutations } from 'vuex';
+    import { XHeader } from 'vux';
     export default {
         name: 'people',
         computed: {
             ...mapState({
                 histogramConfig: state => state.common.histogramConfig,
-                chartsData: state => state.common.stats.chartsData,
-                peopleList: state => state.common.stats.peopleList
+                formModel: state => state.common.people.formModel,
+                peopleList: state => state.common.people.peopleList,
+                vm: state => state.common.people.vm
             })
+        },
+        components: {
+            XHeader  
+        },
+        created () {
+          this.handleGetList();  
+        },
+        methods:{
+            ...mapMutations({
+                handleGetList:'common/people/getList',
+                handleGetItemList:'common/people/getItemList'
+            }),
+            handleCharts(item){
+                console.log(item);
+                this.$router.push({path:'/main/people-charts',query:{itemId:item.id}});
+            }
         }
     }
 </script>

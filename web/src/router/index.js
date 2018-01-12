@@ -64,6 +64,14 @@ export default new Router({
           meta: { // 添加该字段，表示进入这个路由是需要登录的
             requireAuth: true,
           }
+        },
+        {
+          path: 'people-charts',
+          name: 'people-charts',
+          component: resolve => require(['@/components/statistics/people-charts'],resolve),
+          meta: { // 添加该字段，表示进入这个路由是需要登录的
+            requireAuth: true,
+          }
         }
       ]
     },

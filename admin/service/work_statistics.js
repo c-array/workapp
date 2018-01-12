@@ -450,29 +450,47 @@ router.post('/work/statsItem',function (req,res,next) {
 router.post('/work/statsPeople',function (req,res,next) {
     var param = req.body;
     var where = {}
-    if(param.itemType){
-        where.type = param.itemType;
+    var sql = 'SELECT pro.prName, wa.realname AS realname, SUM(usedTime) AS usedTime FROM work_product_project AS pro LEFT OUTER JOIN work_daily AS wd ON pro.id = wd.itemId LEFT OUTER JOIN work_admin AS wa ON wd.userId = wa.id ';
+    if(param.type && param.itemId){
+        where.type = param.type;
+        sql += 'WHERE pro.type = ' + param.type + ' AND pro.id = ' + param.itemId;
+    }else if(param.type){
+        sql += 'WHERE pro.type = ' + param.type;
+    }else if(param.itemId){
+        sql += 'WHERE pro.id = ' + param.itemId;
     }
-    if(param.itemId){
-        where.id = param.itemId
-    }
-    if(param.startDate || param.endDate){
-        where.createTime = {};
-        if(param.startDate){
-            where.createTime.$gte = param.startDate;
+    sql += " GROUP BY pro.prName";
+
+    db.sequelize.query(sql,{ type: sequelize.QueryTypes.SELECT}).then(function(data){
+        if(data){
+            res.send({
+                status:0,
+                message:'成功',
+                result:data
+            });
+        }else{
+            res.send({
+                status:1,
+                message:'失败',
+                result:''
+            });
         }
-        if(param.endDate){
-            where.createTime.$lte = param.endDate;
-        }
-    }
-    workProductProject.all({
+    }).catch(function(err){
+        console.log(err);
+        res.send({
+            status:1,
+            message:'失败',
+            result:''
+        });
+    })
+
+    /* workProductProject.all({
         where:where,
-        attributes: ['prName','type'],
+        attributes: ['id','prName','type'],
         group:'realname',
         include:{
             model:workDaily,
             attributes: [
-                'usedTime',
                 [sequelize.fn('SUM', sequelize.col('usedTime')),'usedTime']
             ],
             include:{
@@ -501,7 +519,7 @@ router.post('/work/statsPeople',function (req,res,next) {
             message:'失败',
             result:''
         });
-    })
+    }) */
 });
 
 
