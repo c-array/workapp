@@ -23,8 +23,8 @@
             <div class="stats-warp">
                 <dl class="people" v-for="item in peopleList">
                     <dt>{{item.prName}}</dt>
-                    <dd v-for="obj in item.work_dailies">
-                        {{obj.work_admin.realname}}：<span class="usedTime">{{obj.usedTime.toFixed(1)}}</span>小时
+                    <dd v-for="obj in item.dailies">
+                        {{obj.realname}}：<span class="usedTime">{{obj.usedTime.toFixed(1)}}</span>小时
                     </dd>
                     <dd class="people-count">总投入时间：<span class="usedTime">{{item.count.toFixed(1)}}</span> 小时 <i @click="handleCharts(item)" class="icon-curve"></i></dd>
                 </dl>

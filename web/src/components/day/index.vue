@@ -25,8 +25,6 @@
 </style>
 <script>
     import Vue from 'vue';
-    import { DatetimePicker } from 'mint-ui';
-    Vue.component(DatetimePicker.name, DatetimePicker);
     import { mapState, mapMutations } from 'vuex';
     import { Calendar,XHeader } from 'vux';
     export default {

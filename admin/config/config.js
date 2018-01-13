@@ -4,11 +4,12 @@
 var Sequelize = require('sequelize');
 var config = {
     username: 'root',
-    password: 'Yka@yunkouan.cao',
+    password: 'root',
     database: 'work',
     host: "localhost",
     dialect: 'mysql',
     port: 3306, // 端口号，MySQL默认3306
+    logging:false,
     define: {
         underscored: false,
         timestamps: false,
@@ -20,7 +21,6 @@ var config = {
 var db = {
     sequelize: new Sequelize(config.database, config.username, config.password,config)
 };
-
 db.workAdmin = db.sequelize.import('../models/work_admin.js'); //用户模型
 db.workAdminRole = db.sequelize.import('../models/work_admin_role.js'); //用户角色模型
 db.workDaily = db.sequelize.import('../models/work_daily.js'); //主任务模型

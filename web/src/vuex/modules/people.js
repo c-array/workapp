@@ -33,14 +33,14 @@ export default {
                 success: data => {
                     data.forEach(function(item,key){
                         item.count = 0;
-                        item.work_dailies.forEach(function(obj,index){
+                        item.dailies.forEach(function(obj,index){
                             item.count = item.count + obj.usedTime;
                         })
                     })
                     state.peopleList = data;
                 },
                 error: msg => {
-                    Toast(msg);
+                    Vue.$vux.toast.text(msg, 'top');
                 }
             })
         },
@@ -78,9 +78,9 @@ export default {
                         state.vm.loading = false;
                         state.vm.empty = false;
                         let arr = [];
-                        data[0].work_dailies.forEach((item,key) => {
+                        data[0].dailies.forEach((item,key) => {
                             arr.push({
-                                realname:item.work_admin.realname,
+                                realname:item.realname,
                                 用时:item.usedTime.toFixed(2)
                             })
                         })

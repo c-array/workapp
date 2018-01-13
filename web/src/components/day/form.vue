@@ -53,10 +53,6 @@
     import Vue from 'vue';
     import { mapState, mapMutations } from 'vuex';
     import { XHeader,Calendar,XButton } from 'vux';
-    import { Field, Picker, Popup } from 'mint-ui';
-    Vue.component(Field.name, Field);
-    Vue.component(Picker.name, Picker);
-    Vue.component(Popup.name, Popup);
     export default {
         name: 'day-form',
         data() {

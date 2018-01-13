@@ -10,7 +10,6 @@
             <ul>
                 <li>
                     <select @change="getList" v-model="formModel.departmentId">
-                        <option value="">请选择</option>
                         <option v-for="item in vm.itemList" :value="item.id">{{item.depName}}</option>
                     </select>
                 </li>
@@ -114,11 +113,7 @@
                 histogramConfig: state => state.common.histogramConfig,
                 pieConfig: state => state.common.pieConfig,
                 chartsData: state => state.common.department.chartsData,
-                formModel: state => {
-                    let formModel = state.common.department.formModel;
-                    formModel.departmentId = state.common.userInfo.departmentId;
-                    return formModel;
-                },
+                formModel: state => state.common.department.formModel,
                 vm: state => state.common.department.vm
             })
         },
@@ -131,7 +126,9 @@
         },
         created(){
             this.getDepartmentList();
-            this.getList();
+        },
+        mounted () {
+          this.getList();
         },
         methods:{
             ...mapMutations({

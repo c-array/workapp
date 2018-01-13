@@ -17,7 +17,7 @@ var statistics = require('./service/work_statistics');
 var port = process.env.Port || 8000;
 
 //连接数据库并同步模型到数据库
-sqlDb.sequelize.sync({force: false}).then(function () {
+sqlDb.sequelize.sync({force: false,logging:false}).then(function () {
     console.log("连接数据库成功！");
 }).catch(function (err) {
     console.log("连接数据库失败：" + err);

@@ -450,24 +450,39 @@ router.post('/work/statsItem',function (req,res,next) {
 router.post('/work/statsPeople',function (req,res,next) {
     var param = req.body;
     var where = {}
-    var sql = 'SELECT pro.prName, wa.realname AS realname, SUM(usedTime) AS usedTime FROM work_product_project AS pro LEFT OUTER JOIN work_daily AS wd ON pro.id = wd.itemId LEFT OUTER JOIN work_admin AS wa ON wd.userId = wa.id ';
+    var sql = 'SELECT pro.id,pro.prName,pro.type FROM work_product_project pro';
     if(param.type && param.itemId){
         where.type = param.type;
-        sql += 'WHERE pro.type = ' + param.type + ' AND pro.id = ' + param.itemId;
+        sql += ' WHERE pro.type = ' + param.type + ' AND pro.id = ' + param.itemId;
     }else if(param.type){
-        sql += 'WHERE pro.type = ' + param.type;
+        sql += ' WHERE pro.type = ' + param.type;
     }else if(param.itemId){
-        sql += 'WHERE pro.id = ' + param.itemId;
+        sql += ' WHERE pro.id = ' + param.itemId;
     }
-    sql += " GROUP BY pro.prName";
-
-    db.sequelize.query(sql,{ type: sequelize.QueryTypes.SELECT}).then(function(data){
+    sql += ' ORDER BY pro.createTime DESC';
+    db.sequelize.query(sql).spread(function(data, metadata){
         if(data){
-            res.send({
-                status:0,
-                message:'成功',
-                result:data
-            });
+            async.map(data,function(item,callback){
+                db.sequelize.query("SELECT SUM(wd.usedTime) usedTime,wa.realname realname FROM work_daily wd LEFT JOIN work_admin wa ON wa.id = wd.userId WHERE wd.itemId = " + item.id + " GROUP BY wa.realname").spread(function(result,row){
+                    item.dailies = result;
+                    callback(null,item);
+                })
+            },function(err,results){
+                if(!err){
+                    res.send({
+                        status:0,
+                        message:'成功',
+                        result:results
+                    });
+                }else{
+                    console.log(err);
+                    res.send({
+                        status:1,
+                        message:'失败',
+                        result:''
+                    });
+                }
+            })
         }else{
             res.send({
                 status:1,
@@ -475,13 +490,6 @@ router.post('/work/statsPeople',function (req,res,next) {
                 result:''
             });
         }
-    }).catch(function(err){
-        console.log(err);
-        res.send({
-            status:1,
-            message:'失败',
-            result:''
-        });
     })
 
     /* workProductProject.all({
@@ -491,12 +499,15 @@ router.post('/work/statsPeople',function (req,res,next) {
         include:{
             model:workDaily,
             attributes: [
-                [sequelize.fn('SUM', sequelize.col('usedTime')),'usedTime']
+                [sequelize.fn('SUM', sequelize.col('usedTime')),'usedTime'],
             ],
             include:{
                 model:workAdmin,
-                attributes: ['realname']
-            },
+                attributes: [
+                    'realname'
+                    //[sequelize.fn('CONCAT',sequelize.col('realname')),'realname']
+                ]
+            }
         }
     }).then(function (data) {
         if(data){

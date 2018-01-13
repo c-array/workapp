@@ -28,7 +28,7 @@ export default {
                 type: 'yyyy-mm-dd',
                 date:new Date('2016-08-31') 
             }), 
-            userId:sessionStorage.userId
+            userId:''
         },
         chartsData:{
             dayData:{ //每天投入时间
@@ -67,6 +67,17 @@ export default {
             }else if(!state.formModel.startDate && !state.formModel.endDate){
                 Vue.$vux.toast.text('时间不能为空', 'top');
                 return false;
+            }
+
+            if(!state.formModel.userId){
+                state.formModel.userId = sessionStorage.userId;
+            }
+            if(!state.vm.nameModel[0]){
+                state.vm.nameModel = [sessionStorage.userId];
+            }
+            
+            if(!state.formModel.username){
+                state.formModel.username = sessionStorage.username;
             }
             state.vm.loading = true;
             http.post({

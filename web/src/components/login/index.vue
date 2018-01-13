@@ -49,6 +49,8 @@
                     data:this.formModel,
                     success:data => {
                         localStorage.userInfo = JSON.stringify(data);
+                        sessionStorage.username = data.realname;
+                        sessionStorage.departmentId = data.departmentId;
                         sessionStorage.userId = data.id;
                         this.$router.push({ path: '/main' }); //登录成功，跳转到主页
                     },

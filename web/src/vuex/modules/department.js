@@ -17,7 +17,7 @@ export default {
             empty:false
         },
         formModel:{
-            departmentId:'', //部门id
+            departmentId:"", //部门id
             startDate: formatDate({ //开始时间
                 type: 'yyyy-mm-dd',
                 date:new Date('2016-08-01') 
@@ -69,10 +69,15 @@ export default {
                 Vue.$vux.toast.text('时间不能为空', 'top');
                 return false;
             }
+            state.formModel.departmentId = state.formModel.departmentId ? state.formModel.departmentId : sessionStorage.departmentId
             state.vm.loading = true;
             http.post({
                 url:'/statsDepartment',
-                data:state.formModel,
+                data:{
+                    startDate:state.formModel.startDate,
+                    endDate:state.formModel.endDate,
+                    departmentId:state.formModel.departmentId,
+                },
                 type:'json',
                 success: data => {
                     setTimeout(_ => {
