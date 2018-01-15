@@ -2,8 +2,7 @@
     <div class="inner stats">
         <x-header title="统计分析-项目/产品统计">
             <div slot="right" class="stats-head-right">
-                <i class="icon-list"></i>
-                <i class="icon-curve"></i>
+                <i @click="handleExport" class="icon-export"></i>
             </div>
         </x-header>
         <div class="stats-box">
@@ -77,7 +76,8 @@
         methods:{
             ...mapMutations({
                 handleGetItemList:'common/item/getItemList',
-                handleGetList:'common/item/getList'
+                handleGetList:'common/item/getList',
+                handleExport:'common/item/export',
             })
         }
     }

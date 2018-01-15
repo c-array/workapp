@@ -81,6 +81,19 @@ export default {
                 state.vm.itemList = [];
                 this.commit('common/item/getList');
             }
+        },
+        export(state,params){
+            http.post({
+                url:'/exportItem',
+                data:state.formModel,
+                type:'json',
+                success: url => {
+                    window.location.href = "http://192.168.1.8:8000" + url;
+                },
+                error: msg => {
+                    Vue.$vux.toast.text(msg, 'top');
+                }
+            })
         }
     }
 }

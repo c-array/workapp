@@ -145,6 +145,19 @@ export default {
         showDate(state,key){
             state.vm.dateKey = key;
             state.vm.dateVisible = true;
+        },
+        export(state,params){
+            http.post({
+                url:'/exportDepartment',
+                data:state.formModel,
+                type:'json',
+                success: url => {
+                    window.location.href = "http://192.168.1.8:8000" + url;
+                },
+                error: msg => {
+                    Vue.$vux.toast.text(msg, 'top');
+                }
+            })
         }
     }
 }

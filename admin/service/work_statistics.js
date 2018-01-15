@@ -13,14 +13,6 @@ var workSubtask = db.workSubtask;
 var workProductProject = db.workProductProject;
 var workDepartment = db.workDepartment
 
-function fillIn(value){
-    if(value < 10){
-        return "0" + value;
-    }else{
-        return value;
-    }
-}
-
 //我和同事
 router.post('/work/statsMyColleague',function(req,res,next){
     var param = req.body;
@@ -491,63 +483,6 @@ router.post('/work/statsPeople',function (req,res,next) {
             });
         }
     })
-
-    /* workProductProject.all({
-        where:where,
-        attributes: ['id','prName','type'],
-        group:'realname',
-        include:{
-            model:workDaily,
-            attributes: [
-                [sequelize.fn('SUM', sequelize.col('usedTime')),'usedTime'],
-            ],
-            include:{
-                model:workAdmin,
-                attributes: [
-                    'realname'
-                    //[sequelize.fn('CONCAT',sequelize.col('realname')),'realname']
-                ]
-            }
-        }
-    }).then(function (data) {
-        if(data){
-            res.send({
-                status:0,
-                message:'成功',
-                result:data
-            });
-        }else{
-            res.send({
-                status:1,
-                message:'失败',
-                result:''
-            });
-        }
-    }).catch(function (err) {
-        console.log(err);
-        res.send({
-            status:1,
-            message:'失败',
-            result:''
-        });
-    }) */
 });
-
-
-function getValue(arr,key1,key2,type) {
-    var tempArr = {
-        xAxis:[],
-        data:[]
-    };
-    for(var i = 0; i < arr.length; i++){
-        if(type == 2){
-            tempArr.xAxis.push(arr[i].work_product_project[key1]);
-        }else{
-            tempArr.xAxis.push(arr[i][key1]);
-        }
-        tempArr.data.push(arr[i][key2]);
-    }
-    return tempArr;
-}
 
 module.exports = router;

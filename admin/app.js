@@ -12,6 +12,7 @@ var week = require('./service/work_week');
 var item = require('./service/work_product_project');
 var department = require('./service/work_department');
 var statistics = require('./service/work_statistics');
+var wexport = require('./service/work_export');
 
 //创建http服务器
 var port = process.env.Port || 8000;
@@ -42,6 +43,7 @@ app.use('/', week);
 app.use('/', item);
 app.use('/', department);
 app.use('/', statistics);
+app.use('/', wexport);
 
 /**
  * 监听服务端口

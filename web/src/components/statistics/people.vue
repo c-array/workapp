@@ -2,7 +2,7 @@
     <div class="inner stats">
         <x-header title="统计分析-人月统计">
             <div slot="right" class="stats-head-right">
-                <i class="icon-list"></i>
+                <i @click="handleExport" class="icon-export"></i>
             </div>
         </x-header>
         <div class="stats-box">
@@ -57,12 +57,12 @@
         methods:{
             ...mapMutations({
                 handleGetList:'common/people/getList',
-                handleGetItemList:'common/people/getItemList'
+                handleGetItemList:'common/people/getItemList',
+                handleExport:'common/people/export',
             }),
             handleCharts(item){
-                console.log(item);
                 this.$router.push({path:'/main/people-charts',query:{itemId:item.id}});
-            }
+            },
         }
     }
 </script>

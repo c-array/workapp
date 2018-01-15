@@ -2,8 +2,7 @@
     <div class="inner stats">
         <x-header title="统计分析-部门统计">
             <div slot="right" class="stats-head-right">
-                <i class="icon-list"></i>
-                <i class="icon-curve"></i>
+                <i @click="handleExport" class="icon-export"></i>
             </div>
         </x-header>
         <div class="stats-box">
@@ -136,7 +135,8 @@
                 handleClear:'common/department/clear',
                 getList:'common/department/getList',
                 getDate:'common/department/getDate',
-                handleShowDate:'common/department/showDate'
+                handleShowDate:'common/department/showDate',
+                handleExport:'common/department/export',
             }),
             handleFormat(value){
                 return value[0] + ' 至 ' + value[1];
