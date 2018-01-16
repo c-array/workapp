@@ -4,7 +4,7 @@
 var Sequelize = require('sequelize');
 var config = {
     username: 'root',
-    password: 'root',
+    password: 'Yka@yunkouan.cao',
     database: 'work',
     host: "localhost",
     dialect: 'mysql',
@@ -37,7 +37,7 @@ db.workDepartment.hasMany(db.workAdmin, {foreignKey:'departmentId', targetKey:'i
 db.workAdmin.belongsTo(db.workDepartment, {foreignKey:'departmentId', targetKey:'id'});
 
 //用户表、角色表建立关系（多对多关联）
-db.workAdmin.belongsToMany(db.workRole,{through:'work_admin_role',foreignKey:'adminId',targetKey:'id'});
+db.workAdmin.belongsToMany(db.workRole,{through:'work_admin_role',foreignKey:'userId',targetKey:'id'});
 db.workRole.belongsToMany(db.workAdmin,{through:'work_admin_role',foreignKey:'roleId',targetKey:'id'});
 
 //角色表、菜单表建立关系（多对多关联）

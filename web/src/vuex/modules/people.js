@@ -100,8 +100,7 @@ export default {
                 data:state.formModel,
                 type:'json',
                 success: url => {
-                    window.location.href = "http://192.168.1.8:8000" + url;
-                    //state.peopleList = data;
+                    window.location.href = this.state.common.exportIP + url;
                 },
                 error: msg => {
                     Vue.$vux.toast.text(msg, 'top');

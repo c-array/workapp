@@ -40,7 +40,7 @@
                         id:3,
                         name:'系统管理',
                         icon:'icon-guanli',
-                        url:'/main/day'
+                        url:'/main/system'
                     },
                     {
                         id:4,

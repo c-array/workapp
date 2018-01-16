@@ -1,12 +1,7 @@
 <template>
     <!-- 统计分析 -->
     <div class="inner stats">
-        <x-header title="统计分析">
-            <div slot="right" class="stats-head-right">
-                <i class="icon-list"></i>
-                <i class="icon-curve"></i>
-            </div>
-        </x-header>
+        <x-header title="统计分析"></x-header>
         <grid :cols="2">
             <grid-item link="/main/colleague">
                 <i class="icon-colleague"></i>

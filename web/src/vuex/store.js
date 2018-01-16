@@ -5,6 +5,7 @@ import colleague from './modules/colleague';
 import department from './modules/department';
 import item from './modules/item';
 import people from './modules/people';
+import user from './modules/user';
 Vue.use(Vuex);
 export default new Vuex.Store({
     modules: {
@@ -12,6 +13,7 @@ export default new Vuex.Store({
             namespaced: true,
             state:{
                 userInfo:localStorage.userInfo ? JSON.parse(localStorage.userInfo) : {},
+                exportIP:window.location.protocol + "//" + window.location.hostname + ":8000",
                 histogramConfig: {
                     callback(options) {
                         options.title.textStyle = {
@@ -129,7 +131,8 @@ export default new Vuex.Store({
                 colleague:colleague,
                 department:department,
                 item:item,
-                people:people
+                people:people,
+                user:user
             }
         }
     }

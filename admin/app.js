@@ -6,6 +6,7 @@ var sqlDb = require('./config/config');
 
 //加载数据服务
 var admin = require('./service/work_admin');
+var role = require('./service/work_role');
 var menu = require('./service/work_menu');
 var daily = require('./service/work_daily');
 var week = require('./service/work_week');
@@ -37,6 +38,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //加载服务
 app.use('/', admin);
+app.use('/', role);
 app.use('/', menu);
 app.use('/', daily);
 app.use('/', week);

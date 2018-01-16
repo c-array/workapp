@@ -5,6 +5,9 @@ var express = require('express');
 var router = express.Router();
 var db = require('../config/config');
 var workAdmin = db.workAdmin;
+var workDepartment = db.workDepartment;
+var workAdminRole = db.workAdminRole;
+var workRole = db.workRole;
 router.post('/work/login',function(req,res,next){
     var param = req.body;
     var crypto = require('crypto'); //引用crypto模块，用于处理密码加密
@@ -43,7 +46,15 @@ router.get('/work/users',function(req,res,next){
                 {username:['admin']}
             ]
         },
-        attributes: [['id', 'value'],['realname','name']]
+        include:[
+            {
+                model:workDepartment,
+                attributes: ['depName']
+            },
+            {
+                model:workRole
+            }
+        ]
     }).then(function(data){
         if(data){
             res.send({
@@ -59,6 +70,7 @@ router.get('/work/users',function(req,res,next){
             });
         }
     }).catch(function(err){
+        console.log(err);
         res.send({
             status:1,
             message:'失败',

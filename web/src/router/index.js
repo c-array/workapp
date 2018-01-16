@@ -72,6 +72,14 @@ export default new Router({
           meta: { // 添加该字段，表示进入这个路由是需要登录的
             requireAuth: true,
           }
+        },
+        {
+          path: 'system',
+          name: 'system',
+          component: resolve => require(['@/components/system/index'],resolve),
+          meta: { // 添加该字段，表示进入这个路由是需要登录的
+            requireAuth: true,
+          }
         }
       ]
     },
@@ -79,6 +87,14 @@ export default new Router({
       path: '/day-form',
       name: 'day-form',
       component: resolve => require(['@/components/day/form'],resolve),
+      meta: { // 添加该字段，表示进入这个路由是需要登录的
+        requireAuth: true,
+      }
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: resolve => require(['@/components/system/user/index'],resolve),
       meta: { // 添加该字段，表示进入这个路由是需要登录的
         requireAuth: true,
       }
