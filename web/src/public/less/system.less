@@ -26,6 +26,19 @@
 }
 
 .user-main{
+    .user-search{
+        display: flex;
+        background-color: #4db6ac;
+        span{
+            flex: 1;
+            color: #fff;
+            padding: 0 10px;
+            font-size: 14px;
+            height: 35px;
+            line-height: 35px;
+            border-right: 1px solid #3baca1;
+        }
+    }
     ul{
         height: calc(~"100% - 46px");
         overflow-y: auto;
@@ -38,6 +51,7 @@
         display: flex;
         justify-content: space-between;
         white-space: nowrap;
+        overflow: hidden;
         span{
             padding: 5px 10px;
         }

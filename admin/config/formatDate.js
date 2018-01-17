@@ -11,7 +11,7 @@ function formatDate(params) {
     }
     var time;
     var d = '';
-    if(params.date){
+    if(params && params.date){
         d = new Date(params.date);
     }else {
         d = new Date();
@@ -22,15 +22,15 @@ function formatDate(params) {
     var hour = d.getHours();
     var minute = d.getMinutes();
     var second = d.getSeconds();
-    if(params.type == 'yyyy-mm-dd'){
+    if(params && params.type == 'yyyy-mm-dd'){
         time = year + '-' + fillIn(month) + '-' + fillIn(ndate);
-    }else if(params.type == 'yyyy-mm'){
+    }else if(params && params.type == 'yyyy-mm'){
         time = year + '-' + fillIn(month);
-    }else if(params.type == 'mm-dd'){
+    }else if(params && params.type == 'mm-dd'){
         time = fillIn(month) + '-' + fillIn(ndate);
-    }else if(params.type == 'hh:mm:ss'){
+    }else if(params && params.type == 'hh:mm:ss'){
         time = fillIn(hour) + ':' + fillIn(minute) + ':' + fillIn(second);
-    }else if(params.type == 'time'){
+    }else if(params && params.type == 'time'){
         time = d.getTime();
     }else{
         time = year + '-' + fillIn(month) + '-' + fillIn(ndate) + ' ' + fillIn(hour) + ':' + fillIn(minute) + ':' + fillIn(second);
