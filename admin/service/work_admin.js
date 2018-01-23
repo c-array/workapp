@@ -12,10 +12,10 @@ var workAdminRole = db.workAdminRole;
 var workRole = db.workRole;
 
 //登录
-router.post('/work/login',function(req,res,next){
+router.post('/work/login',async(req,res,next) => {
     var param = req.body;
-    param.password = md5Encrypt(param.password); //密码加密
-    workAdmin.find({where:{username:param.username,password:param.password}}).then(function(data){
+        param.password = md5Encrypt(param.password); //密码加密
+        let data = await workAdmin.find({where:{username:param.username,password:param.password}})
         if(data){
             res.send({
                 status:0,
@@ -29,13 +29,6 @@ router.post('/work/login',function(req,res,next){
                 result:''
             });
         }
-    }).catch(function(err){
-        res.send({
-            status:1,
-            message:'失败',
-            result:err
-        });
-    });
 });
 
 //查询用户列表

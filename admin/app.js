@@ -1,3 +1,6 @@
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
 var express = require('express');
 var bodyParser = require('body-parser');
 var sequelize = require('sequelize');
@@ -14,9 +17,6 @@ var item = require('./service/work_product_project');
 var department = require('./service/work_department');
 var statistics = require('./service/work_statistics');
 var wexport = require('./service/work_export');
-
-//创建http服务器
-var port = process.env.Port || 8000;
 
 //连接数据库并同步模型到数据库
 sqlDb.sequelize.sync({force: false,logging:false}).then(function () {
@@ -50,5 +50,13 @@ app.use('/', wexport);
 /**
  * 监听服务端口
  * */
-app.listen(port);
-console.log("监听" + port + "端口成功！");
+var httpServer = http.createServer(app);
+var options = {
+    key:fs.readFileSync("./sslcert/sever.key"),
+    cert:fs.readFileSync("./sslcert/sever.crt")
+}
+var httpsServer = https.createServer(options,app);
+httpServer.listen(80)
+httpsServer.listen(443);
+console.log("监听" + 80 + "端口成功！");
+console.log("监听" + 443 + "端口成功！");
