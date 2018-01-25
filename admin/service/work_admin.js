@@ -119,10 +119,27 @@ router.post('/work/userSearch',function(req,res,next){
     var param = req.body;
     var where = {};
     for (const key in param) {
-        where[key] = param[key];
+        if(param[key]){
+            if(key == "realname" || key == "post"){
+                where[key] = {
+                    $like: '%'+ param[key] +'%'
+                };
+            }else{
+                where[key] = param[key];
+            }
+        }
     }
-    workAdmin.findOne({
-        where:where
+    workAdmin.all({
+        where:where,
+        include:[
+            {
+                model:workDepartment,
+                attributes: ['depName']
+            },
+            {
+                model:workRole
+            }
+        ]
     }).then(function(data){
         if(data){
             res.send({
