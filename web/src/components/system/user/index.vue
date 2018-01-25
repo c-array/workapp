@@ -2,26 +2,15 @@
     <div class="inner user-main">
         <x-header class="x-header" title="用户管理">
             <div slot="right" class="x-header-right">
-                <i class="icon-search"></i>
+                <i @click="vm.searchVisible = !vm.searchVisible" class="icon-search"></i>
                 <i @click="gotoForm()" class="icon-add"></i>
             </div>
         </x-header>
-        <div class="user-search">
-            <span>
-                姓名
-                <i v-if="queryModel.username" @click="handleClear(['username','userId'])" class="icon-clear"></i>
-            </span>
-            <span>部门</span>
-            <span>岗位</span>
-        </div>
         <ul>
             <li v-for="(item,index) in userList">
-                <p>
-                    <span>用户名：{{item.username}}</span>
-                    <span>真实姓名：{{item.realname}}</span>
-                </p>
+                <p class="title"><span>真实姓名：{{item.realname}}</span></p>
                 <p><span>部门：{{item.work_department.depName}}</span><span>职位：{{item.post}}</span></p>
-                <p><span>手机号：{{item.phone}}</span><span>QQ：{{item.qq}}</span></p>
+                <p><span>手机号：{{item.phone}}</span></p>
                 <p><span>邮箱：{{item.email}}</span></p>
                 <p>
                     <span>创建日期：{{item.createTime}}</span>
@@ -44,6 +33,9 @@
             </popup-header>
             <checklist v-model="vm.checkRole" :options="roleList"></checklist>
         </popup>
+        <popup position="right" width="90%" v-model="vm.searchVisible">
+            <user-search></user-search>
+        </popup>
     </div>
 </template>
 <style scoped lang="less">
@@ -52,6 +44,7 @@
 <script>
     import {mapState,mapMutations} from 'vuex';
     import { Grid, GridItem, XHeader, XButton, Popup, PopupHeader, Checklist, CellFormPreview, Group, Cell} from 'vux';
+    import userSearch from "./search.vue";
     export default {
         name:'user',
         data () {
@@ -63,8 +56,7 @@
             ...mapState({
                 userList: state => state.common.user.userList,
                 roleList: state => state.common.user.roleList,
-                vm:state => state.common.user.vm,
-                queryModel:state => state.common.user.queryModel
+                vm:state => state.common.user.vm
             })
         },
         components: {
@@ -76,7 +68,8 @@
             Cell,
             Popup,
             PopupHeader,
-            Checklist
+            Checklist,
+            userSearch
         },
         created () {
           this.query();  

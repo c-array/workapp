@@ -8,6 +8,7 @@ export default {
         roleList:[],
         vm:{
             visible:false,
+            searchVisible:false, //搜索弹窗显示
             checkRole:[], //选中的角色
             currentUserInfo:"", //存储当前用户信息
             departmentList:[] //存储部门数据
@@ -22,9 +23,8 @@ export default {
             qq:""
         },
         queryModel:{
-            username:"",
+            realname:"",
             departmentId:"",
-            departmentName:"",
             post:""
         }
     },
@@ -82,6 +82,20 @@ export default {
                 },
                 success: data => {
                     state.formModel = data;
+                },
+                error: msg => {
+                    Vue.$vux.toast.text(msg, 'top');
+                }
+            })
+        },
+        getUserSearch(state){
+            http.post({
+                url:'/userSearch',
+                data:state.queryModel,
+                type:"json",
+                success: data => {
+                    state.userList = data;
+                    state.vm.searchVisible = false;
                 },
                 error: msg => {
                     Vue.$vux.toast.text(msg, 'top');

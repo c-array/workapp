@@ -74,12 +74,55 @@ router.get('/work/users',function(req,res,next){
     });
 });
 
-//查询单个用户
+//根据id查询单个用户
 router.get('/work/userItem',function(req,res,next){
+    var userId = req.query.userId;
+    if(!userId){
+        res.send({
+            status:1,
+            message:'用户id不能为空！',
+            result:''
+        });
+        return false;
+    }
+
     workAdmin.findOne({
         where:{
-            id:req.query.userId
+            id:userId
         }
+    }).then(function(data){
+        if(data){
+            res.send({
+                status:0,
+                message:'成功',
+                result:data
+            });
+        }else{
+            res.send({
+                status:1,
+                message:'失败！',
+                result:''
+            });
+        }
+    }).catch(function(err){
+        console.log(err);
+        res.send({
+            status:1,
+            message:'失败',
+            result:err
+        });
+    });
+});
+
+//根据id查询单个用户
+router.post('/work/userSearch',function(req,res,next){
+    var param = req.body;
+    var where = {};
+    for (const key in param) {
+        where[key] = param[key];
+    }
+    workAdmin.findOne({
+        where:where
     }).then(function(data){
         if(data){
             res.send({

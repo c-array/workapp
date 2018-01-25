@@ -56,7 +56,7 @@ var options = {
     cert:fs.readFileSync("./sslcert/sever.crt")
 }
 var httpsServer = https.createServer(options,app);
-httpServer.listen(80)
-httpsServer.listen(443);
-console.log("监听" + 80 + "端口成功！");
-console.log("监听" + 443 + "端口成功！");
+httpServer.listen(8000)
+httpsServer.listen(8001);
+console.log("监听" + 8000 + "端口成功！");
+console.log("监听" + 8001 + "端口成功！");
