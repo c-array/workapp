@@ -6,6 +6,7 @@ import department from './modules/department';
 import item from './modules/item';
 import people from './modules/people';
 import user from './modules/user';
+import role from './modules/role';
 Vue.use(Vuex);
 export default new Vuex.Store({
     modules: {
@@ -132,7 +133,8 @@ export default new Vuex.Store({
                 department:department,
                 item:item,
                 people:people,
-                user:user
+                user:user,
+                role:role
             }
         }
     }

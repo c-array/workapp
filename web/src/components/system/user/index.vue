@@ -1,5 +1,5 @@
 <template>
-    <div class="inner user-main">
+    <div class="inner list-main">
         <x-header class="x-header" title="用户管理">
             <div slot="right" class="x-header-right">
                 <i @click="vm.searchVisible = !vm.searchVisible" class="icon-search"></i>
@@ -43,7 +43,7 @@
 </style>
 <script>
     import {mapState,mapMutations} from 'vuex';
-    import { Grid, GridItem, XHeader, XButton, Popup, PopupHeader, Checklist, CellFormPreview, Group, Cell} from 'vux';
+    import { XHeader, Popup, PopupHeader, Checklist} from 'vux';
     import userSearch from "./search.vue";
     export default {
         name:'user',
@@ -60,12 +60,7 @@
             })
         },
         components: {
-            Grid,
-            GridItem,
             XHeader,
-            CellFormPreview,
-            Group,
-            Cell,
             Popup,
             PopupHeader,
             Checklist,

@@ -24,7 +24,7 @@ export default {
         },
         queryModel:{
             realname:"",
-            departmentId:"",
+            departmentId:0,
             post:""
         }
     },
@@ -46,7 +46,15 @@ export default {
                 url:'/roles',
                 success: data => {
                     state.vm.checkRole = [];
-                    state.roleList = data;
+                    let arr = [];
+                    data.forEach((item,key) => {
+                        arr.push({
+                            key:item.id,
+                            value:item.roleName,
+                            inlineDesc:item.inlineDesc
+                        })
+                    })
+                    state.roleList = arr;
                     for (const item of params.work_roles) {
                         state.vm.checkRole.push(item.id);
                     }
@@ -106,6 +114,10 @@ export default {
             http.get({
                 url:'/departments',
                 success: data => {
+                    data.unshift({
+                        id:0,
+                        depName:"全部"
+                    })
                     state.vm.departmentList = data;
                 },
                 error: msg => {

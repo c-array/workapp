@@ -27,20 +27,7 @@
 .vux-popup-dialog{
     background-color: #fff;
 }
-.user-main{
-    .user-search{
-        display: flex;
-        background-color: #4db6ac;
-        span{
-            flex: 1;
-            color: #fff;
-            padding: 0 10px;
-            font-size: 14px;
-            height: 35px;
-            line-height: 35px;
-            border-right: 1px solid #3baca1;
-        }
-    }
+.list-main{
     ul{
         height: calc(~"100% - 46px");
         overflow-y: auto;
@@ -66,7 +53,7 @@
         }
         i{
             margin-left: 5px;
-            &.icon-partner{
+            &.icon-partner,&.icon-authority{
                 color: #d500f9;
             }
             &.icon-edit{
@@ -75,6 +62,16 @@
             &.icon-delete{
                 color: #607d8b;
             }
+        }
+    }
+}
+
+.form-btn{
+    padding: 20px 10px 0;
+    button{
+        background: #009688;
+        &:active{
+            background: #009688 + 20%;
         }
     }
 }

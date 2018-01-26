@@ -119,7 +119,7 @@ router.post('/work/userSearch',function(req,res,next){
     var param = req.body;
     var where = {};
     for (const key in param) {
-        if(param[key]){
+        if(param[key] && param[key] != 0){
             if(key == "realname" || key == "post"){
                 where[key] = {
                     $like: '%'+ param[key] +'%'

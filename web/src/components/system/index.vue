@@ -11,7 +11,7 @@
                 <i class="icon-user-mag"></i>
                 <p>用户管理</p>
             </grid-item>
-            <grid-item link="/main/department">
+            <grid-item link="/role">
                 <i class="icon-role-mag"></i>
                 <p>角色管理</p>
             </grid-item>
