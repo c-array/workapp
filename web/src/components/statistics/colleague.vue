@@ -115,14 +115,14 @@
             filterName() { //过滤用户名
                 if(this.vm.userList && this.vm.userList.length > 0){
                     let data = this.vm.userList[0].filter((obj,index) => {
-                            if (this.vm.username) {
-                                if (obj.name.indexOf(this.vm.username) >= 0) {
-                                    return obj;
-                                }
-                            } else {
+                        if (this.vm.username) {
+                            if (obj.name.indexOf(this.vm.username) >= 0) {
                                 return obj;
                             }
-                        })
+                        } else {
+                            return obj;
+                        }
+                    })
                     return [data];
                 }else{
                     return [];

@@ -124,7 +124,14 @@ export default {
             http.get({
                 url:'/users',
                 success: data => {
-                    state.vm.userList = [data];
+                    var arr = [];
+                    data.forEach((item,key) => {
+                        arr.push({
+                            name:item.realname,
+                            value:item.id
+                        })
+                    })
+                    state.vm.userList = [arr];
                     state.vm.visible = true;
                 },
                 error: msg => {
