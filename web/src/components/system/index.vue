@@ -1,11 +1,6 @@
 <template>
     <div class="inner system">
-        <x-header class="x-header" title="系统管理">
-            <!-- <div slot="right" class="x-header-right">
-                <i class="icon-list"></i>
-                <i class="icon-curve"></i>
-            </div> -->
-        </x-header>
+        <x-header class="x-header" title="系统管理"></x-header>
         <grid :cols="2">
             <grid-item link="/user">
                 <i class="icon-user-mag"></i>
@@ -15,7 +10,7 @@
                 <i class="icon-role-mag"></i>
                 <p>角色管理</p>
             </grid-item>
-            <grid-item link="/main/item">
+            <grid-item link="/dept">
                 <i class="icon-dep-mag"></i>
                 <p>部门管理</p>
             </grid-item>

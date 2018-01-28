@@ -122,6 +122,22 @@ export default new Router({
       meta: { // 添加该字段，表示进入这个路由是需要登录的
         requireAuth: true,
       }
+    },
+    {
+      path: '/dept',
+      name: 'dept',
+      component: resolve => require(['@/components/system/dept/index'],resolve),
+      meta: { // 添加该字段，表示进入这个路由是需要登录的
+        requireAuth: true,
+      }
+    },
+    {
+      path: '/dept-form',
+      name: 'dept-form',
+      component: resolve => require(['@/components/system/dept/form'],resolve),
+      meta: { // 添加该字段，表示进入这个路由是需要登录的
+        requireAuth: true,
+      }
     }
   ]
 })
