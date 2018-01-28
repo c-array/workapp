@@ -45,14 +45,77 @@ export default {
             state.roleInfo = params.roleInfo;
             http.get({
                 url:'/menus',
-                success:data => {
-                    state.menuList = data;
+                success:result => {
+                    result.forEach((item,key) => {
+                        item.checked = false;
+                        item.visible = false;
+                        item.second.forEach((obj,index) => {
+                            obj.checked = false;
+                            state.roleInfo.work_menus.forEach((value,k) => {
+                                if(item.id == value.id){
+                                    item.checked = true;
+                                }
+                                if(obj.id == value.id){
+                                    obj.checked = true;
+                                }
+                            })
+                        })
+                    })
+                    state.menuList = result;
                     state.vm.visible = true;
                 },
                 error: msg => {
                     Vue.$vux.toast.text(msg, 'top');
                 }
             })
+        },
+        saveAuthority(state,params){
+            let menus = [];
+            state.menuList.forEach((item,key) => {
+                if(item.checked){
+                    menus.push(item.id);
+                }
+                item.second.forEach((obj,index) => {
+                    if(obj.checked){
+                        menus.push(obj.id);
+                    }
+                })
+            })
+            http.post({
+                url:"/saveAuthority",
+                data:{
+                    roleId:state.roleInfo.id,
+                    menus:menus
+                },
+                type:'json',
+                success: data => {
+                    state.vm.visible = false;
+                    this.commit({
+                        type:'common/role/getList'
+                    });
+                    Vue.$vux.toast.text("权限分配成功！", 'top');
+                },
+                error: msg => {
+                    Vue.$vux.toast.text(msg, 'top');
+                }
+            })
+        },
+        setCheck(state,params){
+            if(params.type == 1){
+                params.item.checked = !params.item.checked;
+                params.item.second.forEach((item,key) => {
+                    item.checked = params.item.checked;
+                })
+            }else if(params.type == 2){
+                params.obj.checked = !params.obj.checked;
+                let flag = false;
+                params.item.second.forEach((item,key) => {
+                    if(item.checked){
+                        flag = true;
+                    }
+                })
+                params.item.checked = flag;
+            }
         },
         clear(state,params){
             for (const key in state.formModel) {

@@ -6,10 +6,13 @@ var router = express.Router();
 var db = require('../config/config');
 var formatDate = require('../config/formatDate');
 var workRole = db.workRole;
+var workMenu = db.workMenu;
+var workRoleMenu = db.workRoleMenu;
 
-//查询用户列表
-router.get('/work/roles',function(req,res,next){
-    workRole.all().then(function(data){
+//查询角色列表
+router.get('/work/roles',async(req,res,next) => {
+    try{
+        let data = await workRole.all({include:{model:workMenu,group:'name'}});
         if(data){
             res.send({
                 status:0,
@@ -23,13 +26,14 @@ router.get('/work/roles',function(req,res,next){
                 result:''
             });
         }
-    }).catch(function(err){
+    }catch(err){
+        console.log(err);
         res.send({
             status:1,
             message:'失败',
             result:err
         });
-    });
+    }
 });
 
 //根据id查询单个角色
@@ -160,5 +164,50 @@ router.get('/work/deleteRole',async (req,res,next) => {
         });
     }
 });
+
+//保存权限
+router.post('/work/saveAuthority',async(req,res,next) => {
+    var param = req.body;
+    if(!param.roleId){
+        res.send({
+            status:1,
+            message:'保存权限失败,角色id不能为空！',
+            result:''
+        });
+        return false;
+    }
+    try{
+        var arr = [];
+        param.menus.forEach(function(menuId,key){
+            arr.push({
+                roleId:param.roleId,
+                menuId:menuId
+            })
+        });
+        workRoleMenu.destroy({where:{roleId:param.roleId}}).then(async data => {
+            let result = await workRoleMenu.bulkCreate(arr);
+            if(result){
+                res.send({
+                    status:0,
+                    message:'分配权限成功',
+                    result:result
+                });
+            }else{
+                res.send({
+                    status:1,
+                    message:'保存权限',
+                    result:""
+                });
+            }
+        });
+    }catch(err){
+        console.log(err);
+        res.send({
+            status:1,
+            message:'保存权限失败！',
+            result:''
+        });
+    }
+})
 
 module.exports = router;

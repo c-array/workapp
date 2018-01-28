@@ -1,11 +1,53 @@
 .tree-main{
+    padding: 10px 15px 10px;
+    height: calc(~"100% - 44px");
+    overflow-y: auto;
     li{
         display: flex;
+        flex-direction: column;
     }
     .tree-level1{
+        padding-bottom: 10px;
         i{
-            font-size: 16px;
+            font-size: 18px;
             color: #dcdfe6;
+            vertical-align: middle;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            &.awwor{
+                font-size: 16px;
+                color: #c0c4cc;
+            }
+        }
+    }
+    .checked{
+        margin: 0 5px;
+        &.active{
+            color: #409eff;
+        }
+    }
+    span{
+        vertical-align: middle;
+        font-size: 16px;
+    }
+    .tree-level2{
+        padding: 0 0 0 54px;
+        overflow: hidden;
+        transition: height .5s;
+        &.hide{
+            height: 0 !important;
+        }
+        p{
+            padding-bottom: 10px;
+        }
+        i{
+            width: 20px;
+            height: 20px;
+            font-size: 18px;
+            color: #dcdfe6;
+            vertical-align: middle;
             &.awwor{
                 font-size: 10px;
                 color: #c0c4cc;

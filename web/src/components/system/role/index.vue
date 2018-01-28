@@ -1,35 +1,48 @@
 <template>
-    <div class="inner list-main">
+    <div class="inner">
         <x-header class="x-header" title="角色管理">
             <div slot="right" class="x-header-right">
                 <i @click="gotoForm()" class="icon-add"></i>
             </div>
         </x-header>
-        <ul>
-            <li v-for="(item,index) in roleList">
-                <p class="title"><span>角色名称：{{item.roleName}}</span></p>
-                <p><span>角色描述：{{item.roleDescription}}</span></p>
-                <p>
-                    <span>创建日期：{{item.createTime}}</span>
-                    <span>
-                        <i @click="getAuthority(item)" class="icon-authority"></i>
-                        <i @click="gotoForm(item)" class="icon-edit"></i>
-                        <i @click="handleDelete(item.id)" class="icon-delete"></i>
-                    </span>
-                </p>
-            </li>
-        </ul>
-        <popup v-model="vm.visible" position="bottom" height="80%">
+        <div class="list-main">
+            <ul>
+                <li v-for="(item,index) in roleList">
+                    <p class="title"><span>角色名称：{{item.roleName}}</span></p>
+                    <p><span>角色描述：{{item.roleDescription}}</span></p>
+                    <p>
+                        <span>创建日期：{{item.createTime}}</span>
+                        <span>
+                            <i @click="getAuthority(item)" class="icon-authority"></i>
+                            <i @click="gotoForm(item)" class="icon-edit"></i>
+                            <i @click="handleDelete(item.id)" class="icon-delete"></i>
+                        </span>
+                    </p>
+                </li>
+            </ul>
+        </div>
+        <popup v-model="vm.visible" height="80%" position="bottom">
+            <popup-header 
+                left-text="取消" 
+                right-text="确定" 
+                :title="roleInfo.roleName + '-分配权限'" 
+                :show-bottom-border="false" 
+                @on-click-left="vm.visible = false"
+                @on-click-right="saveAuthority">
+            </popup-header>
             <div class="tree-main">
                 <ul>
-                    <li>
+                    <li v-for="item in menuList">
                         <p class="tree-level1">
-                            <i class="icon-left awwor"></i>
-                            <i class="icon-unchecked"></i>
-                            <span>一级1</span>
+                            <i @click="item.visible = !item.visible" class="awwor" :class="item.visible ? 'icon-bottom' : 'icon-left'"></i>
+                            <i @click="setCheck({type:1,item:item})" class="checked" :class="item.checked ? 'icon-checked active' : 'icon-unchecked'"></i>
+                            <span>{{item.name}}</span>
                         </p>
-                        <div class="tree-level2">
-                            <p><i class="icon-unchecked"></i><span>二级1</span></p>
+                        <div class="tree-level2" :style="{height:item.second.length * 32 + 'px'}" :class="{'hide':!item.visible}">
+                            <p v-for="obj in item.second">
+                                <i @click="setCheck({type:2,item:item,obj:obj})" class="checked" :class="obj.checked ? 'icon-checked active' : 'icon-unchecked'"></i>
+                                <span>{{obj.name}}</span>
+                            </p>
                         </div>
                     </li>
                 </ul>
@@ -48,7 +61,9 @@
         computed:{
             ...mapState({
                 roleList: state => state.common.role.roleList,
-                vm: state => state.common.role.vm
+                vm: state => state.common.role.vm,
+                roleInfo: state => state.common.role.roleInfo,
+                menuList: state => state.common.role.menuList
             })
         },
         components: {
@@ -63,6 +78,8 @@
         methods: {
             ...mapMutations({
                 query:'common/role/getList',
+                setCheck:'common/role/setCheck',
+                saveAuthority:'common/role/saveAuthority'
             }),
             gotoForm(item){
                 this.$store.commit('common/role/clear');
