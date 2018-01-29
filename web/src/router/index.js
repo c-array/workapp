@@ -138,6 +138,22 @@ export default new Router({
       meta: { // 添加该字段，表示进入这个路由是需要登录的
         requireAuth: true,
       }
+    },
+    {
+      path: '/proitem',
+      name: 'proitem',
+      component: resolve => require(['@/components/system/proitem/index'],resolve),
+      meta: { // 添加该字段，表示进入这个路由是需要登录的
+        requireAuth: true,
+      }
+    },
+    {
+      path: '/proitem-form',
+      name: 'proitem-form',
+      component: resolve => require(['@/components/system/proitem/form'],resolve),
+      meta: { // 添加该字段，表示进入这个路由是需要登录的
+        requireAuth: true,
+      }
     }
   ]
 })

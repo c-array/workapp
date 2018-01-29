@@ -14,7 +14,7 @@
                 <i class="icon-dep-mag"></i>
                 <p>部门管理</p>
             </grid-item>
-            <grid-item link="/main/people">
+            <grid-item link="/proitem">
                 <i class="icon-pro-mag"></i>
                 <p>产品/项目管理</p>
             </grid-item>
