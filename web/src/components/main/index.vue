@@ -46,7 +46,7 @@
                         id:4,
                         name:'我的',
                         icon:'icon-my',
-                        url:'/main/day'
+                        url:'/main/my'
                     }
                 ]
             }
