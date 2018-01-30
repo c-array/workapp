@@ -162,6 +162,30 @@ export default new Router({
       meta: { // 添加该字段，表示进入这个路由是需要登录的
         requireAuth: true,
       }
+    },
+    {
+      path: '/partner',
+      name: 'partner',
+      component: resolve => require(['@/components/my/partner'],resolve),
+      meta: { // 添加该字段，表示进入这个路由是需要登录的
+        requireAuth: true,
+      }
+    },
+    {
+      path: '/product',
+      name: 'product',
+      component: resolve => require(['@/components/my/product'],resolve),
+      meta: { // 添加该字段，表示进入这个路由是需要登录的
+        requireAuth: true,
+      }
+    },
+    {
+      path: '/project',
+      name: 'project',
+      component: resolve => require(['@/components/my/project'],resolve),
+      meta: { // 添加该字段，表示进入这个路由是需要登录的
+        requireAuth: true,
+      }
     }
   ]
 })

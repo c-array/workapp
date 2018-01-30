@@ -17,6 +17,7 @@ var item = require('./service/work_product_project');
 var department = require('./service/work_department');
 var statistics = require('./service/work_statistics');
 var wexport = require('./service/work_export');
+var my = require('./service/my');
 
 //连接数据库并同步模型到数据库
 sqlDb.sequelize.sync({force: false,logging:false}).then(function () {
@@ -46,6 +47,7 @@ app.use('/', item);
 app.use('/', department);
 app.use('/', statistics);
 app.use('/', wexport);
+app.use('/', my);
 
 /**
  * 监听服务端口

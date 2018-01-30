@@ -7,8 +7,11 @@ import store from './vuex/store';
 
 Vue.config.productionTip = false;
 
+import VueScroller from 'vue-scroller';
+Vue.use(VueScroller);
+
 //ui框架
-import  { ToastPlugin,ConfirmPlugin } from 'vux'
+import  { ToastPlugin,ConfirmPlugin } from 'vux';
 Vue.use(ToastPlugin);
 Vue.use(ConfirmPlugin);
 

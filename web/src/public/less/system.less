@@ -41,12 +41,9 @@
         p{
             display: flex;
             justify-content: space-between;
-            white-space: nowrap;
             overflow: hidden;
-            padding: 5px 10px;
-            &.title{
-                //color: #3baca1;
-            }
+            padding: 0 10px;
+            line-height: 26px;
             span{
                 padding: 5px 10px;
             }
@@ -62,6 +59,13 @@
                     color: #607d8b;
                 }
             }
+        }
+    }
+    &.list-inner{
+        position: relative;
+        height: calc(~"100% - 46px");
+        ul{
+            height: 100%;
         }
     }
 }
