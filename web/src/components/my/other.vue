@@ -1,6 +1,6 @@
 <template>
     <div class="inner">
-        <x-header class="x-header" title="我参与的项目"></x-header>
+        <x-header class="x-header" title="我参与的其他工作"></x-header>
         <div class="list-main list-inner">
             <scroller ref="myScroller" :on-refresh="refresh" :on-infinite="loadMore">
                 <group>
@@ -12,19 +12,19 @@
 </template>
 <style scoped lang="less">
     @import '../../public/less/system.less';
-    .list-item p {
+    .list-item p{
         padding-left: 30px;
     }
 </style>
 <script>
-    import { XHeader, Spinner, Group, Cell } from 'vux';
+    import {XHeader, Spinner, Group, Cell} from 'vux';
     export default {
-        name: 'partner',
-        data() {
+        name:'partner',
+        data () {
             return {
-                currentPage: -1,
-                pageSize: 15,
-                list: []
+                currentPage:-1,
+                pageSize:15,
+                list:[]
             }
         },
         components: {
@@ -33,50 +33,50 @@
             Group,
             Cell
         },
-        created() {
+        created () {
             //this.query();
         },
-        methods: {
-            query(param) {
+        methods:{
+            query(param){
                 this.$http.post({
-                    url: '/my-proitem',
-                    data: {
-                        userId: sessionStorage.userId,
-                        currentPage: this.currentPage,
-                        pageSize: this.pageSize,
-                        type: 2
+                    url:'/my-proitem',
+                    data:{
+                        userId:sessionStorage.userId,
+                        currentPage:this.currentPage,
+                        pageSize:this.pageSize,
+                        type:3
                     },
-                    type: "json",
+                    type:"json",
                     success: data => {
-                        if (data.length > 0) {
-                            if (param && param.done) {
+                        if(data.length > 0){
+                            if(param && param.done){
                                 setTimeout(_ => {
-                                    if (param.type == 1) {
+                                    if(param.type == 1){
                                         this.list = this.list.concat(data);
-                                    } else if (param.type == 2) {
+                                    }else if(param.type == 2){
                                         this.list = data;
                                     }
                                     param.done();
-                                }, 1000)
-                            } else {
+                                },1000)
+                            }else{
                                 this.list = data;
                             }
-                        } else {
+                        }else{
                             this.$refs.myScroller.finishInfinite(2);
                         }
                     },
-                    error: msg => {
+                    error:msg => {
                         this.$vux.toast.text(msg, 'top');
                     }
                 })
             },
-            loadMore(done) {
+            loadMore(done){
                 this.currentPage = this.currentPage + 1;
-                this.query({ type: 1, done: done });
+                this.query({type:1,done:done});
             },
-            refresh(state, done) {
+            refresh(state,done){
                 this.currentPage = 0;
-                this.query({ type: 2, done: done });
+                this.query({type:2,done:done});
             }
         }
     }

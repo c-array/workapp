@@ -29,12 +29,12 @@
                     <span>我参与的项目</span>
                 </div>
             </cell>
-            <cell link="/other" is-link>
+            <!-- <cell link="/other" is-link>
                 <div slot="icon">
                     <i class="icon-product purple"></i>
                     <span>我参与的其他工作</span>
                 </div>
-            </cell>
+            </cell> -->
         </group>
         <group class="my-group">
             <cell is-link>

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var sequelize = require('sequelize');
 var db = require('../config/config');
 var workAdmin = db.workAdmin;
 var workDaily = db.workDaily;
@@ -99,7 +100,7 @@ router.post('/work/my-proitem',async (req,res,next) => {
         return;
     }
     try{
-        let data = workDaily.all({ //产品投入时间
+        let data = await workDaily.all({ //产品投入时间
             where:{
                 userId:param.userId
             },
@@ -115,7 +116,7 @@ router.post('/work/my-proitem',async (req,res,next) => {
             include:[{
                 model:workProductProject,
                 where:{
-                    type:1
+                    type:param.type
                 },
                 attributes: ['id','prName']
             }]

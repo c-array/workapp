@@ -1,6 +1,8 @@
 <template>
     <div class="inner">
-        <x-header class="x-header" title="我的工作"></x-header>
+        <x-header class="x-header" title="我的工作">
+            <!-- <i @click="vm.visible = !vm.visible" class="icon-search"></i> -->
+        </x-header>
         <div class="list-main list-inner">
             <scroller ref="myScroller" :on-refresh="refresh" :on-infinite="loadMore">
                 <ul>
@@ -13,28 +15,35 @@
                 </ul>
             </scroller>
         </div>
+        <!-- <popup position="right" width="90%" v-model="vm.visible">
+            <user-search></user-search>
+        </popup> -->
     </div>
 </template>
 <style scoped lang="less">
     @import '../../public/less/system.less';
 </style>
 <script>
-    import {XHeader,Spinner} from 'vux';
+    import {XHeader,Spinner,Popup} from 'vux';
     export default {
         name:'partner',
         data () {
             return {
-                currentPage:0,
-                pageSize:10,
+                vm:{
+                    visible:false
+                },
+                currentPage:-1,
+                pageSize:15,
                 list:[]
             }
         },
         components: {
             XHeader,
-            Spinner
+            Spinner,
+            Popup
         },
         created () {
-            this.query();
+            //this.query();
         },
         methods:{
             query(param){
@@ -57,7 +66,7 @@
                                 param.done();
                             },1500)
                         }else{
-                            state.workList = data;
+                            this.list = data;
                         }
                     },
                     error:msg => {
