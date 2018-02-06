@@ -17,7 +17,7 @@ export default new Vuex.Store({
             namespaced: true,
             state:{
                 userInfo:localStorage.userInfo ? JSON.parse(localStorage.userInfo) : {},
-                exportIP:window.location.protocol + "//" + window.location.hostname + ":8000",
+                exportIP:window.location.protocol + "//" + window.location.hostname,
                 histogramConfig: {
                     callback(options) {
                         options.title.textStyle = {
