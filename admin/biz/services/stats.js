@@ -50,7 +50,7 @@ const getColleague = async param => {
             result:''
         }
     }
-    let data = statsDao.getColleague(where);
+    let data = await statsDao.getColleague(where);
     return response(data,'同事统计');
 }
 

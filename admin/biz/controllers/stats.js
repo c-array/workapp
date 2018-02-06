@@ -1,7 +1,7 @@
 const statsService = require('../services/stats');
 
 const getColleague = async (req, res, next) => {
-    let data = statsService.getColleague(req.body);
+    let data = await statsService.getColleague(req.body);
     res.send(data);
 }
 
