@@ -35,10 +35,7 @@ module.exports = function(sequelize, DataTypes) {
     usedTime: {
       type: "DOUBLE",
       allowNull: false,
-      defaultValue: '0',
-      get() {
-        return this.getDataValue('usedTime').toFixed(2);
-      }
+      defaultValue: '0'
     },
     status: {
       type: DataTypes.INTEGER(4),

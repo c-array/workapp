@@ -81,18 +81,18 @@ export default {
             }
             state.vm.loading = true;
             http.post({
-                url:'/statsMyColleague',
+                url:'/stats/colleague',
                 data:state.formModel,
                 type:'json',
                 success: data => {
                     setTimeout(_ => {
                         state.vm.loading = false;
                         state.vm.empty = false;
-                        data[0].forEach(function(item,key){
+                        data.colleague.forEach((item,key) => {
                             var arr = item.createDate.split('-');
                             item.createDate = arr[1] + '-' + arr[2];
                         })
-                        var itemPmData = [];
+                        /* var itemPmData = [];
                         var itemPjData = [];
                         data[1].forEach(function(item,key){
                             if(item.work_product_project.type == 1){
@@ -109,9 +109,9 @@ export default {
                             }
                         })
                         state.chartsData.pmData.rows = itemPmData;
-                        state.chartsData.pjData.rows = itemPjData;
-                        state.chartsData.dayData.rows = data[0];
-                        state.chartsData.otherData.rows = data[2];
+                        state.chartsData.pjData.rows = itemPjData; */
+                        state.chartsData.dayData.rows = data.colleague;
+                        //state.chartsData.otherData.rows = data[2];
                     },300);
                 },
                 error: msg => {

@@ -75,25 +75,13 @@
         },
         created(){
             if(this.taskId){
-                this.$http.post({
-                    url:'/daily',
-                    type:'json',
-                    data:{
-                        id:this.taskId
-                    },
-                    success:data => {
-                        this.$store.state.common.day.formModel = data;
-                        this.getPrItem();
-                    },
-                    error: msg => {
-                        this.$Toast(msg);
-                    }
-                })
+                this.getItem(this.taskId);
             }
         },
         methods: {
             ...mapMutations({
-                getPrItem:'common/day/getPrItem'
+                getPrItem:'common/day/getPrItem',
+                getItem:'common/day/getItem'
             }),
             handleSave(){
                 if(this.taskId){

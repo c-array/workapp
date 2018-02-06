@@ -3,8 +3,8 @@
  */
 var express = require('express');
 var async = require('async');
-var sequelize = require('sequelize');
 var router = express.Router();
+var sequelize = require('sequelize');
 var db = require('../config/config');
 var formatDate = require('../config/formatDate');
 var workAdmin = db.workAdmin;

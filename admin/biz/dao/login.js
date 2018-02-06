@@ -1,6 +1,6 @@
-var db = require('../../config/config');
-var md5Encrypt = require('../../config/md5Encrypt');
-var formatDate = require('../../config/formatDate');
+var db = require('../../config/db');
+var md5Encrypt = require('../../tools/md5Encrypt');
+var formatDate = require('../../tools/formatDate');
 var workAdmin = db.workAdmin;
 
 module.exports = {

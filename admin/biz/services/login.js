@@ -1,4 +1,4 @@
-const loginModel = require('../model/login');
+const loginDao = require('../dao/login');
 
 module.exports = {
     login: async param => {
@@ -15,7 +15,7 @@ module.exports = {
                 result: ''
             }
         }
-        let data = await loginModel.login(param);
+        let data = await loginDao.login(param);
         if (data) {
             return {
                 status: 0,

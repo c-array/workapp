@@ -5,7 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const sequelize = require('sequelize');
 const path = require('path');
-const sqlDb = require('./config/config');
+const sqlDb = require('./config/db');
 
 //连接数据库并同步模型到数据库
 sqlDb.sequelize.sync({force: false,logging:false}).then(function () {

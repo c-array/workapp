@@ -6,14 +6,15 @@ export default {
     state: {
         vm:{
             currentDate:formatDate({
-                type:'yyyy-mm-dd',
-                date:'2016-08-11'
+                type:'yyyy-mm-dd'
             }),
             formPicker:'',
         },
         list:[],
         formModel:{
-            createDate:'',
+            createDate:formatDate({
+                type:'yyyy-mm-dd'
+            }),
             taskName:'',
             usedTime:'',
             type:'',
@@ -37,9 +38,8 @@ export default {
     },
     mutations: {
         getList(state,params){
-            http.post({
-                url:'/daily',
-                type:'json',
+            http.get({
+                url:'/dailys',
                 data:{
                     userId:sessionStorage.userId,
                     createDate:state.vm.currentDate
@@ -52,13 +52,23 @@ export default {
                 }
             })
         },
-        getPrItem(state,params){
-            http.post({
-                url:'/getPrItem',
-                type:'json',
-                data:{
-                    type:state.formModel.type
+        getItem(state,id){
+            http.get({
+                url:'/dailys/' + id,
+                success:data => {
+                    state.formModel = data;
+                    this.commit({
+                        type:'common/day/getPrItem'
+                    });
                 },
+                error:msg => {
+                    Vue.$vux.toast.text(msg, 'top');
+                }
+            })
+        },
+        getPrItem(state,params){
+            http.get({
+                url:'/proitems/' + state.formModel.type,
                 success:data => {
                     state.prList = data;
                 },
@@ -79,7 +89,7 @@ export default {
         add(state,params){
             state.formModel.userId = sessionStorage.userId;
             http.post({
-                url:'/addTask',
+                url:'/dailys',
                 type:'json',
                 data:state.formModel,
                 success:data => {
@@ -95,8 +105,8 @@ export default {
             })
         },
         edit(state,params){
-            http.post({
-                url:'/updateTask',
+            http.put({
+                url:'/dailys/' + state.formModel.id,
                 type:'json',
                 data:state.formModel,
                 success:data => {
@@ -111,12 +121,8 @@ export default {
             })
         },
         delete(state,params){
-            http.post({
-                url:'/deleteTask',
-                type:'json',
-                data:{
-                    id:params.id
-                },
+            http.delete({
+                url:'/dailys/' + params.id,
                 success:data => {
                     Vue.$vux.toast.text('删除成功', 'top');
                     this.commit({

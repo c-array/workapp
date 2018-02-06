@@ -1,5 +1,5 @@
 // 配置API接口地址
-const root = '/work';
+const root = '/api';
 
 // 引用axios
 import axios from 'axios';
