@@ -4,12 +4,12 @@
 var Sequelize = require('sequelize');
 var config = {
     username: 'root',
-    password: 'root',
+    password: 'Yka@yunkouan.cao',
     database: 'work',
     host: "localhost",
     dialect: 'mysql',
     port: 3306, // 端口号，MySQL默认3306
-    //logging:false,
+    logging:false,
     define: {
         underscored: false,
         timestamps: false,

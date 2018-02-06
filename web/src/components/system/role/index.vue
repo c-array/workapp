@@ -5,7 +5,7 @@
                 <i @click="gotoForm()" class="icon-add"></i>
             </div>
         </x-header>
-        <div class="list-main">
+        <div class="list-main list-inner">
             <ul>
                 <li v-for="(item,index) in roleList">
                     <p class="title"><span>角色名称：{{item.roleName}}</span></p>

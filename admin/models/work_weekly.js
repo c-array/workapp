@@ -1,5 +1,5 @@
 /* jshint indent: 2 */
-
+var moment = require('moment');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('work_weekly', {
     id: {
@@ -20,9 +20,16 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    week: {
-      type: DataTypes.STRING(255),
+    status: {
+      type: DataTypes.INTEGER(4),
       allowNull: true
+    },
+    createDate: {
+      type: DataTypes.DATEONLY,
+      allowNull: true,
+      get() {
+        return moment(this.getDataValue('createDate')).format('YYYY-MM-DD');
+      }
     }
   }, {
     tableName: 'work_weekly'

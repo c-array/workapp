@@ -11,10 +11,18 @@ module.exports = function(sequelize, DataTypes) {
     userId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
+      references: {
+        model: 'work_admin',
+        key: 'id'
+      }
     },
     itemId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
+      references: {
+        model: 'work_product_project',
+        key: 'id'
+      }
     },
     taskName: {
       type: DataTypes.STRING(255),
@@ -27,10 +35,13 @@ module.exports = function(sequelize, DataTypes) {
     usedTime: {
       type: "DOUBLE",
       allowNull: false,
-      defaultValue: '0'
+      defaultValue: '0',
+      get() {
+        return this.getDataValue('usedTime').toFixed(2);
+      }
     },
-    description: {
-      type: DataTypes.TEXT,
+    status: {
+      type: DataTypes.INTEGER(4),
       allowNull: true
     },
     createDate: {
