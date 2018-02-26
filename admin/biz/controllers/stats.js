@@ -6,22 +6,22 @@ const getColleague = async (req, res, next) => {
 }
 
 const getDept = async (req, res, next) => {
-    let data = statsService.getDept(req.body);
+    let data = await statsService.getDept(req.body);
     res.send(data);
 }
 
 const getProduct = async (req, res, next) => {
-    let data = statsService.getProduct(req.body);
+    let data = await statsService.getProduct(req.body);
     res.send(data);
 }
 
 const getProject = async (req, res, next) => {
-    let data = statsService.getProject(req.body);
+    let data = await statsService.getProject(req.body);
     res.send(data);
 }
 
 const getPeople = async (req, res, next) => {
-    let data = statsService.getPeople(req.body);
+    let data = await statsService.getPeople(req.body);
     res.send(data);
 }
 

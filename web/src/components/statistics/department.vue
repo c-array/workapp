@@ -42,7 +42,7 @@
                         :legend-visible="false"
                         :data-zoom="histogramConfig.dataZoom" 
                         :after-config="histogramConfig.callback" 
-                        :data="chartsData.itemPersonData"
+                        :data="chartsData.personItemData"
                         :data-empty="vm.empty"
                         :loading="vm.loading"
                         :settings="histogramConfig.chartSettings">
@@ -55,7 +55,7 @@
                         :legend-visible="false"
                         :data-zoom="histogramConfig.dataZoom" 
                         :after-config="histogramConfig.callback" 
-                        :data="chartsData.depPmData"
+                        :data="chartsData.productData"
                         :data-empty="vm.empty"
                         :loading="vm.loading"
                         :settings="histogramConfig.chartSettings">
@@ -67,7 +67,7 @@
                         :legend-visible="false"
                         :data-zoom="histogramConfig.dataZoom" 
                         :after-config="histogramConfig.callback" 
-                        :data="chartsData.depPjData"
+                        :data="chartsData.projectData"
                         :data-empty="vm.empty"
                         :loading="vm.loading"
                         :settings="histogramConfig.chartSettings">
@@ -76,7 +76,7 @@
                 <div class="stats-chart">
                     <ve-pie 
                         height="250px" 
-                        :data="chartsData.depOtherData" 
+                        :data="chartsData.otherData" 
                         :after-config="pieConfig.callback"
                         :title="{text: '项目/产品/其他'}" 
                         :data-empty="vm.empty"

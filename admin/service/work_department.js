@@ -3,8 +3,8 @@
  */
 var express = require('express');
 var router = express.Router();
-var db = require('../config/config');
 var formatDate = require('../config/formatDate');
+var db = require('../config/config');
 var workDepartment = db.workDepartment;
 
 //查询部门列表

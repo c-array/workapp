@@ -35,11 +35,11 @@ export default {
                 columns: ['createDate', 'usedTime'],
                 rows: []
             },
-            pmData:{ //产品投入时间
+            productData:{ //产品投入时间
                 columns: ['prName', 'usedTime'],
                 rows: []
             },
-            pjData:{ //项目投入时间
+            projectData:{ //项目投入时间
                 columns: ['prName', 'usedTime'],
                 rows: []
             },
@@ -88,30 +88,27 @@ export default {
                     setTimeout(_ => {
                         state.vm.loading = false;
                         state.vm.empty = false;
-                        data.colleague.forEach((item,key) => {
-                            var arr = item.createDate.split('-');
-                            item.createDate = arr[1] + '-' + arr[2];
+                        
+                        var productData = [];
+                        data.product.forEach(function(item,key){
+                            productData.push({
+                                prName:item.work_product_project.prName,
+                                usedTime:item.usedTime
+                            })
                         })
-                        /* var itemPmData = [];
-                        var itemPjData = [];
-                        data[1].forEach(function(item,key){
-                            if(item.work_product_project.type == 1){
-                                itemPmData.push({
-                                    prName:item.work_product_project.prName,
-                                    usedTime:item.usedTime
-                                })
-                            }
-                            if(item.work_product_project.type == 2){
-                                itemPjData.push({
-                                    prName:item.work_product_project.prName,
-                                    usedTime:item.usedTime
-                                })
-                            }
+
+                        var projectData = [];
+                        data.project.forEach(function(item,key){
+                            projectData.push({
+                                prName:item.work_product_project.prName,
+                                usedTime:item.usedTime
+                            })
                         })
-                        state.chartsData.pmData.rows = itemPmData;
-                        state.chartsData.pjData.rows = itemPjData; */
+
                         state.chartsData.dayData.rows = data.colleague;
-                        //state.chartsData.otherData.rows = data[2];
+                        state.chartsData.productData.rows = productData;
+                        state.chartsData.projectData.rows = projectData;
+                        state.chartsData.otherData.rows = data.other;
                     },300);
                 },
                 error: msg => {

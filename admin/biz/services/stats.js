@@ -55,7 +55,54 @@ const getColleague = async param => {
 }
 
 const getDept = async param => {
-    let data = statsDao.getDept(param);
+    if(!param.departmentId){
+        return {
+            status:1,
+            message: '部门id不能为空！',
+            result: ''
+        }
+    }
+    var where = {
+        id:param.departmentId
+    }
+    if(param.startDate && param.endDate){ //开始时间和结束时间都存在
+        var startTime = formatDate({
+            type:'time',
+            date:param.startDate
+        })
+        var endTime = formatDate({
+            type:'time',
+            date:param.endDate
+        })
+
+        if(startTime < endTime){ //开始时间小于结束时间
+            where.createDate = { 
+                $gte: param.startDate,
+                $lte:param.endDate
+            };
+        }else{
+            return {
+                status:1,
+                message:'开始时间不能大于结束时间',
+                result:''
+            };
+        }
+    }else if(param.startDate && !param.endDate){ //开始时间有，结束时间没有
+        where.createDate = { 
+            $gte: param.startDate
+        };
+    }else if(param.endDate && !param.startDate){ //开始时间没有，结束时间有
+        where.createDate = { 
+            $lte:param.endDate
+        };
+    }else{
+        return {
+            status:1,
+            message:'时间不能为空',
+            result:''
+        };
+    }
+    let data = await statsDao.getDept(where);
     return response(data,'部门统计');
 }
 

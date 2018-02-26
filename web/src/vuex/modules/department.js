@@ -32,19 +32,19 @@ export default {
                 columns: ['createDate', 'usedTime'],
                 rows: []
             },
-            itemPersonData:{ //每人投入时间
+            personItemData:{ //每人投入时间
                 columns: ['realname', 'usedTime'],
                 rows: []
             },
-            depPmData:{ //产品投入时间
+            productData:{ //产品投入时间
                 columns: ['prName', 'usedTime'],
                 rows: []
             },
-            depPjData:{ //项目投入时间
+            projectData:{ //项目投入时间
                 columns: ['prName', 'usedTime'],
                 rows: []
             },
-            depOtherData:{ //项目/产品/其他投入时间
+            otherData:{ //项目/产品/其他投入时间
                 columns: ['name', 'usedTime'],
                 rows: []
             },
@@ -72,7 +72,7 @@ export default {
             state.formModel.departmentId = state.formModel.departmentId ? state.formModel.departmentId : sessionStorage.departmentId
             state.vm.loading = true;
             http.post({
-                url:'/statsDepartment',
+                url:'/stats/dept',
                 data:{
                     startDate:state.formModel.startDate,
                     endDate:state.formModel.endDate,
@@ -83,35 +83,37 @@ export default {
                     setTimeout(_ => {
                         state.vm.loading = false;
                         state.vm.empty = false;
-                        state.chartsData.personData.rows = data[0];
-                        var itemPersonData = [];
-                        data[1].forEach(function(item,key){
-                            itemPersonData.push({
+
+                        state.chartsData.personData.rows = data.personTotal;
+
+                        var personItemData = [];
+                        data.personItem.forEach(function(item,key){
+                            personItemData.push({
                                 realname:item.work_admin.realname,
                                 usedTime:item.usedTime
                             })
                         })
-                        state.chartsData.itemPersonData.rows = itemPersonData;
+                        state.chartsData.personItemData.rows = personItemData;
 
-                        var depPmData = [];
-                        var depPjData = [];
-                        data[2].forEach(function(item,key){
-                            if(item.work_product_project.type == 1){
-                                depPmData.push({
-                                    prName:item.work_product_project.prName,
-                                    usedTime:item.usedTime
-                                })
-                            }
-                            if(item.work_product_project.type == 2){
-                                depPjData.push({
-                                    prName:item.work_product_project.prName,
-                                    usedTime:item.usedTime
-                                })
-                            }
+                        var productData = [];
+                        data.product.forEach(function(item,key){
+                            productData.push({
+                                prName:item.work_product_project.prName,
+                                usedTime:item.usedTime
+                            })
                         })
-                        state.chartsData.depPmData.rows = depPmData;
-                        state.chartsData.depPjData.rows = depPjData;
-                        state.chartsData.depOtherData.rows = data[3];
+
+                        var projectData = [];
+                        data.project.forEach(function(item,key){
+                            projectData.push({
+                                prName:item.work_product_project.prName,
+                                usedTime:item.usedTime
+                            })
+                        })
+
+                        state.chartsData.productData.rows = productData;
+                        state.chartsData.projectData.rows = projectData;
+                        state.chartsData.otherData.rows = data.other;
                     },300)
                 },
                 error: msg => {
@@ -122,7 +124,7 @@ export default {
         },
         getDepartmentList(state,params){
             http.get({
-                url:'/departments',
+                url:'/depts',
                 success: data => {
                     state.vm.itemList = data;
                 },
