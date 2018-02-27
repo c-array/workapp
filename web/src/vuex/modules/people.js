@@ -27,13 +27,13 @@ export default {
         getList(state,params){
             state.vm.loading = true;
             http.post({
-                url:'/statsPeople',
+                url:'/stats/people',
                 data:state.formModel,
                 type:'json',
                 success: data => {
                     data.forEach(function(item,key){
                         item.count = 0;
-                        item.dailies.forEach(function(obj,index){
+                        item.second.forEach(function(obj,index){
                             item.count = item.count + obj.usedTime;
                         })
                     })
@@ -46,10 +46,8 @@ export default {
         },
         getItemList(state, params) {
             if (state.formModel.type) {
-                http.post({
-                    url: '/getPrItem',
-                    data: state.formModel,
-                    type: 'json',
+                http.get({
+                    url: '/proitems/' + state.formModel.type,
                     success: data => {
                         state.formModel.itemId = '';
                         state.vm.itemList = data;
@@ -68,7 +66,7 @@ export default {
         getPeopleItem(state, itemId){
             state.vm.loading = true;
             http.post({
-                url: '/statsPeople',
+                url: '/stats/people',
                 data: {
                     itemId:itemId
                 },
@@ -78,9 +76,9 @@ export default {
                         state.vm.loading = false;
                         state.vm.empty = false;
                         let arr = [];
-                        data[0].dailies.forEach((item,key) => {
+                        data[0].second.forEach((item,key) => {
                             arr.push({
-                                realname:item.realname,
+                                realname:item.work_admin.realname,
                                 用时:item.usedTime.toFixed(2)
                             })
                         })

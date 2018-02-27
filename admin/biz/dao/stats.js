@@ -285,22 +285,85 @@ const getDept = async where => {
     };
 }
 
-const getProduct = async param => {
-    return "";
+const getProductItem = async (dailyWhere,itemWhere) => {
+    let data = await workDaily.all({
+        where:dailyWhere,
+        attributes: [
+            'usedTime',
+            [sequelize.fn('SUM', sequelize.col('usedTime')),'usedTime']
+        ],
+        group:'prName',
+        order:[
+            ['usedTime','ASC']
+        ],
+        include:{
+            model:workProductProject,
+            where:itemWhere,
+            attributes: ['prName','type']
+        }
+    });
+    let product = [];
+    let project = [];
+    data.forEach(function (item, key) {
+        if (item.work_product_project.type == 1) {
+            product.push({
+                prName: item.work_product_project.prName,
+                usedTime: item.usedTime
+            })
+        }
+        if (item.work_product_project.type == 2) {
+            project.push({
+                prName: item.work_product_project.prName,
+                usedTime: item.usedTime
+            })
+        }
+    })
+    return {
+        product,
+        project
+    };
 }
 
-const getProject = async param => {
-    return "";
-}
-
-const getPeople = async param => {
-    return "";
+const getPeople = async where => {
+    try{
+        let data = await workProductProject.all({
+            where:where,
+            attributes: [
+                'id',
+                'prName',
+                'type'
+            ],
+            order:[
+                ['createTime','DESC']
+            ]
+        });
+        let list = JSON.parse(JSON.stringify(data));
+        for(var i = 0; i < list.length; i++){
+            let item = list[i];
+            let result = await workDaily.all({
+                where:{
+                    itemId:item.id
+                },
+                attributes: [
+                    [sequelize.fn('SUM', sequelize.col('usedTime')),'usedTime']
+                ],
+                group:'realname',
+                include:{
+                    model:workAdmin,
+                    attributes: ['realname']
+                }
+            })
+            item.second = JSON.parse(JSON.stringify(result));
+        }
+        return JSON.parse(JSON.stringify(list));
+    }catch(err){
+        console.log(err);
+    }
 }
 
 module.exports = {
     getColleague: getColleague, //同事统计
     getDept: getDept, //部门统计
-    getProduct:getProduct, //产品统计
-    getProject:getProject, //项目统计
-    getPeople: getPeople, //人月
+    getProductItem:getProductItem, //产品/项目统计
+    getPeople: getPeople, //人月统计
 };

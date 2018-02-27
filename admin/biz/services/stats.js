@@ -106,25 +106,36 @@ const getDept = async param => {
     return response(data,'部门统计');
 }
 
-const getProduct = async param => {
-    let data = statsDao.getProduct(param);
-    return response(data,'产品统计');
-}
-
-const getProject = async param => {
-    let data = statsDao.getProject(param);
-    return response(data,'项目统计');
+const getProductItem = async param => {
+    var dailyWhere = {};
+    var itemWhere = {};
+    if(param.itemId){ //有
+        dailyWhere.itemId = param.itemId;
+    }
+    if(param.type){
+        itemWhere.type = param.type;
+    }
+    let data = await statsDao.getProductItem(dailyWhere,itemWhere);
+    return response(data,'产品/项目统计');
 }
 
 const getPeople = async param => {
-    let data = statsDao.getPeople(param);
+    var where = {};
+    if(param.type && param.itemId){
+        where.type = param.type;
+        where.id = param.itemId;
+    }else if(param.type){
+        where.type = param.type;
+    }else if(param.itemId){
+        where.id = param.itemId;
+    }
+    let data = await statsDao.getPeople(where);
     return response(data,'人月统计');
 }
 
 module.exports = {
     getColleague: getColleague, //同事统计
     getDept: getDept, //部门统计
-    getProduct:getProduct, //产品统计
-    getProject:getProject, //项目统计
+    getProductItem:getProductItem, //产品/项目统计
     getPeople: getPeople, //人月
 };

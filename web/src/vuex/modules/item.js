@@ -14,11 +14,11 @@ export default {
             itemId: '' //产品或项目id
         },
         chartsData: {
-            itemPmData: {
+            product: {
                 columns: ['prName', 'usedTime'],
                 rows: []
             },
-            itemPjData: {
+            project: {
                 columns: ['prName', 'usedTime'],
                 rows: []
             }
@@ -28,31 +28,15 @@ export default {
         getList(state, params) {
             state.vm.loading = true;
             http.post({
-                url: '/statsItem',
+                url: '/stats/product-item',
                 data: state.formModel,
                 type: 'json',
                 success: data => {
                     setTimeout(_ => {
                         state.vm.loading = false;
                         state.vm.empty = false;
-                        var itemPmData = [];
-                        var itemPjData = [];
-                        data.forEach(function (item, key) {
-                            if (item.work_product_project.type == 1) {
-                                itemPmData.push({
-                                    prName: item.work_product_project.prName,
-                                    usedTime: item.usedTime
-                                })
-                            }
-                            if (item.work_product_project.type == 2) {
-                                itemPjData.push({
-                                    prName: item.work_product_project.prName,
-                                    usedTime: item.usedTime
-                                })
-                            }
-                        })
-                        state.chartsData.itemPmData.rows = itemPmData;
-                        state.chartsData.itemPjData.rows = itemPjData;
+                        state.chartsData.product.rows = data.product;
+                        state.chartsData.project.rows = data.project;
                     },300)
                 },
                 error: msg => {
@@ -63,10 +47,8 @@ export default {
         },
         getItemList(state, params) {
             if (state.formModel.type) {
-                http.post({
-                    url: '/getPrItem',
-                    data: state.formModel,
-                    type: 'json',
+                http.get({
+                    url: '/proitems/' + state.formModel.type,
                     success: data => {
                         state.formModel.itemId = '';
                         state.vm.itemList = data;

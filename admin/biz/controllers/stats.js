@@ -10,13 +10,8 @@ const getDept = async (req, res, next) => {
     res.send(data);
 }
 
-const getProduct = async (req, res, next) => {
-    let data = await statsService.getProduct(req.body);
-    res.send(data);
-}
-
-const getProject = async (req, res, next) => {
-    let data = await statsService.getProject(req.body);
+const getProductItem = async (req, res, next) => {
+    let data = await statsService.getProductItem(req.body);
     res.send(data);
 }
 
@@ -28,7 +23,6 @@ const getPeople = async (req, res, next) => {
 module.exports = {
     'POST /stats/colleague': getColleague, //同事统计
     'POST /stats/dept': getDept, //部门统计
-    'POST /stats/product':getProduct, //产品统计
-    'POST /stats/project':getProject, //项目统计
+    'POST /stats/product-item':getProductItem, //产品/项目统计
     'POST /stats/people': getPeople, //人月
 };

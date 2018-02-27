@@ -13,7 +13,6 @@ const getProitems = async (req, res, next) => {
 module.exports = {
     'GET /proitems': getAll, //获取所有数据
     'GET /proitems/:type': getProitems, //获取产品或项目数据
-    
-    /* 'GET /dailys/:id': getItem, //获取单个数据
+    /* 'GET /proitems/:id': getItem, //获取单个数据
     'PUT /dailys/:id': update, //更新数据 */
 };

@@ -28,7 +28,7 @@
                         :legend-visible="false"
                         :data-zoom="histogramConfig.dataZoom" 
                         :after-config="histogramConfig.callback" 
-                        :data="chartsData.itemPmData"
+                        :data="chartsData.product"
                         :data-empty="vm.empty"
                         :loading="vm.loading"
                         :settings="histogramConfig.chartSettings">
@@ -41,7 +41,7 @@
                         :legend-visible="false"
                         :data-zoom="histogramConfig.dataZoom" 
                         :after-config="histogramConfig.callback" 
-                        :data="chartsData.itemPjData"
+                        :data="chartsData.project"
                         :data-empty="vm.empty"
                         :loading="vm.loading"
                         :settings="histogramConfig.chartSettings">
