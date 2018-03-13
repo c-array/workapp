@@ -66,7 +66,7 @@ export default {
         },
         export(state,params){
             http.post({
-                url:'/exportItem',
+                url:'/export/product-item',
                 data:state.formModel,
                 type:'json',
                 success: url => {

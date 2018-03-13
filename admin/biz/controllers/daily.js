@@ -31,5 +31,5 @@ module.exports = {
     'GET /dailys/:id': getItem, //获取单个数据
     'POST /dailys':create, //添加一条数据
     'PUT /dailys/:id': update, //更新数据
-    'DELETE /dailys/:id': remove, //更新数据
+    'DELETE /dailys/:id': remove, //删除数据
 };

@@ -11,7 +11,8 @@ export default {
             searchVisible:false, //搜索弹窗显示
             checkRole:[], //选中的角色
             currentUserInfo:"", //存储当前用户信息
-            departmentList:[] //存储部门数据
+            departmentList:[], //存储部门数据
+            departmentList1:[], //存储部门数据
         },
         formModel:{
             username:"",
@@ -67,7 +68,7 @@ export default {
         },
         assignRole(state,params){
             http.post({
-                url:'/assignRole',
+                url:'/users/role',
                 data:{
                     userId:state.vm.currentUserInfo.id,
                     roles:state.vm.checkRole
@@ -84,10 +85,7 @@ export default {
         },
         getUserItem(state,userId){
             http.get({
-                url:"/userItem",
-                data:{
-                    userId:userId
-                },
+                url:"/users/" + userId,
                 success: data => {
                     state.formModel = data;
                 },
@@ -98,7 +96,7 @@ export default {
         },
         getUserSearch(state){
             http.post({
-                url:'/userSearch',
+                url:'/users/search',
                 data:state.queryModel,
                 type:"json",
                 success: data => {
@@ -112,13 +110,14 @@ export default {
         },
         getDepartmentList(state,params){
             http.get({
-                url:'/departments',
+                url:'/depts',
                 success: data => {
-                    data.unshift({
+                    state.vm.departmentList = data;
+                    state.vm.departmentList1 = JSON.parse(JSON.stringify(data));
+                    state.vm.departmentList1.unshift({
                         id:0,
                         depName:"全部"
                     })
-                    state.vm.departmentList = data;
                 },
                 error: msg => {
                     Vue.$vux.toast.text(msg, 'top');
@@ -131,8 +130,24 @@ export default {
             }
         },
         add(state,params){
+            if(!state.formModel.username){
+                Vue.$vux.toast.text('用户名不能为空！', 'top');
+                return false;
+            }else if(!state.formModel.realname){
+                Vue.$vux.toast.text('真实姓名不能为空！', 'top');
+                return false;
+            }else if(!state.formModel.departmentId){
+                Vue.$vux.toast.text('部门不能为空！', 'top');
+                return false;
+            }else if(!state.formModel.post){
+                Vue.$vux.toast.text('职位名称不能为空！', 'top');
+                return false;
+            }else if(!state.formModel.email){
+                Vue.$vux.toast.text('邮箱不能为空！', 'top');
+                return false;
+            }
             http.post({
-                url:'/addUser',
+                url:'/users',
                 type:'json',
                 data:state.formModel,
                 success:data => {
@@ -148,8 +163,8 @@ export default {
             })
         },
         edit(state,params){
-            http.post({
-                url:'/updateUser',
+            http.put({
+                url:'/users/' + state.formModel.id,
                 type:'json',
                 data:state.formModel,
                 success:data => {
@@ -164,11 +179,8 @@ export default {
             })
         },
         delete(state,params){
-            http.get({
-                url:'/deleteUser',
-                data:{
-                    id:params.id
-                },
+            http.delete({
+                url:'/users/' + params.id,
                 success:data => {
                     Vue.$vux.toast.text('删除成功', 'top');
                     this.commit({

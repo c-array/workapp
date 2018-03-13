@@ -1,5 +1,5 @@
 <template>
-    <div class="inner ">
+    <div class="inner bg-white">
         <x-header :title="userId ? '修改用户信息' : '添加用户信息'"></x-header>
         <div class="form-list">
             <ul>

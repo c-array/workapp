@@ -94,7 +94,7 @@ export default {
         },
         export(state,params){
             http.post({
-                url:'/exportPeople',
+                url:'/export/people',
                 data:state.formModel,
                 type:'json',
                 success: url => {

@@ -4,8 +4,7 @@
 body, html {
   height: 100%;
   width:100%;
-  max-width: 540px;
-  margin: 0 auto !important;
+  margin: 0;
   font: 400 16px Helvetica !important;
   background-color: #ccc;
 }
@@ -116,11 +115,18 @@ textarea {
 .inner{
   height:100%;
 }
+.bg-white{
+  background-color: #fff;
+}
 .right{
   float: right !important;
 }
 .left{
   float: left !important;
+}
+.center{
+  max-width: 540px;
+  margin: 0 auto !important;
 }
 
 @import "./modules/form.less";

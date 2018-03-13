@@ -26,7 +26,7 @@
             <popup-header 
                 left-text="关闭" 
                 right-text="确定" 
-                title="分配角色" 
+                :title="vm.currentUserInfo.realname + '-分配角色'" 
                 :show-bottom-border="false" 
                 @on-click-left="vm.visible = false"
                 @on-click-right="handleAssignRole">

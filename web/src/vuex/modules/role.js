@@ -29,10 +29,7 @@ export default {
         },
         getRoleItem(state,roleId){
             http.get({
-                url:"/roleItem",
-                data:{
-                    roleId:roleId
-                },
+                url:"/roles/" + roleId,
                 success: data => {
                     state.formModel = data;
                 },
