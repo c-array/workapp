@@ -11,7 +11,18 @@ const getItem = async id => {
     return data;
 }
 
+const create = async param => {
+    try{
+        let data = await workDepartment.create(param);
+        return data;
+    }catch(err){
+        console.log(err);
+        return "";
+    }
+}
+
 module.exports = {
-    getAll: getAll, //获取所有部门数据
-    getItem: getItem, //根据id获取单个部门数据
+    getAll, //获取所有部门数据
+    getItem, //根据id获取单个部门数据
+    create, //添加一条部门信息
 };

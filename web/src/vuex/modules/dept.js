@@ -50,7 +50,7 @@ export default {
                 return false;
             }
             http.post({
-                url:'/addDept',
+                url:'/depts',
                 type:'json',
                 data:state.formModel,
                 success:data => {
