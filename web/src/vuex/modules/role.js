@@ -79,7 +79,7 @@ export default {
                 })
             })
             http.post({
-                url:"/saveAuthority",
+                url:"/roles/authority",
                 data:{
                     roleId:state.roleInfo.id,
                     menus:menus
@@ -128,7 +128,7 @@ export default {
                 return false;
             }
             http.post({
-                url:'/addRole',
+                url:'/roles',
                 type:'json',
                 data:state.formModel,
                 success:data => {
@@ -151,8 +151,8 @@ export default {
                 Vue.$vux.toast.text('角色描述不能为空！', 'top');
                 return false;
             }
-            http.post({
-                url:'/updateRole',
+            http.put({
+                url:'/roles/' + state.formModel.id,
                 type:'json',
                 data:state.formModel,
                 success:data => {
@@ -167,11 +167,8 @@ export default {
             })
         },
         delete(state,params){
-            http.get({
-                url:'/deleteRole',
-                data:{
-                    id:params.id
-                },
+            http.delete({
+                url:'/roles/' + params.id,
                 success:data => {
                     Vue.$vux.toast.text('删除成功', 'top');
                     this.commit({

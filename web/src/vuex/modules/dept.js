@@ -16,7 +16,7 @@ export default {
     mutations:{
         getList(state,params){
             http.get({
-                url:'/departments',
+                url:'/depts',
                 success: data => {
                     state.deptList = data;
                 },
@@ -27,10 +27,7 @@ export default {
         },
         getDeptItem(state,deptId){
             http.get({
-                url:"/deptItem",
-                data:{
-                    deptId:deptId
-                },
+                url:"/depts/" + deptId,
                 success: data => {
                     state.formModel = data;
                 },
