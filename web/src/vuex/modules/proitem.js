@@ -25,9 +25,6 @@ export default {
         getList(state, params) {
             http.get({
                 url: '/proitems',
-                data:{
-                   type:state.queryModel.type 
-                },
                 success: data => {
                     state.proitemList = data;
                     state.vm.original = data;
@@ -39,10 +36,7 @@ export default {
         },
         getProitem(state, proitemId) {
             http.get({
-                url: "/proitem",
-                data: {
-                    proitemId: proitemId
-                },
+                url: "/proitems/" + proitemId,
                 success: data => {
                     state.formModel = data;
                 },
@@ -52,10 +46,8 @@ export default {
             })
         },
         getProitemSearch(state, params) {
-            console.log(state.queryModel);
-            http.post({
-                url: '/proitemSearch',
-                data: state.queryModel,
+            http.get({
+                url: '/proitems/search/' + state.queryModel.type + '/' + state.queryModel.prName,
                 type: 'json',
                 success: data => {
                     state.proitemList = data;
@@ -80,7 +72,7 @@ export default {
                 return false;
             }
             http.post({
-                url: '/addProitem',
+                url: '/proitems',
                 type: 'json',
                 data: state.formModel,
                 success: data => {
@@ -103,8 +95,8 @@ export default {
                 Vue.$vux.toast.text('描述不能为空！', 'top');
                 return false;
             }
-            http.post({
-                url: '/updateProitem',
+            http.put({
+                url: '/proitems/' + state.formModel.id,
                 type: 'json',
                 data: state.formModel,
                 success: data => {
@@ -119,11 +111,8 @@ export default {
             })
         },
         delete(state, params) {
-            http.get({
-                url: '/deleteProitem',
-                data: {
-                    id: params.id
-                },
+            http.delete({
+                url: '/remove/' + params.id,
                 success: data => {
                     Vue.$vux.toast.text('删除成功', 'top');
                     this.commit({

@@ -36,16 +36,16 @@
                 </div>
             </cell> -->
         </group>
-        <group class="my-group">
+        <!-- <group class="my-group">
             <cell is-link>
                 <div slot="icon">
                     <i class="icon-skin yellow"></i>
                     <span>换肤</span>
                 </div>
             </cell>
-        </group>
+        </group> -->
         <group class="my-group">
-            <cell class="lgout" title="退出登录"></cell>
+            <cell @click.native="logout" class="lgout" title="退出登录"></cell>
         </group>
     </div>
 </template>
@@ -61,6 +61,22 @@
             Group,
             Cell,
             XButton
+        },
+        methods:{
+            logout(){
+                sessionStorage.userId = "";
+                this.$vux.confirm.show({
+                    title:"提示",
+                    content:"确定要退出系统?",
+                    onCancel () {
+                        //_this.$vux.toast.text('已取消提示', 'top');
+                    },
+                    onConfirm: _ => {
+                        this.$router.push({path:"/"});
+                    }
+                })
+                
+            }
         }
     }
 </script>

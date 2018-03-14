@@ -39,7 +39,7 @@
         methods:{
             query(param){
                 this.$http.post({
-                    url:'/my-proitem',
+                    url:'/my/item',
                     data:{
                         userId:sessionStorage.userId,
                         currentPage:this.currentPage,

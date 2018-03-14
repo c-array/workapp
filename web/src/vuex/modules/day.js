@@ -68,7 +68,7 @@ export default {
         },
         getPrItem(state,params){
             http.get({
-                url:'/proitems/' + state.formModel.type,
+                url:'/proitems/type/' + state.formModel.type,
                 success:data => {
                     state.prList = data;
                 },

@@ -73,8 +73,8 @@ export default {
                 Vue.$vux.toast.text('部门描述不能为空！', 'top');
                 return false;
             }
-            http.post({
-                url:'/updateDept',
+            http.put({
+                url:'/depts/' + state.formModel.id,
                 type:'json',
                 data:state.formModel,
                 success:data => {
@@ -89,11 +89,8 @@ export default {
             })
         },
         delete(state,params){
-            http.get({
-                url:'/deleteDept',
-                data:{
-                    id:params.id
-                },
+            http.delete({
+                url:'/depts/' + params.id,
                 success:data => {
                     Vue.$vux.toast.text('删除成功', 'top');
                     this.commit({

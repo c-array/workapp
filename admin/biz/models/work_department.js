@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: true,
       get() {
-        return moment(this.getDataValue('createTime')).format('YYYY-MM-DD HH:mm:ss');
+        return moment(this.getDataValue('createTime')).format('YYYY-MM-DD');
       }
     }
   }, {

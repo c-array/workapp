@@ -48,7 +48,7 @@
         methods:{
             query(param){
                 this.$http.post({
-                    url:'/my-work',
+                    url:'/my/work',
                     data:{
                         userId:sessionStorage.userId,
                         currentPage:this.currentPage,

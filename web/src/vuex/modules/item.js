@@ -48,7 +48,7 @@ export default {
         getItemList(state, params) {
             if (state.formModel.type) {
                 http.get({
-                    url: '/proitems/' + state.formModel.type,
+                    url: '/proitems/type/' + state.formModel.type,
                     success: data => {
                         state.formModel.itemId = '';
                         state.vm.itemList = data;
