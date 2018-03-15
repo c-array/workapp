@@ -12,9 +12,7 @@ export default {
         },
         formModel:{
             type:'',
-            itemId:'',
-            currentPage:-1,
-            pageSize:15,
+            itemId:''
         },
         peopleList:[],
         chartData:{
@@ -33,28 +31,13 @@ export default {
                 data:state.formModel,
                 type:'json',
                 success: data => {
-                    if(data.length > 0){
-                        data.forEach(function(item,key){
-                            item.count = 0;
-                            item.second.forEach(function(obj,index){
-                                item.count = item.count + obj.usedTime;
-                            })
+                    data.forEach(function(item,key){
+                        item.count = 0;
+                        item.second.forEach(function(obj,index){
+                            item.count = item.count + obj.usedTime;
                         })
-                        if(param && param.done){
-                            setTimeout(_ => {
-                                if(param.type == 1){
-                                    state.peopleList = state.peopleList.concat(data);
-                                }else if(param.type == 2){
-                                    state.peopleList = data;
-                                }
-                                param.done();
-                            },1500)
-                        }else{
-                            state.peopleList = data;
-                        }
-                    }else{
-                        param.callback();
-                    }
+                    })
+                    state.peopleList = data;
                 },
                 error: msg => {
                     Vue.$vux.toast.text(msg, 'top');

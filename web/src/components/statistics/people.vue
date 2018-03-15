@@ -21,15 +21,13 @@
                 </li>
             </ul>
             <div class="stats-warp">
-                <scroller ref="myScroller" :on-refresh="refresh" :on-infinite="loadMore">
-                    <dl class="people" v-for="item in peopleList">
-                        <dt>{{item.prName}}</dt>
-                        <dd v-for="obj in item.second">
-                            {{obj.work_admin.realname}}：<span class="usedTime">{{obj.usedTime.toFixed(1)}}</span>小时
-                        </dd>
-                        <dd class="people-count">总投入时间：<span class="usedTime">{{item.count.toFixed(1)}}</span> 小时 <i @click="handleCharts(item)" class="icon-curve"></i></dd>
-                    </dl>
-                </scroller>
+                <dl class="people" v-for="item in peopleList">
+                    <dt>{{item.prName}}</dt>
+                    <dd v-for="obj in item.second">
+                        {{obj.work_admin.realname}}：<span class="usedTime">{{obj.usedTime.toFixed(1)}}</span>小时
+                    </dd>
+                    <dd class="people-count">总投入时间：<span class="usedTime">{{item.count.toFixed(1)}}</span> 小时 <i @click="handleCharts(item)" class="icon-curve"></i></dd>
+                </dl>
             </div>
         </div>
     </div>
@@ -54,7 +52,7 @@
             XHeader  
         },
         created () {
-          //this.handleGetList();  
+            this.handleGetList();  
         },
         methods:{
             ...mapMutations({
@@ -64,19 +62,7 @@
             }),
             handleCharts(item){
                 this.$router.push({path:'/main/people-charts',query:{itemId:item.id}});
-            },
-            loadMore(done){
-                this.$store.state.common.people.formModel.currentPage = this.$store.state.common.people.formModel.currentPage + 1;
-                this.handleGetList({type:1,done:done,callback: _ => {
-                    this.$refs.myScroller.finishInfinite(2);
-                }});
-            },
-            refresh(done){
-                this.$store.state.common.people.formModel.currentPage = 0;
-                this.handleGetList({type:2,done:done,callback: _ => {
-                    this.$refs.myScroller.finishInfinite(2);
-                }});
-            },
+            }
         }
     }
 </script>
