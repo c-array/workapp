@@ -12,7 +12,9 @@ export default {
         },
         formModel:{
             type:'',
-            itemId:''
+            itemId:'',
+            currentPage:-1,
+            pageSize:15,
         },
         peopleList:[],
         chartData:{
@@ -24,20 +26,35 @@ export default {
         }
     },
     mutations: {
-        getList(state,params){
+        getList(state,param){
             state.vm.loading = true;
             http.post({
                 url:'/stats/people',
                 data:state.formModel,
                 type:'json',
                 success: data => {
-                    data.forEach(function(item,key){
-                        item.count = 0;
-                        item.second.forEach(function(obj,index){
-                            item.count = item.count + obj.usedTime;
+                    if(data.length > 0){
+                        data.forEach(function(item,key){
+                            item.count = 0;
+                            item.second.forEach(function(obj,index){
+                                item.count = item.count + obj.usedTime;
+                            })
                         })
-                    })
-                    state.peopleList = data;
+                        if(param && param.done){
+                            setTimeout(_ => {
+                                if(param.type == 1){
+                                    state.peopleList = state.peopleList.concat(data);
+                                }else if(param.type == 2){
+                                    state.peopleList = data;
+                                }
+                                param.done();
+                            },1500)
+                        }else{
+                            state.peopleList = data;
+                        }
+                    }else{
+                        param.callback();
+                    }
                 },
                 error: msg => {
                     Vue.$vux.toast.text(msg, 'top');

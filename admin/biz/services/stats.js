@@ -120,6 +120,20 @@ const getProductItem = async param => {
 }
 
 const getPeople = async param => {
+    if(param.currentPage === "" || param.currentPage === null){
+        return {
+            status:1,
+            message:'页码不能为空！',
+            result:''
+        };
+    }else if(param.pageSize === "" || param.pageSize === null){
+        return {
+            status:1,
+            message:'页数不能为空！',
+            result:''
+        };
+    }
+
     var where = {};
     if(param.type && param.itemId){
         where.type = param.type;
@@ -129,7 +143,8 @@ const getPeople = async param => {
     }else if(param.itemId){
         where.id = param.itemId;
     }
-    let data = await statsDao.getPeople(where);
+
+    let data = await statsDao.getPeople(where,param.currentPage,param.pageSize);
     return response(data,'人月统计');
 }
 

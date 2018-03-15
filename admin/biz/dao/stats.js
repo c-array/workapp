@@ -324,10 +324,12 @@ const getProductItem = async (dailyWhere,itemWhere) => {
     };
 }
 
-const getPeople = async where => {
+const getPeople = async (where,currentPage,pageSize) => {
     try{
         let data = await workProductProject.all({
             where:where,
+            offset:currentPage * pageSize,
+            limit: pageSize,
             attributes: [
                 'id',
                 'prName',

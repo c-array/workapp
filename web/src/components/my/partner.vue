@@ -56,17 +56,21 @@
                     },
                     type:"json",
                     success: data => {
-                        if(param && param.done){
-                            setTimeout(_ => {
-                                if(param.type == 1){
-                                    this.list = this.list.concat(data);
-                                }else if(param.type == 2){
-                                    this.list = data;
-                                }
-                                param.done();
-                            },1500)
+                        if(data.length > 0){
+                            if(param && param.done){
+                                setTimeout(_ => {
+                                    if(param.type == 1){
+                                        this.list = this.list.concat(data);
+                                    }else if(param.type == 2){
+                                        this.list = data;
+                                    }
+                                    param.done();
+                                },1500)
+                            }else{
+                                this.list = data;
+                            }
                         }else{
-                            this.list = data;
+                            this.$refs.myScroller.finishInfinite(2);
                         }
                     },
                     error:msg => {
