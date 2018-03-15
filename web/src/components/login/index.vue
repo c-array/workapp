@@ -34,6 +34,13 @@
         components: {
             XButton  
         },
+        mounted(){
+            window.onkeyup = e => {
+                if(e.keyCode == 13){
+                    this.handleLogin();
+                }
+            }
+        },
         methods: {
             handleLogin(){
                 if(!this.formModel.username){
