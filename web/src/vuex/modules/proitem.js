@@ -46,8 +46,9 @@ export default {
             })
         },
         getProitemSearch(state, params) {
-            http.get({
-                url: '/proitems/search/' + state.queryModel.type + '/' + state.queryModel.prName,
+            http.post({
+                url: '/proitems/search',
+                data:state.queryModel,
                 type: 'json',
                 success: data => {
                     state.proitemList = data;

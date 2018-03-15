@@ -26,7 +26,7 @@ const update = async (req, res, next) => {
 };
 
 const search = async (req, res, nex) => {
-    let data = await productItemService.search(req.params.type,req.params.prName);
+    let data = await productItemService.search(req.body);
     res.send(data);
 }
 
@@ -42,5 +42,5 @@ module.exports = {
     'POST /proitems':create, //添加一条产品或项目信息
     'PUT /proitems/:id': update, //更新单个产品或项目数据
     'DELETE /remove/:id': remove, //删除单个产品或项目数据
-    'GET /proitems/search/:type/:prName': search, //模糊搜索产品和项目
+    'POST /proitems/search': search, //模糊搜索产品和项目
 };
