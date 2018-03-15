@@ -99,15 +99,15 @@ const remove = async id => {
     return response(data,"删除");
 }
 
-const search = async (type,prName) => {
+const search = async (param) => {
     var where = {};
-    if(type){
-        where.type = type;
+    if(param.type){
+        where.type = param.type;
     }
 
-    if(prName){
+    if(param.prName){
         where.prName = {
-            $like: '%'+ prName +'%'
+            $like: '%'+ param.prName +'%'
         };
     }
     let data = await productItemDao.search(where);

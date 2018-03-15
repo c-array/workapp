@@ -25,13 +25,13 @@ const update = async (req, res, next) => {
     res.send(data);
 };
 
-const search = async (req, res, nex) => {
-    let data = await productItemService.search(req.body);
+const remove = async (req, res, nex) => {
+    let data = await productItemService.remove(req.params.id);
     res.send(data);
 }
 
-const remove = async (req, res, nex) => {
-    let data = await productItemService.remove(req.params.id);
+const search = async (req, res, nex) => {
+    let data = await productItemService.search(req.body);
     res.send(data);
 }
 
