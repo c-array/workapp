@@ -1,6 +1,7 @@
 <template>
     <div class="inner day">
-        <x-header title="今天">
+        <x-header :left-options="{showBack: false}" title="">
+            <span class="x-title" slot="left">今天</span>
             <div slot="right" class="day-date-picker">
                 <calendar @on-change="handleQuery" title="" v-model="vm.currentDate"></calendar>
                 <i class="icon-date"></i>

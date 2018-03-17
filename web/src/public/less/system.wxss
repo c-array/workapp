@@ -1,0 +1,94 @@
+.x-title {
+  font-size: 16px;
+  color: #fff;
+}
+.weui-grids {
+  background-color: rgba(0, 150, 136, 0.6);
+  height: calc(100% - 46px);
+}
+.weui-grids::before {
+  border-color: #4db6ac;
+}
+.weui-grids .weui-grid {
+  text-align: center;
+  color: #fff;
+}
+.weui-grids .weui-grid::before {
+  border-color: #4db6ac;
+}
+.weui-grids .weui-grid::after {
+  border-color: #4db6ac;
+}
+.weui-grids .weui-grid:active {
+  background-color: #4db6ac;
+}
+.weui-grids .weui-grid i {
+  font-size: 36px;
+}
+.weui-grids .weui-grid p {
+  padding-top: 10px;
+}
+.vux-popup-dialog {
+  background-color: #fff;
+}
+.list-main {
+  background-color: #ebebeb;
+}
+.list-main ul {
+  height: calc(100% - 46px);
+  overflow-y: auto;
+}
+.list-main li {
+  border-bottom: 1px solid #f1f1f1;
+  padding: 5px 0;
+  background-color: #fff;
+  margin-bottom: 10px;
+}
+.list-main li p {
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 0 10px;
+  line-height: 26px;
+}
+.list-main li p span {
+  padding: 5px 10px;
+}
+.list-main li p i {
+  margin-left: 5px;
+}
+.list-main li p i.icon-partner,
+.list-main li p i.icon-authority {
+  color: #d500f9;
+}
+.list-main li p i.icon-edit {
+  color: #795548;
+}
+.list-main li p i.icon-delete {
+  color: #607d8b;
+}
+.list-main.list-inner {
+  position: relative;
+  height: calc(100% - 46px);
+}
+.list-main.list-inner ul {
+  height: 100%;
+}
+.form-btn {
+  padding: 20px 10px 0;
+}
+.form-btn button {
+  background: #009688;
+}
+.form-btn button:active {
+  background: #14aa9c;
+}
+.search-btn {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 10px;
+}
+.search-btn button {
+  flex: 0 0 48%;
+  margin: 0;
+}

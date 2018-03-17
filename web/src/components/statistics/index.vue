@@ -1,7 +1,9 @@
 <template>
     <!-- 统计分析 -->
     <div class="inner stats">
-        <x-header title="统计分析"></x-header>
+        <x-header :left-options="{showBack: false}" title="">
+            <span class="x-title" slot="left">统计分析</span>
+        </x-header>
         <grid :cols="2">
             <grid-item link="/main/colleague">
                 <i class="icon-colleague"></i>

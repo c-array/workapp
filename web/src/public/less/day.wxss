@@ -1,0 +1,135 @@
+.day {
+  position: relative;
+}
+.day .x-title {
+  font-size: 16px;
+  color: #fff;
+}
+.day .day-date-picker {
+  position: relative;
+}
+.day .day-date-picker .vux-calendar {
+  padding-right: 14px;
+}
+.day .day-date-picker .vux-calendar::before {
+  border: none;
+}
+.day .day-date-picker i {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+}
+.day .day-head {
+  position: relative;
+  margin: 10px 0;
+  height: 50px;
+  line-height: 50px;
+  background-color: #009688;
+  border-radius: 5px;
+  color: #fff;
+}
+.day .day-head .mu-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-54%);
+}
+.day .day-head input {
+  width: 100%;
+  padding-left: 50px;
+  background: none;
+  color: #fff;
+}
+.day .day-list {
+  padding: 10px 5px;
+}
+.day li {
+  display: flex;
+  padding: 15px 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  margin-bottom: 1px;
+}
+.day li p {
+  flex: 1;
+  padding: 0 20px 0 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #666;
+  line-height: 28px;
+}
+.day li i {
+  color: #999;
+  margin-left: 5px;
+}
+.day li i.icon-edit {
+  color: #795548;
+}
+.day li i.icon-delete {
+  color: #607d8b;
+}
+.day .day-add {
+  position: absolute;
+  right: 10%;
+  bottom: 10%;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 50%;
+  text-align: center;
+  background-color: #009688;
+}
+.day .day-add i {
+  font-size: 25px;
+  color: #fff;
+}
+.day-form {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+.day-form .mint-cell {
+  border-bottom: 1px solid #eee;
+}
+.day-form .day-form-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.day-form li {
+  min-height: 48px;
+  border-bottom: 1px solid #eee;
+  padding: 0 10px;
+  overflow: hidden;
+}
+.day-form li label {
+  line-height: 48px;
+  float: left;
+  width: 80px;
+}
+.day-form li .day-form-item {
+  position: relative;
+  margin-left: 80px;
+}
+.day-form li .day-form-item select,
+.day-form li .day-form-item input {
+  width: 100%;
+  height: 48px;
+  background: none;
+  padding-left: 15px;
+  font-size: 16px;
+}
+.day-form .day-form-btn {
+  text-align: center;
+  margin-top: 30px;
+  padding: 0 10px;
+}
+.day-form .day-form-btn button {
+  background-color: #009688;
+  width: 100%;
+  height: 45px;
+  line-height: 45px;
+}

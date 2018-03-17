@@ -74,7 +74,7 @@
                 this.currentPage = this.currentPage + 1;
                 this.query({ type: 1, done: done });
             },
-            refresh(state, done) {
+            refresh(done) {
                 this.currentPage = 0;
                 this.query({ type: 2, done: done });
             }
