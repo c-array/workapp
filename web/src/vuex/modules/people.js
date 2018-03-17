@@ -7,8 +7,7 @@ export default {
         vm:{
             itemList:'',
             charts:1,
-            empty:false,
-            loading:true
+            empty:false
         },
         formModel:{
             type:'',
@@ -25,7 +24,9 @@ export default {
     },
     mutations: {
         getList(state,param){
-            state.vm.loading = true;
+            Vue.$vux.loading.show({
+                text: 'Loading'
+            })
             http.post({
                 url:'/stats/people',
                 data:state.formModel,
@@ -37,7 +38,10 @@ export default {
                             item.count = item.count + obj.usedTime;
                         })
                     })
-                    state.peopleList = data;
+                    setTimeout(_ =>{
+                        state.peopleList = data;
+                        Vue.$vux.loading.hide();
+                    },1000);
                 },
                 error: msg => {
                     Vue.$vux.toast.text(msg, 'top');

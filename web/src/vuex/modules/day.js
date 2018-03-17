@@ -12,9 +12,7 @@ export default {
         },
         list:[],
         formModel:{
-            createDate:formatDate({
-                type:'yyyy-mm-dd'
-            }),
+            createDate:"",
             taskName:'',
             usedTime:'',
             type:'',
@@ -81,7 +79,7 @@ export default {
             this.commit('common/day/getPrItem');
             state.formModel.itemId = "";
         },
-        clear(state,params){
+        clear(state,item){
             for (const key in state.formModel) {
                 state.formModel[key] = "";
             }

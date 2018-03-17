@@ -53,7 +53,7 @@
                 handleQuery: 'common/day/getList'
             }),
             handleGoTo(item) { //跳转
-                this.$store.commit('common/day/clear');
+                this.$store.commit('common/day/clear',item);
                 this.$router.push({
                     path: '/day-form',
                     query: {
