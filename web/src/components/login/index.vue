@@ -50,6 +50,9 @@
                     this.$vux.toast.text('密码不能为空！', 'top');
                     return false;
                 }
+                this.$vux.loading.show({
+                    text: 'Loading'
+                })
                 this.$http.post({
                     url:'/login',
                     type:'json',
@@ -59,7 +62,10 @@
                         sessionStorage.username = data.realname;
                         sessionStorage.departmentId = data.departmentId;
                         sessionStorage.userId = data.id;
-                        this.$router.push({ path: '/main' }); //登录成功，跳转到主页
+                        setTimeout(_ =>{
+                            this.$vux.loading.hide();
+                            this.$router.push({ path: '/main' }); //登录成功，跳转到主页
+                        },1000);
                     },
                     error:msg => {
                         this.$vux.toast.text(msg, 'top');
