@@ -1,18 +1,16 @@
 import Vue from 'vue';
-import http from '../../public/js/http';
-import {formatDate} from '../../public/js/common';
 export default {
     namespaced: true,
     state: {
         vm:{
-            currentDate:formatDate({
+            currentDate:Vue.$formatDate({
                 type:'yyyy-mm-dd'
             }),
             formPicker:'',
         },
         list:[],
         formModel:{
-            createDate:formatDate({
+            createDate:Vue.$formatDate({
                 type:'yyyy-mm-dd'
             }),
             taskName:'',
@@ -38,7 +36,7 @@ export default {
     },
     mutations: {
         getList(state,params){
-            http.get({
+            Vue.$http.get({
                 url:'/dailys',
                 data:{
                     userId:sessionStorage.userId,
@@ -53,7 +51,7 @@ export default {
             })
         },
         getItem(state,id){
-            http.get({
+            Vue.$http.get({
                 url:'/dailys/' + id,
                 success:data => {
                     state.formModel = data;
@@ -67,7 +65,7 @@ export default {
             })
         },
         getPrItem(state,params){
-            http.get({
+            Vue.$http.get({
                 url:'/proitems/type/' + state.formModel.type,
                 success:data => {
                     state.prList = data;
@@ -88,7 +86,7 @@ export default {
         },
         add(state,params){
             state.formModel.userId = sessionStorage.userId;
-            http.post({
+            Vue.$http.post({
                 url:'/dailys',
                 type:'json',
                 data:state.formModel,
@@ -105,7 +103,7 @@ export default {
             })
         },
         edit(state,params){
-            http.put({
+            Vue.$http.put({
                 url:'/dailys/' + state.formModel.id,
                 type:'json',
                 data:state.formModel,
@@ -121,7 +119,7 @@ export default {
             })
         },
         delete(state,params){
-            http.delete({
+            Vue.$http.delete({
                 url:'/dailys/' + params.id,
                 success:data => {
                     Vue.$vux.toast.text('删除成功', 'top');

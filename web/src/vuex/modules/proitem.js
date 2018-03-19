@@ -1,6 +1,4 @@
 import Vue from 'vue';
-import http from '../../public/js/http';
-import { formatDate } from '../../public/js/common';
 export default {
     namespaced: true,
     state: {
@@ -23,7 +21,7 @@ export default {
     },
     mutations: {
         getList(state, params) {
-            http.get({
+            Vue.$http.get({
                 url: '/proitems',
                 success: data => {
                     state.proitemList = data;
@@ -35,7 +33,7 @@ export default {
             })
         },
         getProitem(state, proitemId) {
-            http.get({
+            Vue.$http.get({
                 url: "/proitems/" + proitemId,
                 success: data => {
                     state.formModel = data;
@@ -46,7 +44,7 @@ export default {
             })
         },
         getProitemSearch(state, params) {
-            http.post({
+            Vue.$http.post({
                 url: '/proitems/search',
                 data:state.queryModel,
                 type: 'json',
@@ -72,7 +70,7 @@ export default {
                 Vue.$vux.toast.text('描述不能为空！', 'top');
                 return false;
             }
-            http.post({
+            Vue.$http.post({
                 url: '/proitems',
                 type: 'json',
                 data: state.formModel,
@@ -96,7 +94,7 @@ export default {
                 Vue.$vux.toast.text('描述不能为空！', 'top');
                 return false;
             }
-            http.put({
+            Vue.$http.put({
                 url: '/proitems/' + state.formModel.id,
                 type: 'json',
                 data: state.formModel,
@@ -112,7 +110,7 @@ export default {
             })
         },
         delete(state, params) {
-            http.delete({
+            Vue.$http.delete({
                 url: '/remove/' + params.id,
                 success: data => {
                     Vue.$vux.toast.text('删除成功', 'top');

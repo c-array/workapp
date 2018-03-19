@@ -1,6 +1,4 @@
 import Vue from 'vue';
-import http from '../../public/js/http';
-import { formatDate } from '../../public/js/common';
 export default {
     namespaced: true,
     state: {
@@ -31,7 +29,7 @@ export default {
     },
     mutations: {
         getList(state){
-            http.get({
+            Vue.$http.get({
                 url:'/users',
                 success: data => {
                     state.userList = data;
@@ -43,7 +41,7 @@ export default {
         },
         getRoles(state,params){
             state.vm.currentUserInfo = params;
-            http.get({
+            Vue.$http.get({
                 url:'/roles',
                 success: data => {
                     state.vm.checkRole = [];
@@ -67,7 +65,7 @@ export default {
             })
         },
         assignRole(state,params){
-            http.post({
+            Vue.$http.post({
                 url:'/users/role',
                 data:{
                     userId:state.vm.currentUserInfo.id,
@@ -84,7 +82,7 @@ export default {
             })
         },
         getUserItem(state,userId){
-            http.get({
+            Vue.$http.get({
                 url:"/users/" + userId,
                 success: data => {
                     state.formModel = data;
@@ -95,7 +93,7 @@ export default {
             })
         },
         getUserSearch(state){
-            http.post({
+            Vue.$http.post({
                 url:'/users/search',
                 data:state.queryModel,
                 type:"json",
@@ -109,7 +107,7 @@ export default {
             })
         },
         getDepartmentList(state,params){
-            http.get({
+            Vue.$http.get({
                 url:'/depts',
                 success: data => {
                     state.vm.departmentList = data;
@@ -146,7 +144,7 @@ export default {
                 Vue.$vux.toast.text('邮箱不能为空！', 'top');
                 return false;
             }
-            http.post({
+            Vue.$http.post({
                 url:'/users',
                 type:'json',
                 data:state.formModel,
@@ -163,7 +161,7 @@ export default {
             })
         },
         edit(state,params){
-            http.put({
+            Vue.$http.put({
                 url:'/users/' + state.formModel.id,
                 type:'json',
                 data:state.formModel,
@@ -179,7 +177,7 @@ export default {
             })
         },
         delete(state,params){
-            http.delete({
+            Vue.$http.delete({
                 url:'/users/' + params.id,
                 success:data => {
                     Vue.$vux.toast.text('删除成功', 'top');

@@ -3,7 +3,7 @@
         <div class="my-head">
             <div class="my-pic">
                 <img src="../../public/images/pic.jpg" alt="">
-                <input type="file">
+                <input @change="handleUpload($event)" type="file">
             </div>
             <div class="my-head_info">
                 <h3>曹琦敏 前端工程师</h3>
@@ -76,6 +76,19 @@
                     }
                 })
                 
+            },
+            handleUpload(e){
+                var file = e.target.files[0];
+				if(!/image\/\w+/.test(file.type)){ //判断获取的是否为图片文件
+					alert("请确保文件为图像文件");
+					return false;
+				}
+                console.log(file);
+				var reader = new FileReader();
+             	reader.readAsDataURL(file);
+             	reader.onload = e => {
+                    this.baseImg = e.target.result;
+                }
             }
         }
     }

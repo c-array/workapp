@@ -1,6 +1,4 @@
 import Vue from 'vue';
-import http from '../../public/js/http';
-import { formatDate } from '../../public/js/common';
 export default {
     namespaced: true,
     state: {
@@ -17,7 +15,7 @@ export default {
     },
     mutations:{
         getList(state,params){
-            http.get({
+            Vue.$http.get({
                 url:'/roles',
                 success: data => {
                     state.roleList = data;
@@ -28,7 +26,7 @@ export default {
             })
         },
         getRoleItem(state,roleId){
-            http.get({
+            Vue.$http.get({
                 url:"/roles/" + roleId,
                 success: data => {
                     state.formModel = data;
@@ -40,7 +38,7 @@ export default {
         },
         getAuthority(state,params){
             state.roleInfo = params.roleInfo;
-            http.get({
+            Vue.$http.get({
                 url:'/menus',
                 success:result => {
                     result.forEach((item,key) => {
@@ -78,7 +76,7 @@ export default {
                     }
                 })
             })
-            http.post({
+            Vue.$http.post({
                 url:"/roles/authority",
                 data:{
                     roleId:state.roleInfo.id,
@@ -127,7 +125,7 @@ export default {
                 Vue.$vux.toast.text('角色描述不能为空！', 'top');
                 return false;
             }
-            http.post({
+            Vue.$http.post({
                 url:'/roles',
                 type:'json',
                 data:state.formModel,
@@ -151,7 +149,7 @@ export default {
                 Vue.$vux.toast.text('角色描述不能为空！', 'top');
                 return false;
             }
-            http.put({
+            Vue.$http.put({
                 url:'/roles/' + state.formModel.id,
                 type:'json',
                 data:state.formModel,
@@ -167,7 +165,7 @@ export default {
             })
         },
         delete(state,params){
-            http.delete({
+            Vue.$http.delete({
                 url:'/roles/' + params.id,
                 success:data => {
                     Vue.$vux.toast.text('删除成功', 'top');

@@ -1,6 +1,4 @@
 import Vue from 'vue';
-import http from '../../public/js/http';
-import { formatDate } from '../../public/js/common';
 export default {
     namespaced: true,
     state: {
@@ -15,7 +13,7 @@ export default {
     },
     mutations:{
         getList(state,params){
-            http.get({
+            Vue.$http.get({
                 url:'/depts',
                 success: data => {
                     state.deptList = data;
@@ -26,7 +24,7 @@ export default {
             })
         },
         getDeptItem(state,deptId){
-            http.get({
+            Vue.$http.get({
                 url:"/depts/" + deptId,
                 success: data => {
                     state.formModel = data;
@@ -49,7 +47,7 @@ export default {
                 Vue.$vux.toast.text('部门描述不能为空！', 'top');
                 return false;
             }
-            http.post({
+            Vue.$http.post({
                 url:'/depts',
                 type:'json',
                 data:state.formModel,
@@ -73,7 +71,7 @@ export default {
                 Vue.$vux.toast.text('部门描述不能为空！', 'top');
                 return false;
             }
-            http.put({
+            Vue.$http.put({
                 url:'/depts/' + state.formModel.id,
                 type:'json',
                 data:state.formModel,
@@ -89,7 +87,7 @@ export default {
             })
         },
         delete(state,params){
-            http.delete({
+            Vue.$http.delete({
                 url:'/depts/' + params.id,
                 success:data => {
                     Vue.$vux.toast.text('删除成功', 'top');

@@ -1,6 +1,4 @@
 import Vue from 'vue';
-import http from '../../public/js/http';
-import { formatDate } from '../../public/js/common';
 export default {
     namespaced: true,
     state: {
@@ -28,7 +26,7 @@ export default {
     mutations: {
         getList(state,param){
             state.vm.loading = true;
-            http.post({
+            Vue.$http.post({
                 url:'/stats/people',
                 data:state.formModel,
                 type:'json',
@@ -63,7 +61,7 @@ export default {
         },
         getItemList(state, params) {
             if (state.formModel.type) {
-                http.get({
+                Vue.$http.get({
                     url: '/proitems/type/' + state.formModel.type,
                     success: data => {
                         state.formModel.itemId = '';
@@ -82,7 +80,7 @@ export default {
         },
         getPeopleItem(state, itemId){
             state.vm.loading = true;
-            http.post({
+            Vue.$http.post({
                 url: '/stats/people',
                 data: {
                     itemId:itemId
@@ -110,7 +108,7 @@ export default {
             })
         },
         export(state,params){
-            http.post({
+            Vue.$http.post({
                 url:'/export/people',
                 data:state.formModel,
                 type:'json',

@@ -27,11 +27,8 @@ Vue.component(VePie.name, VePie);
 Vue.component(VeLine.name, VeLine);
 
 //htpp请求
-import {formatDate,copyObj} from './public/js/common';
-import http from './public/js/http';
-Vue.prototype.$http = http;
-Vue.prototype.$formatDate = formatDate;
-Vue.prototype.$copyObj = copyObj;
+import plugin from './public/js/plugin';
+Vue.use(plugin);
 
 router.beforeEach((to, from, next) => {
   // 判断该路由是否需要登录权限

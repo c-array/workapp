@@ -1,6 +1,4 @@
 import Vue from 'vue';
-import http from '../../public/js/http';
-import {formatDate} from '../../public/js/common';
 export default {
     namespaced: true,
     state: {
@@ -9,7 +7,7 @@ export default {
             dateVisible:false,
             itemList:[], //部门数据集合
             dateKey:'',
-            date:formatDate({ //开始时间
+            date:Vue.$formatDate({ //开始时间
                 type: 'yyyy-mm-dd',
                 date:new Date('2016-08-01') 
             }),
@@ -18,11 +16,11 @@ export default {
         },
         formModel:{
             departmentId:"", //部门id
-            startDate: formatDate({ //开始时间
+            startDate: Vue.$formatDate({ //开始时间
                 type: 'yyyy-mm-dd',
                 date:new Date('2016-08-01') 
             }),
-            endDate:formatDate({ //开始时间
+            endDate:Vue.$formatDate({ //开始时间
                 type: 'yyyy-mm-dd',
                 date:new Date('2016-08-31') 
             })
@@ -53,11 +51,11 @@ export default {
     mutations:{
         getList(state,params){
             if(state.formModel.startDate && state.formModel.endDate){
-                var startTime = formatDate({
+                var startTime = Vue.$formatDate({
                     type:'time',
                     date:state.formModel.startDate
                 })
-                var endTime = formatDate({
+                var endTime = Vue.$formatDate({
                     type:'time',
                     date:state.formModel.endDate
                 })
@@ -71,7 +69,7 @@ export default {
             }
             state.formModel.departmentId = state.formModel.departmentId ? state.formModel.departmentId : sessionStorage.departmentId
             state.vm.loading = true;
-            http.post({
+            Vue.$http.post({
                 url:'/stats/dept',
                 data:{
                     startDate:state.formModel.startDate,
@@ -123,7 +121,7 @@ export default {
             })
         },
         getDepartmentList(state,params){
-            http.get({
+            Vue.$http.get({
                 url:'/depts',
                 success: data => {
                     state.vm.itemList = data;
@@ -149,7 +147,7 @@ export default {
             state.vm.dateVisible = true;
         },
         export(state,params){
-            http.post({
+            Vue.$http.post({
                 url:'/export/getDept',
                 data:state.formModel,
                 type:'json',

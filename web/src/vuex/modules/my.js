@@ -1,14 +1,11 @@
 import Vue from 'vue';
-import http from '../../public/js/http';
-import {formatDate} from '../../public/js/common';
-import { setTimeout } from 'timers';
 export default {
     namespaced: true,
     state: {
     },
     mutations:{
         getList(state,param){
-            http.post({
+            Vue.$http.post({
                 url:'/my-list',
                 data:{
                     userId:sessionStorage.userId,
