@@ -1,9 +1,10 @@
 import Vue from 'vue';
+import formatDate from '../../public/js/formatDate';
 export default {
     namespaced: true,
     state: {
         vm:{
-            currentDate:Vue.$formatDate({
+            currentDate:formatDate({
                 type:'yyyy-mm-dd'
             }),
             formPicker:'',

@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import formatDate from '../../public/js/formatDate';
 export default {
     namespaced: true,
     state: {
@@ -9,7 +10,7 @@ export default {
             nameModel:[''], //选择用户的model
             userList:[],
             dateKey:'',
-            date:Vue.$formatDate({ //开始时间
+            date:formatDate({ //开始时间
                 type: 'yyyy-mm-dd',
                 date:new Date('2016-08-01') 
             }),
@@ -18,11 +19,11 @@ export default {
         },
         formModel:{
             username:'',
-            startDate: Vue.$formatDate({ //开始时间
+            startDate: formatDate({ //开始时间
                 type: 'yyyy-mm-dd',
                 date:new Date('2016-08-01') 
             }), 
-            endDate: Vue.$formatDate({ //开始时间
+            endDate: formatDate({ //开始时间
                 type: 'yyyy-mm-dd',
                 date:new Date('2016-08-31') 
             }), 
@@ -50,11 +51,11 @@ export default {
     mutations:{
         getList(state,params){
             if(state.formModel.startDate && state.formModel.endDate){
-                var startTime = Vue.$formatDate({
+                var startTime = formatDate({
                     type:'time',
                     date:state.formModel.startDate
                 })
-                var endTime = Vue.$formatDate({
+                var endTime = formatDate({
                     type:'time',
                     date:state.formModel.endDate
                 })
