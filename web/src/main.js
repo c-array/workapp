@@ -11,9 +11,10 @@ import VueScroller from 'vue-scroller';
 Vue.use(VueScroller);
 
 //ui框架
-import  { ToastPlugin,ConfirmPlugin } from 'vux';
+import  { ToastPlugin,ConfirmPlugin, LoadingPlugin} from 'vux';
 Vue.use(ToastPlugin);
 Vue.use(ConfirmPlugin);
+Vue.use(LoadingPlugin);
 
 //图表
 import 'v-charts/lib/style.css';

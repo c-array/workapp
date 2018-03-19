@@ -1,6 +1,8 @@
 <template>
     <div class="inner system">
-        <x-header class="x-header" title="系统管理"></x-header>
+        <x-header :left-options="{showBack: false}" class="x-header" title="">
+            <span class="x-title" slot="left">系统管理</span>
+        </x-header>
         <grid :cols="2">
             <grid-item link="/user">
                 <i class="icon-user-mag"></i>

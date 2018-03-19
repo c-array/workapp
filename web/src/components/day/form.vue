@@ -76,6 +76,10 @@
         created(){
             if(this.taskId){
                 this.getItem(this.taskId);
+            }else{
+                this.formModel.createDate = this.$formatDate({
+                    type:'yyyy-mm-dd'
+                })
             }
         },
         methods: {
