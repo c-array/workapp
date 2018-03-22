@@ -11,19 +11,19 @@
             </div>
         </div>
         <group class="my-group">
-            <cell link="/partner" is-link>
+            <cell link="/my/partner" is-link>
                 <div slot="icon">
                     <i class="icon-partner blue"></i>
                     <span>我的工作</span>
                 </div>
             </cell>
-            <cell link="/product" is-link>
+            <cell link="/my/product" is-link>
                 <div slot="icon">
                     <i class="icon-product purple"></i>
                     <span>我参与的产品</span>
                 </div>
             </cell>
-            <cell link="/project" is-link>
+            <cell link="/my/project" is-link>
                 <div slot="icon">
                     <i class="icon-project red"></i>
                     <span>我参与的项目</span>

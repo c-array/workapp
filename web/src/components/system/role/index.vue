@@ -84,9 +84,9 @@
             gotoForm(item){
                 this.$store.commit('common/role/clear');
                 if(item){
-                    this.$router.push({path:"/role-form",query:{roleId:item.id}});
+                    this.$router.push({path:"/system/role/form",query:{roleId:item.id}});
                 }else{
-                    this.$router.push({path:"/role-form"});
+                    this.$router.push({path:"/system/role/form"});
                 }
             },
             handleDelete(roleId) {

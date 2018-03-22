@@ -4,8 +4,8 @@
 var Sequelize = require('sequelize');
 var config = {
     username: 'root',
-    //password: 'Yka@yunkouan.cao',
-    password: 'root',
+    password: 'Yka@yunkouan.cao',
+    //password: 'root',
     database: 'work',
     host: "localhost",
     dialect: 'mysql',

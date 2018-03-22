@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import formatDate from '../../public/js/formatDate';
+import formatDate from '../../../public/js/formatDate';
 export default {
     namespaced: true,
     state: {

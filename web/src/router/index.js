@@ -26,49 +26,49 @@ export default new Router({
           }
         },
         {
-          path: 'statistics',
-          name: 'statistics',
-          component: resolve => require(['@/components/statistics/index'],resolve),
+          path: 'stats',
+          name: 'stats',
+          component: resolve => require(['@/components/stats/index'],resolve),
           meta: { // 添加该字段，表示进入这个路由是需要登录的
             requireAuth: true,
           }
         },
         {
-          path: 'colleague',
-          name: 'colleague',
-          component: resolve => require(['@/components/statistics/colleague'],resolve),
+          path: 'stats/colleague',
+          name: 'stats-colleague',
+          component: resolve => require(['@/components/stats/colleague'],resolve),
           meta: { // 添加该字段，表示进入这个路由是需要登录的
             requireAuth: true,
           }
         },
         {
-          path: 'department',
-          name: 'department',
-          component: resolve => require(['@/components/statistics/department'],resolve),
+          path: 'stats/dept',
+          name: 'stats-dept',
+          component: resolve => require(['@/components/stats/dept'],resolve),
           meta: { // 添加该字段，表示进入这个路由是需要登录的
             requireAuth: true,
           }
         },
         {
-          path: 'item',
-          name: 'item',
-          component: resolve => require(['@/components/statistics/item'],resolve),
+          path: 'stats/item',
+          name: 'stats-item',
+          component: resolve => require(['@/components/stats/item'],resolve),
           meta: { // 添加该字段，表示进入这个路由是需要登录的
             requireAuth: true,
           }
         },
         {
-          path: 'people',
-          name: 'people',
-          component: resolve => require(['@/components/statistics/people'],resolve),
+          path: 'stats/people',
+          name: 'stats-people',
+          component: resolve => require(['@/components/stats/people'],resolve),
           meta: { // 添加该字段，表示进入这个路由是需要登录的
             requireAuth: true,
           }
         },
         {
-          path: 'people-charts',
-          name: 'people-charts',
-          component: resolve => require(['@/components/statistics/people-charts'],resolve),
+          path: 'stats/people-charts',
+          name: 'stats-people-charts',
+          component: resolve => require(['@/components/stats/people-charts'],resolve),
           meta: { // 添加该字段，表示进入这个路由是需要登录的
             requireAuth: true,
           }
@@ -92,7 +92,7 @@ export default new Router({
       ]
     },
     {
-      path: '/day-form',
+      path: '/day/form',
       name: 'day-form',
       component: resolve => require(['@/components/day/form'],resolve),
       meta: { // 添加该字段，表示进入这个路由是需要登录的
@@ -100,96 +100,96 @@ export default new Router({
       }
     },
     {
-      path: '/user',
-      name: 'user',
+      path: '/system/user',
+      name: 'system-user',
       component: resolve => require(['@/components/system/user/index'],resolve),
       meta: { // 添加该字段，表示进入这个路由是需要登录的
         requireAuth: true,
       }
     },
     {
-      path: '/user-form',
-      name: 'user-form',
+      path: '/system/user/form',
+      name: 'system-user-form',
       component: resolve => require(['@/components/system/user/form'],resolve),
       meta: { // 添加该字段，表示进入这个路由是需要登录的
         requireAuth: true,
       }
     },
     {
-      path: '/role',
-      name: 'role',
+      path: '/system/role',
+      name: 'system-role',
       component: resolve => require(['@/components/system/role/index'],resolve),
       meta: { // 添加该字段，表示进入这个路由是需要登录的
         requireAuth: true,
       }
     },
     {
-      path: '/role-form',
-      name: 'role-form',
+      path: '/system/role/form',
+      name: 'system-role-form',
       component: resolve => require(['@/components/system/role/form'],resolve),
       meta: { // 添加该字段，表示进入这个路由是需要登录的
         requireAuth: true,
       }
     },
     {
-      path: '/dept',
-      name: 'dept',
+      path: '/system/dept',
+      name: 'system-dept',
       component: resolve => require(['@/components/system/dept/index'],resolve),
       meta: { // 添加该字段，表示进入这个路由是需要登录的
         requireAuth: true,
       }
     },
     {
-      path: '/dept-form',
-      name: 'dept-form',
+      path: '/system/dept/form',
+      name: 'system-dept-form',
       component: resolve => require(['@/components/system/dept/form'],resolve),
       meta: { // 添加该字段，表示进入这个路由是需要登录的
         requireAuth: true,
       }
     },
     {
-      path: '/proitem',
-      name: 'proitem',
+      path: '/system/proitem',
+      name: 'system-proitem',
       component: resolve => require(['@/components/system/proitem/index'],resolve),
       meta: { // 添加该字段，表示进入这个路由是需要登录的
         requireAuth: true,
       }
     },
     {
-      path: '/proitem-form',
-      name: 'proitem-form',
+      path: '/system/proitem/form',
+      name: 'system-proitem-form',
       component: resolve => require(['@/components/system/proitem/form'],resolve),
       meta: { // 添加该字段，表示进入这个路由是需要登录的
         requireAuth: true,
       }
     },
     {
-      path: '/partner',
-      name: 'partner',
+      path: '/my/partner',
+      name: 'system-partner',
       component: resolve => require(['@/components/my/partner'],resolve),
       meta: { // 添加该字段，表示进入这个路由是需要登录的
         requireAuth: true,
       }
     },
     {
-      path: '/product',
-      name: 'product',
+      path: '/my/product',
+      name: 'my-product',
       component: resolve => require(['@/components/my/product'],resolve),
       meta: { // 添加该字段，表示进入这个路由是需要登录的
         requireAuth: true,
       }
     },
     {
-      path: '/project',
-      name: 'project',
+      path: '/my/project',
+      name: 'my-project',
       component: resolve => require(['@/components/my/project'],resolve),
       meta: { // 添加该字段，表示进入这个路由是需要登录的
         requireAuth: true,
       }
     },
     {
-      path: '/other',
-      name: 'other',
+      path: '/my/other',
+      name: 'my-other',
       component: resolve => require(['@/components/my/other'],resolve),
       meta: { // 添加该字段，表示进入这个路由是需要登录的
         requireAuth: true,

@@ -78,9 +78,9 @@
             gotoForm(item){
                 this.$store.commit('common/user/clear');
                 if(item){
-                    this.$router.push({path:"/user-form",query:{userId:item.id}});
+                    this.$router.push({path:"/system/user/form",query:{userId:item.id}});
                 }else{
-                    this.$router.push({path:"/user-form"});
+                    this.$router.push({path:"/system/user/form"});
                 }
             },
             handleDelete(userId) {

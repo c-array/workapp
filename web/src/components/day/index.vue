@@ -55,7 +55,7 @@
             handleGoTo(item) { //跳转
                 this.$store.commit('common/day/clear',item);
                 this.$router.push({
-                    path: '/day-form',
+                    path: '/day/form',
                     query: {
                         id: item ? item.id : '',
                     }

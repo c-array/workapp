@@ -34,7 +34,7 @@
                         id:2,
                         name:'统计分析',
                         icon:'icon-stats',
-                        url:'/main/statistics'
+                        url:'/main/stats'
                     },
                     {
                         id:3,

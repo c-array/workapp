@@ -63,9 +63,9 @@
             gotoForm(item) {
                 this.$store.commit('common/proitem/clear');
                 if (item) {
-                    this.$router.push({ path: "/proitem-form", query: { proitemId: item.id } });
+                    this.$router.push({ path: "/system/proitem/form", query: { proitemId: item.id } });
                 } else {
-                    this.$router.push({ path: "/proitem-form" });
+                    this.$router.push({ path: "/system/proitem/form" });
                 }
             },
             handleDelete(userId) {
