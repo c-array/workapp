@@ -1,8 +1,9 @@
 <template>
     <div class="inner my">
         <div class="my-head">
-            <div class="my-pic">
-                <img src="../../public/images/pic.jpg" alt="">
+            <div class="my-pic" :class="{active:!userInfo.pic}">
+                <img v-if="userInfo.pic" :src="userInfo.pic" alt="">
+                <i v-else class="icon-my"></i>
                 <input @change="handleUpload($event)" type="file">
             </div>
             <div class="my-head_info">
@@ -29,21 +30,7 @@
                     <span>我参与的项目</span>
                 </div>
             </cell>
-            <!-- <cell link="/other" is-link>
-                <div slot="icon">
-                    <i class="icon-product purple"></i>
-                    <span>我参与的其他工作</span>
-                </div>
-            </cell> -->
         </group>
-        <!-- <group class="my-group">
-            <cell is-link>
-                <div slot="icon">
-                    <i class="icon-skin yellow"></i>
-                    <span>换肤</span>
-                </div>
-            </cell>
-        </group> -->
         <group class="my-group">
             <cell @click.native="logout" class="lgout" title="退出登录"></cell>
         </group>
@@ -53,10 +40,14 @@
     @import '../../public/less/my.less';
 </style>
 <script>
-    import {mapState,mapMutations} from "vuex";
     import {Group,Cell,XButton} from 'vux';
     export default {
         name:"my",
+        data () {
+            return {
+                userInfo:localStorage.userInfo ? JSON.parse(localStorage.userInfo) : ""     
+            }
+        },
         components: {
             Group,
             Cell,
@@ -83,11 +74,24 @@
 					alert("请确保文件为图像文件");
 					return false;
 				}
-                console.log(file);
 				var reader = new FileReader();
              	reader.readAsDataURL(file);
              	reader.onload = e => {
-                    this.baseImg = e.target.result;
+                    this.$http.post({
+                        url:"/my/upload",
+                        data:{
+                            id:sessionStorage.userId,
+                            pic:e.target.result
+                        },
+                        type:"json",
+                        success: data => {
+                            this.userInfo.pic = e.target.result;
+                            localStorage.userInfo = JSON.stringify(this.userInfo);
+                        },
+                        error: msg => {
+                            this.$vux.toast.text(msg, 'top');
+                        }
+                    })
                 }
             }
         }

@@ -62,7 +62,19 @@ const getItem = async param => {
     }
 }
 
+const upload = async param => {
+    let data = await workAdmin.update({
+        pic:param.pic
+    },{
+        where:{
+            id:param.id
+        }
+    })
+    return data;
+}
+
 module.exports = {
     getWork, //获取我的工作数据
     getItem, //获取我参与的产品或项目数据
+    upload, //上传图像
 };

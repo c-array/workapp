@@ -21,10 +21,16 @@ app.use(express.static(path.join(__dirname,'report')));
 app.use(express.static(path.join(__dirname,'/')));
 
 /**
- * 设置http请求方式
+ * 解析请求体
  * */
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+var jsonParser = bodyParser.json({limit: 1024 * 1024 * 100, type: 'application/json'});
+var urlencodedParser = bodyParser.urlencoded({
+    extended: true,
+    limit: 1024 * 1024 * 100,
+    type: 'application/x-www-form-urlencoding'
+});
+app.use(jsonParser);
+app.use(urlencodedParser);
 
 //路由分发
 const routes = require('./routes/index');
