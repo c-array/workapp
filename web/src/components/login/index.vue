@@ -69,6 +69,7 @@
                     },
                     error:msg => {
                         this.$vux.toast.text(msg, 'top');
+                        this.$vux.loading.hide();
                     }
                 })
             }
