@@ -7,8 +7,8 @@
                 <input @change="handleUpload($event)" type="file">
             </div>
             <div class="my-head_info">
-                <h3>曹琦敏 前端工程师</h3>
-                <p>部门：软件部</p>
+                <h3>{{userInfo.realname}}</h3>
+                <p>部门：{{userInfo.post}}</p>
             </div>
         </div>
         <group class="my-group">
