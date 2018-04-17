@@ -4,28 +4,6 @@ const root = '/api';
 // 引用axios
 import axios from 'axios';
 
-// 自定义判断元素类型JS
-const toType = (obj => {
-    return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
-});
-
-// 参数过滤函数
-const filterNull = (o => {
-    for (var key in o) {
-        if (o[key] === null) {
-            delete o[key]
-        }
-        if (toType(o[key]) === 'string') {
-            o[key] = o[key].trim()
-        } else if (toType(o[key]) === 'object') {
-            o[key] = filterNull(o[key])
-        } else if (toType(o[key]) === 'array') {
-            o[key] = filterNull(o[key])
-        }
-    }
-    return o
-});
-
 /*
  接口处理函数
  这个函数每个项目都是不一样的，我现在调整的是适用于
@@ -40,6 +18,10 @@ const apiAxios = ((method, url, type, data, success, failure) => {
     if(type == 'json'){
         headers = {
             'Content-type':'application/json'
+        }
+    }else if(type == 'formdata'){
+        headers = {
+            'Content-type':'multipart/form-data'
         }
     }else{
         headers = {

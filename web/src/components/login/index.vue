@@ -62,10 +62,8 @@
                         sessionStorage.username = data.realname;
                         sessionStorage.departmentId = data.departmentId;
                         sessionStorage.userId = data.id;
-                        setTimeout(_ =>{
-                            this.$vux.loading.hide();
-                            this.$router.push({ path: '/main' }); //登录成功，跳转到主页
-                        },1000);
+                        this.$vux.loading.hide();
+                        this.$router.push({ path: '/main' }); //登录成功，跳转到主页
                     },
                     error:msg => {
                         this.$vux.toast.text(msg, 'top');

@@ -18,6 +18,7 @@ sqlDb.sequelize.sync({force: false,logging:false}).then(function () {
 const app = express();
 
 app.use(express.static(path.join(__dirname,'report')));
+app.use(express.static(path.join(__dirname,'uploads')));
 app.use(express.static(path.join(__dirname,'/')));
 
 /**

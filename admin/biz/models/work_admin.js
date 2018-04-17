@@ -45,7 +45,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     pic: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING(255),
       allowNull: true
     },
     createTime: {

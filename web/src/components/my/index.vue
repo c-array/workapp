@@ -40,6 +40,8 @@
     @import '../../public/less/my.less';
 </style>
 <script>
+    // 引用axios
+    import axios from 'axios';
     import {Group,Cell,XButton} from 'vux';
     export default {
         name:"my",
@@ -71,28 +73,47 @@
             handleUpload(e){
                 var file = e.target.files[0];
 				if(!/image\/\w+/.test(file.type)){ //判断获取的是否为图片文件
-					alert("请确保文件为图像文件");
+					this.$vux.toast.text("请确保文件为图像文件",'top');
 					return false;
-				}
-				var reader = new FileReader();
-             	reader.readAsDataURL(file);
-             	reader.onload = e => {
-                    this.$http.post({
-                        url:"/my/upload",
-                        data:{
-                            id:sessionStorage.userId,
-                            pic:e.target.result
-                        },
-                        type:"json",
-                        success: data => {
-                            this.userInfo.pic = e.target.result;
-                            localStorage.userInfo = JSON.stringify(this.userInfo);
-                        },
-                        error: msg => {
-                            this.$vux.toast.text(msg, 'top');
-                        }
-                    })
                 }
+                if(file.size > 1048576){
+                    this.$vux.toast.text("请上传小于1M以内的图片",'top');
+					return false;
+                }
+                var fd = new FormData()
+                fd.append('file', file)
+                this.$http.post({
+                    url:"/uploadFile",
+                    data:fd,
+                    type:"formdata",
+                    success: data => {
+                        this.setUploadImg(data.filePath);
+                    },
+                    error: msg => {
+                        this.$vux.toast.text(msg, 'top');
+                    }
+                })
+            },
+            setUploadImg(imgPath){
+                this.$http.post({
+                    url:"/my/upload",
+                    type:"json",
+                    data:{
+                        id:this.userInfo.id,
+                        pic:imgPath
+                    },
+                    success: data => {
+                        if(process.env.NODE_ENV == "development"){
+                            this.userInfo.pic = "http://localhost:8000" + imgPath;
+                        }else{
+                            this.userInfo.pic = imgPath;
+                        };
+                        localStorage.userInfo = JSON.stringify(this.userInfo);
+                    },
+                    error: msg => {
+                        this.$vux.toast.text(msg, 'top');
+                    }
+                })
             }
         }
     }
