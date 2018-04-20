@@ -1,6 +1,6 @@
 <template>
   <div class="inner login">
-
+    
   </div>
 </template>
 <style scoped lang="less">
