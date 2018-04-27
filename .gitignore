@@ -3,3 +3,4 @@ web/node_modules/
 app/node_modules/
 .vscode/
 web/dist/
+app/dist/
