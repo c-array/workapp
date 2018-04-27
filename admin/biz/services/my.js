@@ -26,6 +26,33 @@ const getWork = async param => {
     return response(data,'查询');
 }
 
+const getWorkDay = async param => {
+    if(!param.userId){
+        return {
+            status:1,
+            message:'用户id不能为空！',
+            result:''
+        };
+    }else if(param.currentPage === "" || param.currentPage === null){
+        return {
+            status:1,
+            message:'页码不能为空！',
+            result:''
+        };
+    }else if(param.pageSize === "" || param.pageSize === null){
+        return {
+            status:1,
+            message:'页数不能为空！',
+            result:''
+        };
+    }
+    if(param.currentPage > 0){
+        param.currentPage = param.currentPage - 1;
+    }
+    let data = await myDao.getWorkDay(param);
+    return response(data,'查询');
+}
+
 const getItem = async param => {
     if(!param.userId){
         return {
@@ -76,6 +103,7 @@ const upload = async param => {
 
 module.exports = {
     getWork, //获取我的工作数据
+    getWorkDay, //获取每天的工作数据
     getItem, //获取我参与的产品或项目数据
     upload, //上传图像
 };

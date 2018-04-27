@@ -1,0 +1,52 @@
+.main{
+  .el-container.is-vertical{
+    height: 100%;
+  }
+  .el-header{
+    display: flex;
+    justify-content: space-between;
+    background-color: #5760d5;
+    .title{
+      color: #fff;
+      line-height: 60px;
+      font-size: 24px;
+    }
+    ul{
+      display: flex;
+    }
+    li{
+      padding: 0 10px;
+      line-height: 60px;
+      cursor: pointer;
+      color: #fff;
+      &:first-child{
+        cursor: initial;
+      }
+      i{
+        vertical-align: middle;
+        margin-right: 5px;
+        font-size: 20px;
+        &.icon-password{
+          font-size: 17px;
+        }
+      }
+      span{
+        vertical-align: middle;
+        font-size: 15px;
+      }
+    }
+  }
+  .el-aside{
+    width: auto !important;
+    .el-menu-vertical-demo:not(.el-menu--collapse) {
+      width: 220px;
+      min-height: 400px;
+    }
+  }
+  .el-main{
+    background-color: #fff;
+  }
+  .router-main{
+    height: calc(100% - 14px);
+  }
+}

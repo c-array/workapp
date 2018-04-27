@@ -4,10 +4,10 @@
 var Sequelize = require('sequelize');
 var config = {
     username: 'root',
-    password: 'work@2018',
-    //password: 'root',
+    //password: 'work@2018',
+    password: 'Yka@yunkouan.cao',
     database: 'work',
-    host: "115.159.88.36",
+    host: "localhost",
     dialect: 'mysql',
     port: 3306, // 端口号，MySQL默认3306
     logging:false,
